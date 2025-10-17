@@ -1,0 +1,190 @@
+svg text tspan {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeSpeed;
+  fill: #ffffff;
+}
+
+code {
+  background: rgba(15, 20, 32, 0.8);
+  color: #22d3ee;
+  padding: 4px 8px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid rgba(34, 211, 238, 0.2);
+  backdrop-filter: blur(8px);
+}
+
+svg .clickable-group {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+svg .clickable-group:hover {
+  filter: brightness(1.1) drop-shadow(0 4px 12px rgba(59, 130, 246, 0.3));
+  transform: translateY(-2px);
+}
+
+svg .clickable-group:hover > [fill='rgb(65,53,214)'] {
+  fill: #3b82f6;
+  stroke: #3b82f6;
+  filter: drop-shadow(0 2px 8px rgba(59, 130, 246, 0.4));
+}
+
+svg .clickable-group:hover > [fill='rgb(255,255,0)'] {
+  fill: #f59e0b;
+  filter: drop-shadow(0 2px 8px rgba(245, 158, 11, 0.4));
+}
+
+svg .clickable-group:hover > [fill='rgb(255,229,153)'] {
+  fill: #fbbf24;
+  filter: drop-shadow(0 2px 8px rgba(251, 191, 36, 0.4));
+}
+
+svg .clickable-group:hover > [fill='rgb(153,153,153)'] {
+  fill: #94a3b8;
+  filter: drop-shadow(0 2px 8px rgba(148, 163, 184, 0.4));
+}
+
+svg .clickable-group:hover > [fill='rgb(255,255,255)'] {
+  fill: #f1f5f9;
+  filter: drop-shadow(0 2px 8px rgba(241, 245, 249, 0.4));
+}
+
+svg .clickable-group:hover > [fill='rgb(255,255,221)'] {
+  fill: #fef3c7;
+  filter: drop-shadow(0 2px 8px rgba(254, 243, 199, 0.4));
+}
+
+svg .clickable-group:hover > [fill='rgb(255,217,102)'] {
+  fill: #f59e0b;
+  filter: drop-shadow(0 2px 8px rgba(245, 158, 11, 0.4));
+}
+
+svg .done rect {
+  fill: rgba(16, 185, 129, 0.3) !important;
+  stroke: #10b981 !important;
+  stroke-width: 2px;
+  filter: drop-shadow(0 2px 8px rgba(16, 185, 129, 0.3));
+}
+
+svg .done text {
+  text-decoration: line-through;
+  fill: #10b981 !important;
+  opacity: 0.8;
+}
+
+svg .clickable-group.done[data-group-id^='check:'] rect {
+  fill: rgba(16, 185, 129, 0.4) !important;
+  stroke: #10b981 !important;
+  stroke-width: 2px;
+}
+
+.clickable-group rect {
+  user-select: none;
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.2));
+}
+
+/* Add modern glow effects for different roadmap sections */
+svg .clickable-group[data-group-id*='frontend'] rect {
+  filter: drop-shadow(0 1px 3px rgba(59, 130, 246, 0.2));
+}
+
+svg .clickable-group[data-group-id*='backend'] rect {
+  filter: drop-shadow(0 1px 3px rgba(245, 158, 11, 0.2));
+}
+
+svg .clickable-group[data-group-id*='devops'] rect {
+  filter: drop-shadow(0 1px 3px rgba(16, 185, 129, 0.2));
+}
+
+svg .clickable-group[data-group-id*='database'] rect {
+  filter: drop-shadow(0 1px 3px rgba(139, 92, 246, 0.2));
+}
+
+/* Modern container styling */
+#resource-svg-wrap,
+.roadmap-container {
+  background: linear-gradient(
+    135deg,
+    rgba(10, 14, 26, 0.8) 0%,
+    rgba(15, 20, 32, 0.6) 100%
+  );
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(59, 130, 246, 0.1) inset;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+#resource-svg-wrap:hover,
+.roadmap-container:hover {
+  border-color: rgba(59, 130, 246, 0.3);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(59, 130, 246, 0.2) inset;
+}
+
+#resource-svg-wrap svg,
+.roadmap-container svg {
+  border-radius: 16px;
+  background: transparent;
+}
+
+/* Loader styling */
+.roadmap-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  background: linear-gradient(
+    135deg,
+    rgba(10, 14, 26, 0.9) 0%,
+    rgba(15, 20, 32, 0.7) 100%
+  );
+  border-radius: 16px;
+}
+
+/* Error styling */
+.error {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 12px;
+  padding: 2rem;
+  color: #fca5a5;
+  backdrop-filter: blur(8px);
+}
+
+/************************************
+    Aspect ratio implementation
+  *************************************/
+[style*='--aspect-ratio'] > :first-child {
+  width: 100%;
+}
+
+[style*='--aspect-ratio'] > img {
+  height: auto;
+}
+
+@supports (--custom: property) {
+  [style*='--aspect-ratio'] {
+    position: relative;
+  }
+
+  [style*='--aspect-ratio']::before {
+    content: '';
+    display: block;
+    /*noinspection CssUnresolvedCustomProperty*/
+    padding-bottom: calc(100% / (var(--aspect-ratio)));
+  }
+
+  [style*='--aspect-ratio'] > :first-child {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+  }
+}

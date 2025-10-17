@@ -1,0 +1,172 @@
+---
+/**
+ * ModernRoadmap Astro Component - Integration layer
+ */
+import './styles.css';
+
+export interface Props {
+  resourceType: 'roadmap' | 'best-practice';
+  resourceId: string;
+  jsonUrl: string;
+  dimensions?: {
+    width: number;
+    height: number;
+  };
+}
+
+const { resourceId, resourceType, jsonUrl, dimensions = null } = Astro.props;
+---
+
+<div
+  id='modern-roadmap-container'
+  class='modern-roadmap-wrapper'
+  style={dimensions
+    ? `--aspect-ratio:${dimensions.width}/${dimensions.height}`
+    : null}
+  data-resource-type={resourceType}
+  data-resource-id={resourceId}
+  data-json-url={jsonUrl}
+>
+  <div id='modern-roadmap-root'></div>
+</div>
+
+<script>
+  import { render, h } from 'preact';
+  import { RoadmapRenderer } from './RoadmapRenderer';
+  import { getUserResourceProgressApi } from '../../lib/progress-api';
+
+  class ModernRoadmapManager {
+    constructor() {
+      this.container = null;
+      this.root = null;
+      this.resourceId = '';
+      this.resourceType = '';
+      this.jsonUrl = '';
+      this.completedNodes = [];
+
+      this.init = this.init.bind(this);
+      this.loadCompletedNodes = this.loadCompletedNodes.bind(this);
+      this.renderRoadmap = this.renderRoadmap.bind(this);
+    }
+
+    async loadCompletedNodes() {
+      const { response, error } = await getUserResourceProgressApi({
+        resourceId: this.resourceId,
+        resourceType: this.resourceType,
+      });
+
+      if (!response) {
+        console.error('Failed to load progress:', error);
+        return;
+      }
+
+      this.completedNodes = response.done || [];
+    }
+
+    renderRoadmap() {
+      if (!this.root) return;
+
+      render(
+        h(RoadmapRenderer, {
+          resourceId: this.resourceId,
+          resourceType: this.resourceType,
+          jsonUrl: this.jsonUrl,
+          completedNodes: this.completedNodes,
+        }),
+        this.root
+      );
+    }
+
+    async init() {
+      this.container = document.getElementById('modern-roadmap-container');
+      this.root = document.getElementById('modern-roadmap-root');
+
+      if (!this.container || !this.root) {
+        console.error('Modern roadmap container not found');
+        return;
+      }
+
+      const dataset = this.container.dataset;
+      this.resourceType = dataset.resourceType || '';
+      this.resourceId = dataset.resourceId || '';
+      this.jsonUrl = dataset.jsonUrl || '';
+
+      if (!this.jsonUrl) {
+        console.error('JSON URL not provided');
+        return;
+      }
+
+      // Load completed nodes
+      await this.loadCompletedNodes();
+
+      // Render the roadmap
+      this.renderRoadmap();
+
+      // Listen for progress updates
+      window.addEventListener(`${this.resourceType}.topic.toggle`, async () => {
+        await this.loadCompletedNodes();
+        this.renderRoadmap();
+      });
+    }
+  }
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      const manager = new ModernRoadmapManager();
+      manager.init();
+    });
+  } else {
+    const manager = new ModernRoadmapManager();
+    manager.init();
+  }
+</script>
+
+<style>
+  .modern-roadmap-wrapper {
+    position: relative;
+    width: 100%;
+    min-height: 600px;
+    border-radius: 24px;
+    overflow: hidden;
+    background: linear-gradient(
+      135deg,
+      rgba(10, 14, 26, 0.8) 0%,
+      rgba(15, 20, 32, 0.6) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+      0 0 0 1px rgba(59, 130, 246, 0.1) inset;
+  }
+
+  #modern-roadmap-root {
+    width: 100%;
+    height: 100%;
+    min-height: 600px;
+  }
+
+  /* Aspect ratio support */
+  [style*='--aspect-ratio'] > :first-child {
+    width: 100%;
+  }
+
+  @supports (--custom: property) {
+    [style*='--aspect-ratio'] {
+      position: relative;
+    }
+
+    [style*='--aspect-ratio']::before {
+      content: '';
+      display: block;
+      padding-bottom: calc(100% / (var(--aspect-ratio)));
+    }
+
+    [style*='--aspect-ratio'] > :first-child {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+    }
+  }
+</style>

@@ -1,0 +1,55 @@
+---
+import type { GuideFileType } from '../lib/guide';
+import GuideListItem from './GuideListItem.astro';
+
+export interface Props {
+  heading: string;
+  guides: GuideFileType[];
+}
+
+const { heading, guides } = Astro.props;
+---
+
+<div class='container'>
+  <!-- Section Heading -->
+  <div class='mb-8 flex items-center justify-between'>
+    <div class='relative'>
+      <h2
+        class='gradient-text-brand relative z-10 text-2xl font-bold sm:text-3xl'
+      >
+        {heading}
+      </h2>
+      <div
+        class='absolute inset-x-0 -bottom-2 h-1 w-24 bg-gradient-to-r from-primary to-transparent opacity-50'
+      >
+      </div>
+    </div>
+  </div>
+
+  <!-- Guides List -->
+  <div class='space-y-3 sm:space-y-4'>
+    {guides.map((guide) => <GuideListItem guide={guide} />)}
+  </div>
+
+  <!-- CTA Button -->
+  <div class='mt-8 flex justify-center sm:mt-10'>
+    <a
+      href='/guides'
+      class='btn-ghost group inline-flex items-center gap-2 px-8 py-3 text-sm'
+    >
+      <span>View All Guides</span>
+      <svg
+        class='h-4 w-4 transition-transform group-hover:translate-x-1'
+        fill='none'
+        stroke='currentColor'
+        viewBox='0 0 24 24'
+      >
+        <path
+          stroke-linecap='round'
+          stroke-linejoin='round'
+          stroke-width='2'
+          d='M13 7l5 5m0 0l-5 5m5-5H6'></path>
+      </svg>
+    </a>
+  </div>
+</div>

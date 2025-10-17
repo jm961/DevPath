@@ -1,0 +1,45 @@
+---
+import YouTubeAlert from './YouTubeAlert.astro';
+
+export interface Props {
+  title: string;
+  description: string;
+  showYouTubeAlert?: boolean;
+}
+
+const { title, description, showYouTubeAlert = false } = Astro.props;
+---
+
+<div class='relative border-b border-white/5 pb-12 pt-16 sm:pb-16 sm:pt-24'>
+  <div class='container'>
+    {
+      showYouTubeAlert && (
+        <div class='mb-6 hidden sm:block'>
+          <YouTubeAlert />
+        </div>
+      )
+    }
+
+    <!-- Badge -->
+    <div class='mb-6 flex animate-fade-in justify-start'>
+      <div
+        class='inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 backdrop-blur-sm'
+      >
+        <div class='h-2 w-2 animate-pulse rounded-full bg-primary'></div>
+        <span class='text-sm font-medium text-muted'>Learning Resources</span>
+      </div>
+    </div>
+
+    <h1
+      class='gradient-text-brand mb-4 animate-slide-up text-4xl font-extrabold sm:mb-6 sm:text-6xl'
+    >
+      {title}
+    </h1>
+    <p
+      class='max-w-3xl animate-slide-up text-base leading-relaxed text-muted sm:text-xl'
+      style='animation-delay: 0.1s;'
+    >
+      {description}
+    </p>
+  </div>
+</div>

@@ -1,0 +1,53 @@
+---
+import { getRoadmapsByIds, RoadmapFrontmatter } from '../lib/roadmap';
+
+export interface Props {
+  roadmap: RoadmapFrontmatter;
+}
+
+const { roadmap } = Astro.props;
+
+const relatedRoadmaps = roadmap.relatedRoadmaps || [];
+if (!relatedRoadmaps.length) {
+  return null;
+}
+
+const relatedRoadmapDetails = await getRoadmapsByIds(relatedRoadmaps);
+---
+
+<div class='border-t border-white/5 bg-surface/30'>
+  <div class='container'>
+    <div class='relative -top-5 flex justify-between'>
+      <h1
+        class='text-md rounded-md border border-white/10 bg-surface px-3 py-1 font-medium text-white'
+      >
+        Related Roadmaps
+      </h1>
+      <a
+        href='/roadmaps'
+        class='text-md rounded-md border border-white/10 bg-surface px-3 py-1 font-medium text-white hover:bg-surface-elevated'
+      >
+        <span class='hidden sm:inline'>All Roadmaps &rarr;</span>
+        <span class='inline sm:hidden'>More &rarr;</span>
+      </a>
+    </div>
+
+    <div class='flex flex-col gap-1 pb-8'>
+      {
+        relatedRoadmapDetails.map((relatedRoadmap) => (
+          <a
+            href={`/${relatedRoadmap.id}`}
+            class='flex flex-col gap-0.5 rounded-md border border-white/10 bg-surface px-3.5 py-2 hover:bg-surface-elevated sm:flex-row sm:gap-0'
+          >
+            <span class='inline-block min-w-[150px] font-medium text-white'>
+              {relatedRoadmap.frontmatter.briefTitle}
+            </span>
+            <span class='text-muted'>
+              {relatedRoadmap.frontmatter.briefDescription}
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</div>

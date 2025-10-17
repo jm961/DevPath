@@ -1,0 +1,19 @@
+---
+import { Debug } from 'astro/components';
+import { markdownToHtml } from '../lib/markdown';
+
+export interface Props {
+  text: string;
+}
+
+const { text } = Astro.props;
+---
+
+<div class='bg-surface/30'>
+  <div class='container pt-1'>
+    <p
+      class='relative z-10 mb-0 mt-2 rounded-md bg-warning/10 p-2 text-sm text-warning sm:-mb-6 sm:mt-5 [&>a]:text-accent [&>a]:underline [&>a]:hover:text-accent-light'
+      set:html={markdownToHtml(text.trim())}
+    />
+  </div>
+</div>

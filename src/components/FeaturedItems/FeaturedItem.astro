@@ -1,0 +1,62 @@
+---
+export interface FeaturedItemType {
+  isUpcoming?: boolean;
+  isNew?: boolean;
+  url: string;
+  text: string;
+}
+
+export interface Props extends FeaturedItemType {}
+
+const { isUpcoming = false, isNew = false, text, url } = Astro.props;
+---
+
+<a
+  class:list={[
+    'group relative block overflow-hidden rounded-2xl border border-white/10 p-6 no-underline transition-all duration-300 hover:border-primary/30 hover:bg-white/[0.02]',
+    {
+      'opacity-60 hover:opacity-80': isUpcoming,
+    },
+  ]}
+  href={url}
+>
+  <!-- Content -->
+  <div class='flex items-center justify-between gap-4'>
+    <h3
+      class='text-base font-semibold text-white transition-colors group-hover:text-primary sm:text-lg'
+    >
+      {text}
+    </h3>
+
+    <div class='flex shrink-0 items-center gap-2'>
+      {
+        isNew && (
+          <span class='rounded-full bg-accent/20 px-2.5 py-1 text-xs font-bold text-accent ring-1 ring-accent/30'>
+            New
+          </span>
+        )
+      }
+
+      {
+        isUpcoming && (
+          <span class='rounded-full bg-muted/20 px-2.5 py-1 text-xs font-bold text-muted ring-1 ring-muted/30'>
+            Soon
+          </span>
+        )
+      }
+
+      <svg
+        class='h-5 w-5 text-muted transition-all group-hover:translate-x-1 group-hover:text-primary'
+        fill='none'
+        stroke='currentColor'
+        viewBox='0 0 24 24'
+      >
+        <path
+          stroke-linecap='round'
+          stroke-linejoin='round'
+          stroke-width='2'
+          d='M13 7l5 5m0 0l-5 5m5-5H6'></path>
+      </svg>
+    </div>
+  </div>
+</a>

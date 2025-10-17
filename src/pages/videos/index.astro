@@ -1,0 +1,29 @@
+---
+import VideoListItem from '../../components/VideoListItem.astro';
+import SimplePageHeader from '../../components/SimplePageHeader.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getAllVideos } from '../../lib/video';
+
+const videos = await getAllVideos();
+---
+
+<BaseLayout
+  title='Illustrated Videos - DevPath'
+  description={'Graphical video demonstrations on software engineering topics.'}
+  permalink={`/videos`}
+>
+  <SimplePageHeader
+    title='Videos'
+    description='Illustrated walkthroughs of engineering concepts.'
+  />
+
+  <div
+    class='bg-gradient-to-b from-bg to-surface/30 pb-20 pt-8 sm:pb-28 sm:pt-12'
+  >
+    <div class='container'>
+      <div class='space-y-3 sm:space-y-4'>
+        {videos.map((video) => <VideoListItem video={video} />)}
+      </div>
+    </div>
+  </div>
+</BaseLayout>
