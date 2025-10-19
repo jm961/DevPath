@@ -36,36 +36,141 @@ const roadmapData = roadmapFile.frontmatter as RoadmapFrontmatter;
     hasTopics={false}
   />
 
-  <div class='bg-gray-50 pt-5 pb-8 sm:pt-10 sm:pb-16'>
+  <div class='relative py-8 sm:py-16'>
     <div class='container'>
-      {
-        topics.map((topic) => {
-          // Breadcrumbs have three additional items e.g.
-          //
-          //     Roadmaps / Frontend / Topics / Internet / HTTP
-          //     ---^----------^---------^----
-          //
-          // Subtracting 3 to get the total parent count
-          const totalParentCount = topic.breadcrumbs.length - 3;
+      <!-- Section Header -->
+      <div class='mb-8'>
+        <div class='mb-3 flex items-center gap-2'>
+          <svg class='h-5 w-5 text-primary' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+            <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 6h16M4 12h16M4 18h16'></path>
+          </svg>
+          <h2 class='text-xl font-bold text-white sm:text-2xl'>All Topics</h2>
+        </div>
+        <p class='text-sm text-muted sm:text-base'>
+          Browse through all topics in the {roadmapData.briefTitle} roadmap
+        </p>
+      </div>
 
-          return (
-            <a
-              data-topic={topic.heading.toLowerCase()}
-              class:list={[
-                'cursor-pointer text-sm sm:text-md border-gray-200 border py-1.5 px-2 sm:py-2 sm:px-2.5 rounded-md block mb-0.5 sm:mb-1',
-                {
-                  'bg-gray-400 hover:bg-gray-500': totalParentCount === 1,
-                  'bg-gray-300 hover:bg-gray-400': totalParentCount === 2,
-                  'bg-gray-100 hover:bg-gray-300': totalParentCount === 3,
-                },
-              ]}
-              href={`${topic.url}`}
-            >
-              {topic.heading}
-            </a>
-          );
-        })
-      }
+      <!-- Topics Grid -->
+      <div class='space-y-2 sm:space-y-3'>
+        {
+          topics.map((topic) => {
+            // Breadcrumbs have three additional items e.g.
+            //
+            //     Roadmaps / Frontend / Topics / Internet / HTTP
+            //     ---^----------^---------^----
+            //
+            // Subtracting 3 to get the total parent count
+            const totalParentCount = topic.breadcrumbs.length - 3;
+
+            // Define styling based on hierarchy level
+            const levelConfig = {
+              1: {
+                bg: 'rgba(59, 130, 246, 0.12)',
+                border: 'rgba(59, 130, 246, 0.3)',
+                hoverBg: 'rgba(59, 130, 246, 0.2)',
+                hoverBorder: 'rgba(59, 130, 246, 0.5)',
+                icon: '●',
+                textColor: 'text-white',
+                pl: 'pl-4',
+              },
+              2: {
+                bg: 'rgba(168, 85, 247, 0.08)',
+                border: 'rgba(168, 85, 247, 0.2)',
+                hoverBg: 'rgba(168, 85, 247, 0.15)',
+                hoverBorder: 'rgba(168, 85, 247, 0.4)',
+                icon: '◆',
+                textColor: 'text-white/90',
+                pl: 'pl-8',
+              },
+              3: {
+                bg: 'rgba(255, 255, 255, 0.03)',
+                border: 'rgba(255, 255, 255, 0.1)',
+                hoverBg: 'rgba(255, 255, 255, 0.08)',
+                hoverBorder: 'rgba(255, 255, 255, 0.2)',
+                icon: '▸',
+                textColor: 'text-muted',
+                pl: 'pl-12',
+              },
+            }[totalParentCount] || {
+              bg: 'rgba(255, 255, 255, 0.02)',
+              border: 'rgba(255, 255, 255, 0.08)',
+              hoverBg: 'rgba(255, 255, 255, 0.05)',
+              hoverBorder: 'rgba(255, 255, 255, 0.15)',
+              icon: '▹',
+              textColor: 'text-muted',
+              pl: 'pl-16',
+            };
+
+            return (
+              <a
+                data-topic={topic.heading.toLowerCase()}
+                href={`${topic.url}`}
+                class={`topic-card group relative block ${levelConfig.pl}`}
+                style={`--bg: ${levelConfig.bg}; --border: ${levelConfig.border}; --hover-bg: ${levelConfig.hoverBg}; --hover-border: ${levelConfig.hoverBorder};`}
+              >
+                <div class='topic-card-inner flex items-center gap-3 rounded-xl border px-4 py-3 transition-all duration-300 sm:px-5 sm:py-4'>
+                  <span class='topic-icon text-xs text-primary transition-all duration-300 group-hover:scale-125 sm:text-sm'>
+                    {levelConfig.icon}
+                  </span>
+                  <span class={`flex-1 text-sm font-medium transition-colors duration-300 sm:text-base ${levelConfig.textColor} group-hover:text-white`}>
+                    {topic.heading}
+                  </span>
+                  <svg
+                    class='h-4 w-4 text-muted opacity-0 transition-all duration-300 group-hover:translate-x-1 group-hover:opacity-100 sm:h-5 sm:w-5'
+                    fill='none'
+                    stroke='currentColor'
+                    viewBox='0 0 24 24'
+                  >
+                    <path
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      stroke-width='2'
+                      d='M9 5l7 7-7 7'
+                    ></path>
+                  </svg>
+                </div>
+              </a>
+            );
+          })
+        }
+      </div>
+
+      <!-- Footer Stats -->
+      <div class='mt-8 flex items-center justify-center gap-2 text-sm text-muted sm:mt-12'>
+        <svg class='h-4 w-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+          <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'></path>
+        </svg>
+        <span>Total of <strong class='font-semibold text-white'>{topics.length}</strong> topics</span>
+      </div>
     </div>
   </div>
 </BaseLayout>
+
+<style>
+  .topic-card-inner {
+    background: var(--bg);
+    border-color: var(--border);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    will-change: transform, background-color, border-color;
+    backface-visibility: hidden;
+  }
+
+  .topic-card:hover .topic-card-inner {
+    background: var(--hover-bg);
+    border-color: var(--hover-border);
+    transform: translate3d(0, -2px, 0);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(59, 130, 246, 0.1);
+  }
+
+  .topic-card:active .topic-card-inner {
+    transform: translate3d(0, 0, 0);
+  }
+
+  /* Smooth icon animation */
+  .topic-icon {
+    display: inline-block;
+    transform-origin: center;
+  }
+</style>

@@ -1,6 +1,4 @@
 ---
-import Loader from '../Loader.astro';
-import ModernRoadmap from '../ModernRoadmap/ModernRoadmap.astro';
 import './FrameRenderer.css';
 
 export interface Props {
@@ -19,36 +17,32 @@ const {
   resourceType,
   jsonUrl,
   dimensions = null,
-  useModernRenderer = true,
+  useModernRenderer = false, // Changed to false for better compatibility
 } = Astro.props;
 ---
 
-{
-  useModernRenderer ? (
-    <ModernRoadmap
-      resourceType={resourceType}
-      resourceId={resourceId}
-      jsonUrl={jsonUrl}
-      dimensions={dimensions}
-    />
-  ) : (
-    <div
-      id='resource-svg-wrap'
-      class='roadmap-container'
-      style={
-        dimensions
-          ? `--aspect-ratio:${dimensions.width}/${dimensions.height}`
-          : null
-      }
-      data-resource-type={resourceType}
-      data-resource-id={resourceId}
-      data-json-url={jsonUrl}
-    >
-      <div id='resource-loader' class='roadmap-loader'>
-        <Loader />
-      </div>
-    </div>
-  )
-}
+<div
+  id='resource-svg-wrap'
+  class='roadmap-container'
+  style={
+    dimensions
+      ? `--aspect-ratio:${dimensions.width}/${dimensions.height}`
+      : null
+  }
+  data-resource-type={resourceType}
+  data-resource-id={resourceId}
+  data-json-url={jsonUrl}
+>
+</div>
 
-{!useModernRenderer && <script src='./renderer.js' />}
+<script>
+  console.log('🔧 Loading roadmap renderer module...');
+  
+  import('./renderer.js').then(module => {
+    console.log('✅ Renderer module loaded');
+    const renderer = new module.Renderer();
+    renderer.init();
+  }).catch(error => {
+    console.error('❌ Failed to load renderer:', error);
+  });
+</script>

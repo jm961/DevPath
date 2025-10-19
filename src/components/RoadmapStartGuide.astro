@@ -1,0 +1,186 @@
+---
+export interface Props {
+  roadmapId: string;
+  difficulty?: 'beginner' | 'intermediate' | 'advanced';
+  timeEstimate?: string;
+}
+
+const { roadmapId, difficulty, timeEstimate } = Astro.props;
+
+// Define recommended starting topics for each roadmap
+const startingPoints: Record<string, { topic: string; description: string }> = {
+  'frontend': { topic: 'Internet', description: 'Start by understanding how the internet works, DNS, HTTP, and browsers.' },
+  'backend': { topic: 'Internet', description: 'Begin with internet basics, how servers work, and HTTP protocols.' },
+  'javascript': { topic: 'Introduction', description: 'Start with JavaScript basics, variables, and data types.' },
+  'python': { topic: 'Introduction', description: 'Learn Python syntax, variables, and basic data structures.' },
+  'react': { topic: 'Prerequisites', description: 'Make sure you know HTML, CSS, and JavaScript before starting React.' },
+  'nodejs': { topic: 'Introduction to Node.js', description: 'Understand what Node.js is and how it differs from browser JavaScript.' },
+  'devops': { topic: 'What is DevOps', description: 'Start by understanding the DevOps philosophy and culture.' },
+  'typescript': { topic: 'TypeScript Basics', description: 'Learn the fundamentals of TypeScript and how it extends JavaScript.' },
+};
+
+const startPoint = startingPoints[roadmapId] || { topic: 'Introduction', description: 'Begin from the top of the roadmap and work your way through.' };
+
+const difficultyConfig = {
+  beginner: { 
+    color: 'text-green-400', 
+    bg: 'bg-green-500/10', 
+    border: 'border-green-500/20',
+    glow: 'shadow-green-500/20',
+    label: 'Beginner Friendly',
+    tip: 'Perfect for newcomers! No prior experience required.'
+  },
+  intermediate: { 
+    color: 'text-yellow-400', 
+    bg: 'bg-yellow-500/10', 
+    border: 'border-yellow-500/20',
+    glow: 'shadow-yellow-500/20',
+    label: 'Intermediate Level',
+    tip: 'You should have some programming experience before starting this path.'
+  },
+  advanced: { 
+    color: 'text-red-400', 
+    bg: 'bg-red-500/10', 
+    border: 'border-red-500/20',
+    glow: 'shadow-red-500/20',
+    label: 'Advanced Topic',
+    tip: 'Requires solid experience with related technologies and concepts.'
+  },
+};
+
+const difficultyStyle = difficulty ? difficultyConfig[difficulty] : null;
+---
+
+<div class='roadmap-start-guide mb-8 opacity-0' id='roadmap-start-guide'>
+  <div class={`relative overflow-hidden rounded-3xl border ${difficultyStyle?.border || 'border-primary/20'} ${difficultyStyle?.bg || 'bg-primary/5'} p-6 backdrop-blur-sm transition-all duration-300 sm:p-8`}>
+    <!-- Close button -->
+    <button
+      id='close-start-guide'
+      class='absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/5 text-muted transition-all hover:bg-white/10 hover:text-white'
+      aria-label='Close guide'
+    >
+      <svg class='h-4 w-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M6 18L18 6M6 6l12 12'></path>
+      </svg>
+    </button>
+
+    <div class='flex flex-col gap-6 sm:flex-row sm:gap-8'>
+      <!-- Left side - Icon and title -->
+      <div class='flex-shrink-0'>
+        <div class={`flex h-16 w-16 items-center justify-center rounded-2xl ${difficultyStyle?.bg || 'bg-primary/20'} ring-1 ${difficultyStyle?.border?.replace('border-', 'ring-') || 'ring-primary/30'}`}>
+          <svg class={`h-8 w-8 ${difficultyStyle?.color || 'text-primary'}`} fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+            <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z'></path>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Right side - Content -->
+      <div class='flex-1'>
+        <div class='mb-4'>
+          <div class='mb-2 flex flex-wrap items-center gap-2'>
+            <h3 class='text-xl font-bold text-white sm:text-2xl'>Ready to Start?</h3>
+            {difficultyStyle && (
+              <span class={`inline-flex items-center gap-1.5 rounded-full ${difficultyStyle.bg} px-3 py-1 text-xs font-semibold ${difficultyStyle.color} ring-1 ${difficultyStyle.border?.replace('border-', 'ring-')}`}>
+                {difficultyStyle.label}
+              </span>
+            )}
+          </div>
+          {difficultyStyle && (
+            <p class='text-sm text-muted'>{difficultyStyle.tip}</p>
+          )}
+        </div>
+
+        <div class='space-y-4'>
+          <!-- Starting point -->
+          <div class='flex items-start gap-3'>
+            <div class='flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/20 text-xs font-bold text-primary'>
+              1
+            </div>
+            <div>
+              <p class='font-medium text-white'>
+                Start with: <span class={`font-bold ${difficultyStyle?.color || 'text-primary'}`}>{startPoint.topic}</span>
+              </p>
+              <p class='text-sm text-muted'>{startPoint.description}</p>
+            </div>
+          </div>
+
+          <!-- Time estimate -->
+          {timeEstimate && (
+            <div class='flex items-start gap-3'>
+              <div class='flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-accent/20 text-xs font-bold text-accent'>
+                <svg class='h-3.5 w-3.5' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                  <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'></path>
+                </svg>
+              </div>
+              <div>
+                <p class='font-medium text-white'>
+                  Estimated Time: <span class='font-bold text-accent'>{timeEstimate}</span>
+                </p>
+                <p class='text-sm text-muted'>Dedicate consistent time each day for best results.</p>
+              </div>
+            </div>
+          )}
+
+          <!-- How to use -->
+          <div class='flex items-start gap-3'>
+            <div class='flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-secondary/20 text-xs font-bold text-secondary'>
+              <svg class='h-3.5 w-3.5' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'></path>
+              </svg>
+            </div>
+            <div>
+              <p class='font-medium text-white'>How to Navigate</p>
+              <p class='text-sm text-muted'>Click on any topic in the roadmap to explore resources and mark your progress.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Animate in the guide
+  const guide = document.getElementById('roadmap-start-guide');
+  if (guide) {
+    // Check if user has dismissed this guide in the current session
+    const roadmapId = document.querySelector('[data-roadmap-id]')?.getAttribute('data-roadmap-id');
+    const storageKey = `roadmap-guide-dismissed-${roadmapId}`;
+    const hasDismissedGuide = sessionStorage.getItem(storageKey); // Changed to sessionStorage
+
+    if (!hasDismissedGuide) {
+      setTimeout(() => {
+        guide.style.opacity = '1';
+        guide.style.transform = 'translateY(0)';
+      }, 300);
+    } else {
+      // Hide it if they've dismissed it in this session
+      guide.style.display = 'none';
+    }
+
+    // Close button handler
+    const closeBtn = document.getElementById('close-start-guide');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => {
+        guide.style.opacity = '0';
+        guide.style.transform = 'translateY(-10px)';
+        setTimeout(() => {
+          guide.style.display = 'none';
+        }, 300);
+        
+        // Remember that user has dismissed this guide (for this session only)
+        if (roadmapId) {
+          sessionStorage.setItem(storageKey, 'true');
+        }
+      });
+    }
+  }
+</script>
+
+<style>
+  .roadmap-start-guide {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    transform: translateY(-10px);
+  }
+</style>
+

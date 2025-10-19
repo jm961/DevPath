@@ -30,9 +30,43 @@ const { frontmatter: guideData } = guide;
 >
   <GuideHeader guide={guide} />
 
-  <div class='py-5 sm:py-10 max-w-[700px] mx-auto'>
-    <MarkdownFile>
-      <guide.Content />
-    </MarkdownFile>
+  <div class='bg-gradient-to-b from-bg to-surface/30 py-8 sm:py-16'>
+    <div class='container'>
+      <div class='mx-auto max-w-[900px]'>
+        <article class='guide-content-card rounded-3xl border border-white/10 bg-surface/30 p-6 backdrop-blur-sm sm:p-12'>
+          <MarkdownFile>
+            <guide.Content />
+          </MarkdownFile>
+        </article>
+      </div>
+    </div>
   </div>
 </BaseLayout>
+
+<style>
+  .guide-content-card {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .guide-content-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    opacity: 0.3;
+    z-index: 0;
+  }
+
+  .guide-content-card :global(.prose) {
+    position: relative;
+    z-index: 1;
+  }
+</style>

@@ -1,0 +1,251 @@
+---
+export interface Props {
+  roadmapId: string;
+  roadmapTitle: string;
+}
+
+const { roadmapId, roadmapTitle } = Astro.props;
+---
+
+<div class='roadmap-progress-container fixed bottom-6 right-6 z-50 hidden' id='roadmap-progress-widget'>
+  <div class='overflow-hidden rounded-2xl border border-white/10 bg-surface/95 shadow-2xl backdrop-blur-xl transition-all duration-300 hover:shadow-primary/20'>
+    <div class='p-4'>
+      <!-- Header -->
+      <div class='mb-3 flex items-start justify-between gap-3'>
+        <div class='flex-1'>
+          <h4 class='text-sm font-bold text-white'>Your Progress</h4>
+          <p class='text-xs text-muted'>{roadmapTitle}</p>
+        </div>
+        <button
+          id='toggle-progress-detail'
+          class='flex h-6 w-6 items-center justify-center rounded-lg bg-white/5 text-muted transition-all hover:bg-white/10 hover:text-white'
+          aria-label='Toggle details'
+        >
+          <svg class='h-3.5 w-3.5' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+            <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Progress Bar -->
+      <div class='mb-2 h-2 overflow-hidden rounded-full bg-white/5'>
+        <div
+          id='progress-bar-fill'
+          class='h-full rounded-full bg-gradient-to-r from-primary to-accent transition-all duration-500'
+          style='width: 0%'
+        ></div>
+      </div>
+
+      <!-- Stats -->
+      <div class='flex items-center justify-between text-xs'>
+        <span class='text-muted'>
+          <span id='completed-count' class='font-bold text-primary'>0</span> / <span id='total-count'>0</span> completed
+        </span>
+        <span id='progress-percentage' class='font-bold text-accent'>0%</span>
+      </div>
+
+      <!-- Expandable Details -->
+      <div id='progress-details' class='mt-3 hidden space-y-2 border-t border-white/5 pt-3'>
+        <!-- Quick Actions -->
+        <div class='space-y-1.5'>
+          <button
+            id='reset-progress-btn'
+            class='flex w-full items-center gap-2 rounded-lg bg-white/5 px-3 py-2 text-xs text-muted transition-all hover:bg-white/10 hover:text-white'
+          >
+            <svg class='h-3.5 w-3.5' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+              <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15'></path>
+            </svg>
+            <span>Reset Progress</span>
+          </button>
+          
+          <a
+            href='/roadmaps'
+            class='flex w-full items-center gap-2 rounded-lg bg-white/5 px-3 py-2 text-xs text-muted transition-all hover:bg-white/10 hover:text-white'
+          >
+            <svg class='h-3.5 w-3.5' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+              <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 5l7 7-7 7'></path>
+            </svg>
+            <span>Browse Other Roadmaps</span>
+          </a>
+        </div>
+
+        <!-- Achievement message -->
+        <div id='achievement-message' class='hidden rounded-lg bg-gradient-to-r from-accent/10 to-primary/10 p-3 ring-1 ring-accent/20'>
+          <p class='text-xs font-medium text-accent'>🎉 Amazing progress! Keep it up!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { getUserResourceProgressApi } from '../lib/progress-api';
+
+  class RoadmapProgressWidget {
+    constructor() {
+      this.widget = document.getElementById('roadmap-progress-widget');
+      this.progressBarFill = document.getElementById('progress-bar-fill');
+      this.completedCount = document.getElementById('completed-count');
+      this.totalCount = document.getElementById('total-count');
+      this.progressPercentage = document.getElementById('progress-percentage');
+      this.progressDetails = document.getElementById('progress-details');
+      this.achievementMessage = document.getElementById('achievement-message');
+      this.toggleBtn = document.getElementById('toggle-progress-detail');
+      this.resetBtn = document.getElementById('reset-progress-btn');
+      
+      this.roadmapId = '';
+      this.isExpanded = false;
+      this.completed = 0;
+      this.total = 0;
+      
+      this.init();
+    }
+
+    async init() {
+      // Get roadmap ID from the page
+      const breadcrumb = document.querySelector('[data-roadmap-id]');
+      if (!breadcrumb) return;
+      
+      this.roadmapId = breadcrumb.getAttribute('data-roadmap-id') || '';
+      if (!this.roadmapId) return;
+
+      // Load initial progress
+      await this.loadProgress();
+
+      // Show widget
+      if (this.widget) {
+        this.widget.classList.remove('hidden');
+      }
+
+      // Setup event listeners
+      this.setupEventListeners();
+
+      // Listen for progress updates
+      window.addEventListener('roadmap.topic.toggle', () => {
+        this.loadProgress();
+      });
+    }
+
+    setupEventListeners() {
+      // Toggle details
+      if (this.toggleBtn && this.progressDetails) {
+        this.toggleBtn.addEventListener('click', () => {
+          this.isExpanded = !this.isExpanded;
+          
+          if (this.isExpanded) {
+            this.progressDetails.classList.remove('hidden');
+            this.toggleBtn.style.transform = 'rotate(180deg)';
+          } else {
+            this.progressDetails.classList.add('hidden');
+            this.toggleBtn.style.transform = 'rotate(0deg)';
+          }
+        });
+      }
+
+      // Reset progress
+      if (this.resetBtn) {
+        this.resetBtn.addEventListener('click', async () => {
+          if (confirm('Are you sure you want to reset all progress for this roadmap?')) {
+            // Clear localStorage progress
+            localStorage.removeItem(`roadmap-progress-${this.roadmapId}`);
+            
+            // Reload the page to reflect changes
+            window.location.reload();
+          }
+        });
+      }
+    }
+
+    async loadProgress() {
+      try {
+        const { response, error } = await getUserResourceProgressApi({
+          resourceId: this.roadmapId,
+          resourceType: 'roadmap',
+        });
+
+        if (error || !response) {
+          console.error('Failed to load progress:', error);
+          return;
+        }
+
+        this.completed = response.done?.length || 0;
+        this.total = response.total || 0;
+
+        this.updateUI();
+      } catch (err) {
+        console.error('Error loading progress:', err);
+      }
+    }
+
+    updateUI() {
+      const percentage = this.total > 0 ? Math.round((this.completed / this.total) * 100) : 0;
+
+      // Update counts
+      if (this.completedCount) this.completedCount.textContent = this.completed.toString();
+      if (this.totalCount) this.totalCount.textContent = this.total.toString();
+      
+      // Update percentage
+      if (this.progressPercentage) this.progressPercentage.textContent = `${percentage}%`;
+      
+      // Update progress bar
+      if (this.progressBarFill) {
+        this.progressBarFill.style.width = `${percentage}%`;
+      }
+
+      // Show achievement message at milestones
+      if (this.achievementMessage) {
+        if (percentage >= 25 && percentage < 50) {
+          this.achievementMessage.querySelector('p')!.textContent = '🎉 Great start! You\'re 25% done!';
+          this.achievementMessage.classList.remove('hidden');
+        } else if (percentage >= 50 && percentage < 75) {
+          this.achievementMessage.querySelector('p')!.textContent = '🔥 Halfway there! Keep pushing!';
+          this.achievementMessage.classList.remove('hidden');
+        } else if (percentage >= 75 && percentage < 100) {
+          this.achievementMessage.querySelector('p')!.textContent = '💪 Almost done! You\'re crushing it!';
+          this.achievementMessage.classList.remove('hidden');
+        } else if (percentage === 100) {
+          this.achievementMessage.querySelector('p')!.textContent = '🏆 Roadmap complete! Amazing work!';
+          this.achievementMessage.classList.remove('hidden');
+        } else {
+          this.achievementMessage.classList.add('hidden');
+        }
+      }
+    }
+  }
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      new RoadmapProgressWidget();
+    });
+  } else {
+    new RoadmapProgressWidget();
+  }
+</script>
+
+<style>
+  .roadmap-progress-container {
+    animation: slideIn 0.3s ease-out;
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  /* Make widget responsive */
+  @media (max-width: 640px) {
+    .roadmap-progress-container {
+      bottom: 1rem;
+      right: 1rem;
+      left: 1rem;
+    }
+  }
+</style>
+

@@ -5,6 +5,7 @@ import FrameRenderer from '../../components/FrameRenderer/FrameRenderer.astro';
 import MarkdownFile from '../../components/MarkdownFile.astro';
 import RelatedRoadmaps from '../../components/RelatedRoadmaps.astro';
 import RoadmapHeader from '../../components/RoadmapHeader.astro';
+import RoadmapStartGuide from '../../components/RoadmapStartGuide.astro';
 import ShareIcons from '../../components/ShareIcons/ShareIcons.astro';
 import TopicOverlay from '../../components/TopicOverlay/TopicOverlay.astro';
 import UpcomingForm from '../../components/UpcomingForm.astro';
@@ -14,6 +15,40 @@ import {
   generateFAQSchema,
 } from '../../lib/jsonld-schema';
 import { getRoadmapIds, RoadmapFrontmatter } from '../../lib/roadmap';
+
+// Define difficulty levels and time estimates for each roadmap
+const roadmapMeta: Record<string, { difficulty: 'beginner' | 'intermediate' | 'advanced', timeEstimate: string }> = {
+  'frontend': { difficulty: 'beginner', timeEstimate: '3-6 months' },
+  'backend': { difficulty: 'beginner', timeEstimate: '4-6 months' },
+  'javascript': { difficulty: 'beginner', timeEstimate: '2-4 months' },
+  'python': { difficulty: 'beginner', timeEstimate: '2-4 months' },
+  'react': { difficulty: 'intermediate', timeEstimate: '2-3 months' },
+  'nodejs': { difficulty: 'intermediate', timeEstimate: '2-4 months' },
+  'angular': { difficulty: 'intermediate', timeEstimate: '2-3 months' },
+  'vue': { difficulty: 'intermediate', timeEstimate: '2-3 months' },
+  'typescript': { difficulty: 'intermediate', timeEstimate: '1-2 months' },
+  'java': { difficulty: 'intermediate', timeEstimate: '3-5 months' },
+  'golang': { difficulty: 'intermediate', timeEstimate: '2-3 months' },
+  'devops': { difficulty: 'advanced', timeEstimate: '6-12 months' },
+  'kubernetes': { difficulty: 'advanced', timeEstimate: '3-4 months' },
+  'system-design': { difficulty: 'advanced', timeEstimate: '4-6 months' },
+  'software-architect': { difficulty: 'advanced', timeEstimate: '6-12 months' },
+  'cyber-security': { difficulty: 'advanced', timeEstimate: '6-12 months' },
+  'blockchain': { difficulty: 'advanced', timeEstimate: '4-6 months' },
+  'graphql': { difficulty: 'intermediate', timeEstimate: '1-2 months' },
+  'mongodb': { difficulty: 'intermediate', timeEstimate: '2-3 months' },
+  'postgresql-dba': { difficulty: 'advanced', timeEstimate: '4-6 months' },
+  'android': { difficulty: 'intermediate', timeEstimate: '4-6 months' },
+  'flutter': { difficulty: 'intermediate', timeEstimate: '3-4 months' },
+  'react-native': { difficulty: 'intermediate', timeEstimate: '3-4 months' },
+  'qa': { difficulty: 'intermediate', timeEstimate: '3-5 months' },
+  'aspnet-core': { difficulty: 'intermediate', timeEstimate: '3-5 months' },
+  'spring-boot': { difficulty: 'intermediate', timeEstimate: '3-5 months' },
+  'computer-science': { difficulty: 'intermediate', timeEstimate: '12+ months' },
+  'software-design-architecture': { difficulty: 'advanced', timeEstimate: '4-6 months' },
+  'design-system': { difficulty: 'intermediate', timeEstimate: '2-3 months' },
+  'ux-design': { difficulty: 'beginner', timeEstimate: '3-5 months' },
+};
 
 export async function getStaticPaths() {
   const roadmapIds = await getRoadmapIds();
@@ -57,6 +92,9 @@ if (roadmapFAQs.length) {
 }
 
 const contentContributionLink = `https://github.com/kamranahmedse/developer-roadmap/tree/master/src/data/roadmaps/${roadmapId}/content`;
+
+// Get metadata for this roadmap
+const metadata = roadmapMeta[roadmapId];
 ---
 
 <BaseLayout
@@ -86,12 +124,24 @@ const contentContributionLink = `https://github.com/kamranahmedse/developer-road
     roadmapId={roadmapId}
     hasTopics={roadmapData.hasTopics}
     isUpcoming={roadmapData.isUpcoming}
+    difficulty={metadata?.difficulty}
+    timeEstimate={metadata?.timeEstimate}
   />
 
   <div class='bg-gradient-to-b from-bg to-surface/30 pt-4 sm:pt-12'>
     {
       !roadmapData.isUpcoming && roadmapData.jsonUrl && (
         <div class='container relative max-w-[1000px]'>
+          <!-- Start Guide (shows once per user) -->
+          <RoadmapStartGuide 
+            roadmapId={roadmapId}
+            difficulty={metadata?.difficulty}
+            timeEstimate={metadata?.timeEstimate}
+          />
+
+          <!-- Hidden breadcrumb for progress tracking -->
+          <div class='hidden' data-roadmap-id={roadmapId}></div>
+
           <ShareIcons
             description={roadmapData.briefDescription}
             pageUrl={`https://devpath.app/${roadmapId}`}
@@ -123,4 +173,5 @@ const contentContributionLink = `https://github.com/kamranahmedse/developer-road
     <FAQs faqs={roadmapFAQs} />
     <RelatedRoadmaps roadmap={roadmapData} />
   </div>
+
 </BaseLayout>

@@ -1,6 +1,6 @@
 ---
 layout: ../layouts/MarkdownLayout.astro
-title: Roadmap PDFs - roadmap.sh
+title: Roadmap PDFs
 noIndex: true
 ---
 

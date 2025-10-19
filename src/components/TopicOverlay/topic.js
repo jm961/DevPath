@@ -1,15 +1,15 @@
-import { toggleMarkResourceDoneApi } from '../../lib/progress-api.ts';
+import { toggleMarkResourceDoneApi } from "../../lib/progress-api.ts";
 export class Topic {
   constructor() {
-    this.overlayId = 'topic-overlay';
-    this.contentId = 'topic-content';
-    this.loaderId = 'topic-loader';
-    this.topicBodyId = 'topic-body';
-    this.topicActionsId = 'topic-actions';
-    this.markTopicDoneId = 'mark-topic-done';
-    this.markTopicPendingId = 'mark-topic-pending';
-    this.closeTopicId = 'close-topic';
-    this.contributionTextId = 'contrib-meta';
+    this.overlayId = "topic-overlay";
+    this.contentId = "topic-content";
+    this.loaderId = "topic-loader";
+    this.topicBodyId = "topic-body";
+    this.topicActionsId = "topic-actions";
+    this.markTopicDoneId = "mark-topic-done";
+    this.markTopicPendingId = "mark-topic-pending";
+    this.closeTopicId = "close-topic";
+    this.contributionTextId = "contrib-meta";
 
     this.activeResourceType = null;
     this.activeResourceId = null;
@@ -66,7 +66,7 @@ export class Topic {
 
   rightClickListener(e) {
     console.log(e.detail);
-    const groupId = e.target?.closest('g')?.dataset?.groupId;
+    const groupId = e.target?.closest("g")?.dataset?.groupId;
     if (!groupId) {
       return;
     }
@@ -74,7 +74,7 @@ export class Topic {
     e.preventDefault();
 
     console.log(
-      'Right click on topic',
+      "Right click on topic",
       groupId,
       this.activeResourceId,
       this.activeResourceType
@@ -93,15 +93,15 @@ export class Topic {
 
   resetDOM(hideOverlay = false) {
     if (hideOverlay) {
-      this.overlayEl.classList.add('hidden');
+      this.overlayEl.classList.add("hidden");
     } else {
-      this.overlayEl.classList.remove('hidden');
+      this.overlayEl.classList.remove("hidden");
     }
 
-    this.loaderEl.classList.remove('hidden'); // Show loader
-    this.topicActionsEl.classList.add('hidden'); // Hide Actions
-    this.contributionTextEl.classList.add('hidden'); // Hide contribution text
-    this.contentEl.replaceChildren(''); // Remove content
+    this.loaderEl.classList.remove("hidden"); // Show loader
+    this.topicActionsEl.classList.add("hidden"); // Hide Actions
+    this.contributionTextEl.classList.add("hidden"); // Hide contribution text
+    this.contentEl.replaceChildren(""); // Remove content
   }
 
   close() {
@@ -112,9 +112,9 @@ export class Topic {
   }
 
   isTopicDone(topicId) {
-    const normalizedGroup = topicId.replace(/^\d+-/, '');
+    const normalizedGroup = topicId.replace(/^\d+-/, "");
     const el = document.querySelector(`[data-group-id$="-${normalizedGroup}"]`);
-    return el?.classList.contains('done');
+    return el?.classList.contains("done");
   }
 
   /**
@@ -122,18 +122,18 @@ export class Topic {
    */
   populate(html) {
     this.contentEl.replaceChildren(html);
-    this.loaderEl.classList.add('hidden');
-    this.topicActionsEl.classList.remove('hidden');
-    this.contributionTextEl.classList.remove('hidden');
+    this.loaderEl.classList.add("hidden");
+    this.topicActionsEl.classList.remove("hidden");
+    this.contributionTextEl.classList.remove("hidden");
 
     const isDone = this.isTopicDone(this.activeTopicId);
 
     if (isDone) {
-      this.markTopicDoneEl.classList.add('hidden');
-      this.markTopicPendingEl.classList.remove('hidden');
+      this.markTopicDoneEl.classList.add("hidden");
+      this.markTopicPendingEl.classList.remove("hidden");
     } else {
-      this.markTopicDoneEl.classList.remove('hidden');
-      this.markTopicPendingEl.classList.add('hidden');
+      this.markTopicDoneEl.classList.remove("hidden");
+      this.markTopicPendingEl.classList.add("hidden");
     }
   }
 
@@ -145,60 +145,64 @@ export class Topic {
       .then((topicHtml) => {
         // It's full HTML with page body, head etc.
         // We only need the inner HTML of the #main-content
-        const node = new DOMParser().parseFromString(topicHtml, 'text/html');
+        const node = new DOMParser().parseFromString(topicHtml, "text/html");
 
-        return node.getElementById('main-content');
+        return node.getElementById("main-content");
       })
       .then((content) => {
         this.populate(content);
       })
       .catch((e) => {
         console.error(e);
-        this.populate('Error loading the content!');
+        this.populate("Error loading the content!");
       });
   }
 
   handleBestPracticeTopicToggle(e) {
     const { resourceId: bestPracticeId, topicId } = e.detail;
     if (!topicId || !bestPracticeId) {
-      console.log('Missing topic or bestPracticeId: ', e.detail);
+      console.log("Missing topic or bestPracticeId: ", e.detail);
       return;
     }
 
-    const isDone = localStorage.getItem(topicId) === 'done';
+    // Check if element has 'done' class to determine current state
+    const updatedTopicId = topicId.replace(/^\d+-/, "");
+    const elements = this.querySvgElementsByTopicId(updatedTopicId);
+    const isDone = elements.some((el) => el?.classList?.contains("done"));
+
     if (isDone) {
-      this.markAsPending(topicId, bestPracticeId, 'best-practice');
+      this.markAsPending(topicId, bestPracticeId, "best-practice");
     } else {
-      this.markAsDone(topicId, bestPracticeId, 'best-practice');
+      this.markAsDone(topicId, bestPracticeId, "best-practice");
     }
   }
 
   handleBestPracticeTopicPending(e) {
     const { resourceId: bestPracticeId, topicId } = e.detail;
     if (!topicId || !bestPracticeId) {
-      console.log('Missing topic or bestPracticeId: ', e.detail);
+      console.log("Missing topic or bestPracticeId: ", e.detail);
       return;
     }
 
-    this.markAsPending(topicId, bestPracticeId, 'best-practice');
+    this.markAsPending(topicId, bestPracticeId, "best-practice");
   }
 
   handleBestPracticeTopicClick(e) {
     const { resourceId: bestPracticeId, topicId } = e.detail;
     if (!topicId || !bestPracticeId) {
-      console.log('Missing topic or bestPracticeId: ', e.detail);
+      console.log("Missing topic or bestPracticeId: ", e.detail);
       return;
     }
 
-    this.activeResourceType = 'best-practice';
+    this.activeResourceType = "best-practice";
     this.activeResourceId = bestPracticeId;
     this.activeTopicId = topicId;
 
     this.resetDOM();
 
     const topicUrl = `/best-practices/${bestPracticeId}/${topicId.replaceAll(
-      ':',
-      '/'
+      ":",
+      "/"
     )}`;
 
     this.renderTopicFromUrl(topicUrl).then(() => null);
@@ -208,22 +212,24 @@ export class Topic {
     const { resourceId: roadmapId, topicId } = e.detail;
     console.log(e.detail);
     if (!topicId || !roadmapId) {
-      console.log('Missing topic or roadmap: ', e.detail);
+      console.log("Missing topic or roadmap: ", e.detail);
       return;
     }
 
-    this.activeResourceType = 'roadmap';
+    this.activeResourceType = "roadmap";
     this.activeResourceId = roadmapId;
     this.activeTopicId = topicId;
 
     this.resetDOM();
-    const topicUrl = `/${roadmapId}/${topicId.replaceAll(':', '/')}`;
+    const topicUrl = `/${roadmapId}/${topicId.replaceAll(":", "/")}`;
 
-    window.fireEvent({
-      category: `RoadmapClick`,
-      action: `${roadmapId}/load-topic`,
-      label: topicUrl,
-    });
+    if (window.fireEvent) {
+      window.fireEvent({
+        category: `RoadmapClick`,
+        action: `${roadmapId}/load-topic`,
+        label: topicUrl,
+      });
+    }
 
     this.renderTopicFromUrl(topicUrl).then(() => null);
   }
@@ -235,7 +241,7 @@ export class Topic {
     document
       .querySelectorAll(`[data-group-id$="-${topicId}"]`)
       .forEach((element) => {
-        const foundGroupId = element?.dataset?.groupId || '';
+        const foundGroupId = element?.dataset?.groupId || "";
         const validGroupRegex = new RegExp(`^\\d+-${topicId}$`);
 
         if (validGroupRegex.test(foundGroupId)) {
@@ -261,9 +267,9 @@ export class Topic {
   }
 
   async markAsDone(topicId, resourceId, resourceType) {
-    const updatedTopicId = topicId.replace(/^\d+-/, '');
+    const updatedTopicId = topicId.replace(/^\d+-/, "");
 
-    console.log('Marking as done: ', updatedTopicId, resourceId, resourceType);
+    console.log("Marking as done: ", updatedTopicId, resourceId, resourceType);
 
     const { response, error } = await toggleMarkResourceDoneApi({
       resourceId,
@@ -271,18 +277,26 @@ export class Topic {
       resourceType,
     });
 
+    // Update UI regardless of API success (for local/guest usage)
+    this.querySvgElementsByTopicId(updatedTopicId).forEach((item) => {
+      item?.classList?.add("done");
+    });
+
     if (response) {
+      console.log("✅ Marked as done in backend");
       this.close();
-      this.querySvgElementsByTopicId(updatedTopicId).forEach((item) => {
-        item?.classList?.add('done');
-      });
     } else {
-      console.error(error);
+      console.warn("⚠️ Backend API failed, but UI updated locally:", error);
+      // Store locally for guests
+      localStorage.setItem(
+        `progress-${resourceType}-${resourceId}-${updatedTopicId}`,
+        "done"
+      );
     }
   }
 
   async markAsPending(topicId, resourceId, resourceType) {
-    const updatedTopicId = topicId.replace(/^\d+-/, '');
+    const updatedTopicId = topicId.replace(/^\d+-/, "");
 
     const { response, error } = await toggleMarkResourceDoneApi({
       resourceId,
@@ -290,13 +304,20 @@ export class Topic {
       resourceType,
     });
 
+    // Update UI regardless of API success (for local/guest usage)
+    this.querySvgElementsByTopicId(updatedTopicId).forEach((item) => {
+      item?.classList?.remove("done");
+    });
+
     if (response) {
+      console.log("✅ Marked as pending in backend");
       this.close();
-      this.querySvgElementsByTopicId(updatedTopicId).forEach((item) => {
-        item?.classList?.remove('done');
-      });
     } else {
-      console.error(error);
+      console.warn("⚠️ Backend API failed, but UI updated locally:", error);
+      // Remove from local storage for guests
+      localStorage.removeItem(
+        `progress-${resourceType}-${resourceId}-${updatedTopicId}`
+      );
     }
   }
 
@@ -333,7 +354,7 @@ export class Topic {
     }
 
     const isClickedPopupOpener =
-      e.target.dataset['popup'] || e.target.closest('button[data-popup]');
+      e.target.dataset["popup"] || e.target.closest("button[data-popup]");
     const isClickedClose =
       e.target.id === this.closeTopicId ||
       e.target.closest(`#${this.closeTopicId}`);
@@ -344,23 +365,23 @@ export class Topic {
 
   init() {
     window.addEventListener(
-      'best-practice.topic.click',
+      "best-practice.topic.click",
       this.handleBestPracticeTopicClick
     );
     window.addEventListener(
-      'best-practice.topic.toggle',
+      "best-practice.topic.toggle",
       this.handleBestPracticeTopicToggle
     );
 
     window.addEventListener(
-      'roadmap.topic.click',
+      "roadmap.topic.click",
       this.handleRoadmapTopicClick
     );
-    window.addEventListener('click', this.handleOverlayClick);
-    window.addEventListener('contextmenu', this.rightClickListener);
+    window.addEventListener("click", this.handleOverlayClick);
+    window.addEventListener("contextmenu", this.rightClickListener);
 
-    window.addEventListener('keydown', (e) => {
-      if (e.key.toLowerCase() === 'escape') {
+    window.addEventListener("keydown", (e) => {
+      if (e.key.toLowerCase() === "escape") {
         this.close();
       }
     });

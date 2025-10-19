@@ -1,39 +1,26 @@
-import type { FunctionComponent } from 'preact';
-import { useState } from 'preact/hooks';
+import Cookies from "js-cookie";
+import type { FunctionComponent } from "preact";
+import { useState } from "preact/hooks";
+import { TOKEN_COOKIE_NAME } from "../../lib/jwt";
 
 const EmailSignupForm: FunctionComponent = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
 
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
-  const handleRegisterResponse = async (res: Response) => {
-    const json = await res.json();
-
-    if (!res.ok) {
-      setError(json.message || 'Something went wrong. Please try again later.');
-      setIsLoading(false);
-
-      return;
-    }
-
-    window.location.href = `/verification-pending?email=${encodeURIComponent(
-      email
-    )}`;
-  };
 
   const onSubmit = (e: Event) => {
     e.preventDefault();
 
     setIsLoading(true);
-    setError('');
+    setError("");
 
-    fetch(`${import.meta.env.PUBLIC_API_URL}/v1-register`, {
-      method: 'POST',
+    fetch(`${import.meta.env.PUBLIC_API_URL}/v1-signup`, {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         email,
@@ -41,10 +28,23 @@ const EmailSignupForm: FunctionComponent = () => {
         name,
       }),
     })
-      .then(handleRegisterResponse)
+      .then((res) => res.json())
+      .then((data) => {
+        if (!data.token) {
+          setIsLoading(false);
+          setError(
+            data.message || "Something went wrong. Please try again later."
+          );
+          return;
+        }
+
+        // Set the token in a cookie and reload
+        Cookies.set(TOKEN_COOKIE_NAME, data.token);
+        window.location.href = "/";
+      })
       .catch((err) => {
         setIsLoading(false);
-        setError('Something went wrong. Please try again later.');
+        setError("Something went wrong. Please try again later.");
       });
   };
 
@@ -103,7 +103,7 @@ const EmailSignupForm: FunctionComponent = () => {
         disabled={isLoading}
         className="inline-flex w-full items-center justify-center rounded-lg bg-black p-2 py-3 text-sm font-medium text-white outline-none focus:ring-2 focus:ring-black focus:ring-offset-1 disabled:bg-gray-400"
       >
-        {isLoading ? 'Please wait...' : 'Continue to Verify Email'}
+        {isLoading ? "Please wait..." : "Create Account"}
       </button>
     </form>
   );

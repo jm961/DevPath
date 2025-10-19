@@ -1,5 +1,6 @@
 ---
 import type { GuideFileType } from '../lib/guide';
+import Icon from './AstroIcon.astro';
 
 export interface Props {
   guide: GuideFileType;
@@ -10,37 +11,60 @@ const { frontmatter } = guide;
 const { author } = frontmatter;
 ---
 
-<div class='bg-white border-b py-5 sm:py-12'>
-  <div class='container text-left sm:text-center'>
-    <p
-      class='text-gray-400 hidden sm:flex items-center justify-start sm:justify-center'
-    >
-      <a
-        href={author.url}
-        target='_blank'
-        class='font-medium hover:text-gray-600 inline-flex items-center hover:underline'
-      >
-        <img
-          alt={author.name}
-          src={author.imageUrl}
-          class='w-5 h-5 inline mr-2 rounded-full'
-        />
-        {author.name}
+<div class='relative border-b border-white/5 bg-gradient-to-b from-surface/50 to-transparent'>
+  <div class='container relative py-8 sm:py-16'>
+    
+    <!-- Breadcrumb navigation -->
+    <nav class='mb-6 flex items-center gap-2 text-sm' aria-label='Breadcrumb'>
+      <a href='/guides' class='text-muted transition-colors hover:text-primary'>
+        All Guides
       </a>
-      <span class='mx-1.5'>&middot;</span>
-      <span class='capitalize'>{frontmatter.type} Guide</span>
-      <span class='mx-1.5'>&middot;</span>
+      <svg class='h-4 w-4 text-muted' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 5l7 7-7 7'></path>
+      </svg>
+      <span class='font-medium text-white'>{frontmatter.title}</span>
+    </nav>
+
+    <!-- Title and metadata -->
+    <div class='mb-6 sm:mb-8'>
+      <div class='mb-4 flex flex-wrap items-center gap-3'>
+        <span class='inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-semibold text-primary ring-1 ring-primary/20'>
+          <div class='h-1.5 w-1.5 rounded-full bg-primary'></div>
+          <span class='capitalize'>{frontmatter.type} Guide</span>
+        </span>
+        
+        <a
+          href={author.url}
+          target='_blank'
+          class='inline-flex items-center gap-2 text-xs text-muted transition-colors hover:text-white'
+        >
+          <img
+            alt={author.name}
+            src={author.imageUrl}
+            class='h-5 w-5 rounded-full ring-2 ring-white/10'
+          />
+          <span>by {author.name}</span>
+        </a>
+      </div>
+      
+      <h1 class='mb-3 text-3xl font-black leading-tight text-white sm:text-5xl lg:text-6xl'>
+        {frontmatter.title}
+      </h1>
+      <p class='max-w-3xl text-base text-muted sm:text-lg'>{frontmatter.description}</p>
+    </div>
+
+    <!-- Actions -->
+    <div class='flex flex-wrap items-center gap-2 sm:gap-3'>
       <a
-        class='text-blue-400 hover:text-blue-500 hover:underline'
-        href={`https://github.com/kamranahmedse/roadmap.sh/tree/master/src/data/guides/${guide.id}.md`}
-        target='_blank'>Improve this Guide</a
+        href={`https://github.com/kamranahmedse/developer-roadmap/tree/master/src/data/guides/${guide.id}.md`}
+        target='_blank'
+        class='btn-ghost inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium'
+        aria-label='Improve this Guide'
       >
-    </p>
-    <h1 class='text-2xl sm:text-5xl my-0 sm:my-3.5 font-bold'>
-      {frontmatter.title}
-    </h1>
-    <p class='hidden sm:block text-gray-400 text-xl'>
-      {frontmatter.description}
-    </p>
+        <Icon icon='github' class='h-4 w-4' />
+        <span class='hidden sm:inline'>Improve this Guide</span>
+        <span class='inline sm:hidden'>Improve</span>
+      </a>
+    </div>
   </div>
 </div>

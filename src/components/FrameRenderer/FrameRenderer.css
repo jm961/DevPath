@@ -1,187 +1,721 @@
-svg text tspan {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeSpeed;
-  fill: #ffffff;
-}
+/* =====================================================
+   FUTURISTIC ROADMAP UI - Dark Theme with Mind-Map Flow
+   ===================================================== */
 
-code {
-  background: rgba(15, 20, 32, 0.8);
-  color: #22d3ee;
-  padding: 4px 8px;
-  font-size: 14px;
-  border-radius: 6px;
-  border: 1px solid rgba(34, 211, 238, 0.2);
-  backdrop-filter: blur(8px);
-}
-
-svg .clickable-group {
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-svg .clickable-group:hover {
-  filter: brightness(1.1) drop-shadow(0 4px 12px rgba(59, 130, 246, 0.3));
-  transform: translateY(-2px);
-}
-
-svg .clickable-group:hover > [fill='rgb(65,53,214)'] {
-  fill: #3b82f6;
-  stroke: #3b82f6;
-  filter: drop-shadow(0 2px 8px rgba(59, 130, 246, 0.4));
-}
-
-svg .clickable-group:hover > [fill='rgb(255,255,0)'] {
-  fill: #f59e0b;
-  filter: drop-shadow(0 2px 8px rgba(245, 158, 11, 0.4));
-}
-
-svg .clickable-group:hover > [fill='rgb(255,229,153)'] {
-  fill: #fbbf24;
-  filter: drop-shadow(0 2px 8px rgba(251, 191, 36, 0.4));
-}
-
-svg .clickable-group:hover > [fill='rgb(153,153,153)'] {
-  fill: #94a3b8;
-  filter: drop-shadow(0 2px 8px rgba(148, 163, 184, 0.4));
-}
-
-svg .clickable-group:hover > [fill='rgb(255,255,255)'] {
-  fill: #f1f5f9;
-  filter: drop-shadow(0 2px 8px rgba(241, 245, 249, 0.4));
-}
-
-svg .clickable-group:hover > [fill='rgb(255,255,221)'] {
-  fill: #fef3c7;
-  filter: drop-shadow(0 2px 8px rgba(254, 243, 199, 0.4));
-}
-
-svg .clickable-group:hover > [fill='rgb(255,217,102)'] {
-  fill: #f59e0b;
-  filter: drop-shadow(0 2px 8px rgba(245, 158, 11, 0.4));
-}
-
-svg .done rect {
-  fill: rgba(16, 185, 129, 0.3) !important;
-  stroke: #10b981 !important;
-  stroke-width: 2px;
-  filter: drop-shadow(0 2px 8px rgba(16, 185, 129, 0.3));
-}
-
-svg .done text {
-  text-decoration: line-through;
-  fill: #10b981 !important;
-  opacity: 0.8;
-}
-
-svg .clickable-group.done[data-group-id^='check:'] rect {
-  fill: rgba(16, 185, 129, 0.4) !important;
-  stroke: #10b981 !important;
-  stroke-width: 2px;
-}
-
-.clickable-group rect {
-  user-select: none;
-  transition: all 0.3s ease;
-  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.2));
-}
-
-/* Add modern glow effects for different roadmap sections */
-svg .clickable-group[data-group-id*='frontend'] rect {
-  filter: drop-shadow(0 1px 3px rgba(59, 130, 246, 0.2));
-}
-
-svg .clickable-group[data-group-id*='backend'] rect {
-  filter: drop-shadow(0 1px 3px rgba(245, 158, 11, 0.2));
-}
-
-svg .clickable-group[data-group-id*='devops'] rect {
-  filter: drop-shadow(0 1px 3px rgba(16, 185, 129, 0.2));
-}
-
-svg .clickable-group[data-group-id*='database'] rect {
-  filter: drop-shadow(0 1px 3px rgba(139, 92, 246, 0.2));
-}
-
-/* Modern container styling */
-#resource-svg-wrap,
-.roadmap-container {
-  background: linear-gradient(
-    135deg,
-    rgba(10, 14, 26, 0.8) 0%,
-    rgba(15, 20, 32, 0.6) 100%
-  );
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
-    0 0 0 1px rgba(59, 130, 246, 0.1) inset;
-  overflow: hidden;
-  transition: all 0.3s ease;
+/* Base SVG styling with animated background */
+svg {
+  background: transparent !important;
   position: relative;
 }
 
-#resource-svg-wrap:hover,
-.roadmap-container:hover {
-  border-color: rgba(59, 130, 246, 0.3);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4),
-    0 0 0 1px rgba(59, 130, 246, 0.2) inset;
+/* Force remove any white backgrounds from SVG elements */
+svg rect[fill="white"],
+svg rect[fill="#fff"],
+svg rect[fill="#ffffff"],
+svg rect[fill="rgb(255,255,255)"],
+svg rect[fill="rgb(255, 255, 255)"] {
+  fill: transparent !important;
+  stroke: transparent !important;
+}
+
+/* Override any remaining white fills that aren't in clickable groups */
+svg rect:not(.clickable-group rect)[fill*="255"] {
+  fill: transparent !important;
+  stroke: transparent !important;
+}
+
+/* Hide all non-first rect elements in clickable groups to prevent overlapping */
+svg .clickable-group rect + rect {
+  display: none !important;
+}
+
+/* Animated gradient overlay for futuristic feel */
+@keyframes gradientFlow {
+  0%,
+  100% {
+    opacity: 0.15;
+  }
+  50% {
+    opacity: 0.25;
+  }
+}
+
+/* Text styling - clean and readable with glow */
+svg text,
+svg text tspan {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: geometricPrecision;
+  fill: #f8fafc !important;
+  font-weight: 500;
+  letter-spacing: 0.025em;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.8));
+}
+
+/* Code blocks within roadmap */
+code {
+  background: rgba(15, 20, 32, 0.9);
+  color: #22d3ee;
+  padding: 4px 10px;
+  font-size: 13px;
+  border-radius: 8px;
+  border: 1px solid rgba(34, 211, 238, 0.3);
+  backdrop-filter: blur(12px);
+  font-weight: 600;
+}
+
+/* =====================================================
+   CLICKABLE GROUPS - Futuristic Card Style
+   ===================================================== */
+
+svg .clickable-group {
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+}
+
+/* Ensure text stays within clickable group boundaries and doesn't interfere with clicks */
+svg .clickable-group text {
+  pointer-events: none;
+}
+
+/* Animated glow effect */
+@keyframes nodeGlow {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.3));
+  }
+  50% {
+    filter: drop-shadow(0 0 16px rgba(59, 130, 246, 0.5));
+  }
+}
+
+/* Base rectangles - Floating milestone cards */
+.clickable-group rect {
+  user-select: none;
+  transition: stroke-width 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+    fill 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+    stroke 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  rx: 16 !important;
+  ry: 16 !important;
+}
+
+/* =====================================================
+   COLOR SCHEME - Modern Dark Theme
+   ===================================================== */
+
+/* Transform old ugly colors into modern palette */
+
+/* Primary/Important items - Blue gradient with futuristic glow */
+svg .clickable-group > [fill="rgb(65,53,214)"],
+svg .clickable-group > [fill="rgb(65, 53, 214)"] {
+  fill: rgba(59, 130, 246, 0.18) !important;
+  stroke: rgba(59, 130, 246, 0.6) !important;
+  stroke-width: 2.5px;
+  filter: drop-shadow(0 4px 12px rgba(59, 130, 246, 0.3))
+    drop-shadow(0 0 24px rgba(59, 130, 246, 0.15));
+}
+
+/* Warning/Important - Amber with glow */
+svg .clickable-group > [fill="rgb(255,255,0)"],
+svg .clickable-group > [fill="rgb(255, 255, 0)"] {
+  fill: rgba(245, 158, 11, 0.15) !important;
+  stroke: rgba(245, 158, 11, 0.5) !important;
+  stroke-width: 2.5px;
+  filter: drop-shadow(0 4px 12px rgba(245, 158, 11, 0.25))
+    drop-shadow(0 0 24px rgba(245, 158, 11, 0.12));
+}
+
+/* Secondary - Light amber with subtle glow */
+svg .clickable-group > [fill="rgb(255,229,153)"],
+svg .clickable-group > [fill="rgb(255, 229, 153)"] {
+  fill: rgba(251, 191, 36, 0.12) !important;
+  stroke: rgba(251, 191, 36, 0.4) !important;
+  stroke-width: 2.5px;
+  filter: drop-shadow(0 3px 10px rgba(251, 191, 36, 0.18))
+    drop-shadow(0 0 20px rgba(251, 191, 36, 0.1));
+}
+
+/* Neutral/Optional - Slate */
+svg .clickable-group > [fill="rgb(153,153,153)"],
+svg .clickable-group > [fill="rgb(153, 153, 153)"] {
+  fill: rgba(148, 163, 184, 0.08) !important;
+  stroke: rgba(148, 163, 184, 0.3) !important;
+  stroke-width: 1.5px;
+  filter: drop-shadow(0 2px 6px rgba(148, 163, 184, 0.1));
+}
+
+/* White/Light items - Clean white with subtle border */
+svg .clickable-group > [fill="rgb(255,255,255)"],
+svg .clickable-group > [fill="rgb(255, 255, 255)"] {
+  fill: rgba(255, 255, 255, 0.05) !important;
+  stroke: rgba(255, 255, 255, 0.15) !important;
+  stroke-width: 1.5px;
+  filter: drop-shadow(0 2px 6px rgba(255, 255, 255, 0.05));
+}
+
+/* Light yellow - Soft yellow */
+svg .clickable-group > [fill="rgb(255,255,221)"],
+svg .clickable-group > [fill="rgb(255, 255, 221)"] {
+  fill: rgba(254, 243, 199, 0.08) !important;
+  stroke: rgba(254, 243, 199, 0.25) !important;
+  stroke-width: 1.5px;
+  filter: drop-shadow(0 2px 6px rgba(254, 243, 199, 0.1));
+}
+
+/* Gold/Featured - Orange */
+svg .clickable-group > [fill="rgb(255,217,102)"],
+svg .clickable-group > [fill="rgb(255, 217, 102)"] {
+  fill: rgba(245, 158, 11, 0.12) !important;
+  stroke: rgba(245, 158, 11, 0.4) !important;
+  stroke-width: 2px;
+  filter: drop-shadow(0 2px 8px rgba(245, 158, 11, 0.15));
+}
+
+/* =====================================================
+   HOVER EFFECTS - Futuristic Glow and Lift
+   ===================================================== */
+
+svg .clickable-group:hover {
+  filter: brightness(1.15);
+  transform: translate3d(0, -2px, 0);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Primary hover - Enhanced blue glow */
+svg .clickable-group:hover > [fill*="rgb(65,53,214)"],
+svg .clickable-group:hover > [fill*="rgb(65, 53, 214)"] {
+  fill: rgba(59, 130, 246, 0.25) !important;
+  stroke: rgba(59, 130, 246, 0.8) !important;
+  filter: drop-shadow(0 4px 16px rgba(59, 130, 246, 0.4));
+}
+
+/* Warning hover - Enhanced amber glow */
+svg .clickable-group:hover > [fill*="rgb(255,255,0)"],
+svg .clickable-group:hover > [fill*="rgb(255, 255, 0)"] {
+  fill: rgba(245, 158, 11, 0.2) !important;
+  stroke: rgba(245, 158, 11, 0.7) !important;
+  filter: drop-shadow(0 4px 16px rgba(245, 158, 11, 0.35));
+}
+
+/* Secondary hover */
+svg .clickable-group:hover > [fill*="rgb(255,229,153)"],
+svg .clickable-group:hover > [fill*="rgb(255, 229, 153)"] {
+  fill: rgba(251, 191, 36, 0.18) !important;
+  stroke: rgba(251, 191, 36, 0.6) !important;
+  filter: drop-shadow(0 4px 16px rgba(251, 191, 36, 0.3));
+}
+
+/* Neutral hover */
+svg .clickable-group:hover > [fill*="rgb(153,153,153)"],
+svg .clickable-group:hover > [fill*="rgb(153, 153, 153)"] {
+  fill: rgba(148, 163, 184, 0.15) !important;
+  stroke: rgba(148, 163, 184, 0.5) !important;
+  filter: drop-shadow(0 4px 12px rgba(148, 163, 184, 0.25));
+}
+
+/* White hover */
+svg .clickable-group:hover > [fill*="rgb(255,255,255)"],
+svg .clickable-group:hover > [fill*="rgb(255, 255, 255)"] {
+  fill: rgba(255, 255, 255, 0.1) !important;
+  stroke: rgba(255, 255, 255, 0.3) !important;
+  filter: drop-shadow(0 4px 12px rgba(255, 255, 255, 0.15));
+}
+
+/* Text hover enhancement */
+svg .clickable-group:hover text {
+  fill: #ffffff;
+  font-weight: 600;
+}
+
+/* =====================================================
+   COMPLETED STATE - Green Success Theme with Celebration
+   ===================================================== */
+
+@keyframes celebrate {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+  25% {
+    transform: scale(1.05) rotate(-2deg);
+  }
+  75% {
+    transform: scale(1.05) rotate(2deg);
+  }
+}
+
+svg .done rect,
+svg .clickable-group.done rect {
+  fill: rgba(16, 185, 129, 0.18) !important;
+  stroke: rgba(16, 185, 129, 0.7) !important;
+  stroke-width: 2.5px !important;
+  filter: drop-shadow(0 4px 16px rgba(16, 185, 129, 0.4))
+    drop-shadow(0 0 24px rgba(16, 185, 129, 0.2));
+}
+
+svg .done text,
+svg .clickable-group.done text {
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+  fill: rgba(52, 211, 153, 0.9) !important;
+  opacity: 0.85;
+}
+
+/* Completed checkbox items */
+svg .clickable-group.done[data-group-id^="check:"] rect {
+  fill: rgba(16, 185, 129, 0.2) !important;
+  stroke: rgba(16, 185, 129, 0.7) !important;
+  stroke-width: 2.5px;
+  filter: drop-shadow(0 3px 12px rgba(16, 185, 129, 0.35));
+}
+
+/* Completed item hover */
+svg .done:hover rect,
+svg .clickable-group.done:hover rect {
+  fill: rgba(16, 185, 129, 0.25) !important;
+  stroke: rgba(16, 185, 129, 0.8) !important;
+  filter: drop-shadow(0 4px 16px rgba(16, 185, 129, 0.45));
+}
+
+/* =====================================================
+   CATEGORY-SPECIFIC STYLING
+   ===================================================== */
+
+/* Frontend - Blue theme */
+svg .clickable-group[data-group-id*="frontend"] rect:not(.done rect) {
+  filter: drop-shadow(0 2px 8px rgba(59, 130, 246, 0.2));
+}
+
+svg .clickable-group[data-group-id*="frontend"]:hover rect {
+  filter: drop-shadow(0 4px 16px rgba(59, 130, 246, 0.4));
+}
+
+/* Backend - Amber theme */
+svg .clickable-group[data-group-id*="backend"] rect:not(.done rect) {
+  filter: drop-shadow(0 2px 8px rgba(245, 158, 11, 0.2));
+}
+
+svg .clickable-group[data-group-id*="backend"]:hover rect {
+  filter: drop-shadow(0 4px 16px rgba(245, 158, 11, 0.4));
+}
+
+/* DevOps - Green theme */
+svg .clickable-group[data-group-id*="devops"] rect:not(.done rect) {
+  filter: drop-shadow(0 2px 8px rgba(16, 185, 129, 0.2));
+}
+
+svg .clickable-group[data-group-id*="devops"]:hover rect {
+  filter: drop-shadow(0 4px 16px rgba(16, 185, 129, 0.4));
+}
+
+/* Database - Purple theme */
+svg .clickable-group[data-group-id*="database"] rect:not(.done rect) {
+  filter: drop-shadow(0 2px 8px rgba(139, 92, 246, 0.2));
+}
+
+svg .clickable-group[data-group-id*="database"]:hover rect {
+  filter: drop-shadow(0 4px 16px rgba(139, 92, 246, 0.4));
+}
+
+/* =====================================================
+   ACTIVE/FOCUS STATES
+   ===================================================== */
+
+svg .clickable-group:active {
+  transform: translate3d(0, 0, 0);
+  transition: all 0.1s ease;
+}
+
+svg .clickable-group:focus {
+  outline: 3px solid rgba(59, 130, 246, 0.5);
+  outline-offset: 4px;
+  border-radius: 16px;
+}
+
+/* =====================================================
+   CONTAINER & LAYOUT - Futuristic Glass Effect
+   ===================================================== */
+
+@keyframes borderGlow {
+  0%,
+  100% {
+    border-color: rgba(59, 130, 246, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
+      0 0 0 1px rgba(59, 130, 246, 0.08) inset, 0 20px 60px rgba(0, 0, 0, 0.3);
+  }
+  50% {
+    border-color: rgba(59, 130, 246, 0.25);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
+      0 0 0 1px rgba(59, 130, 246, 0.2) inset, 0 20px 60px rgba(0, 0, 0, 0.3),
+      0 0 40px rgba(59, 130, 246, 0.15);
+  }
+}
+
+#resource-svg-wrap,
+.roadmap-container {
+  background: radial-gradient(
+      ellipse at top,
+      rgba(59, 130, 246, 0.08) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse at bottom,
+      rgba(139, 92, 246, 0.06) 0%,
+      transparent 60%
+    ),
+    linear-gradient(
+      135deg,
+      rgba(10, 14, 26, 0.98) 0%,
+      rgba(15, 20, 32, 0.95) 50%,
+      rgba(10, 14, 26, 0.98) 100%
+    );
+  border-radius: 32px;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  backdrop-filter: blur(24px) saturate(200%);
+  box-shadow: 0 16px 64px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(59, 130, 246, 0.25) inset, 0 0 80px rgba(59, 130, 246, 0.2),
+    0 0 120px rgba(139, 92, 246, 0.1);
+  overflow: visible;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  padding: 3rem;
+  min-height: 400px;
+  animation: borderGlow 8s ease-in-out infinite;
+}
+
+/* Futuristic grid pattern overlay with animation */
+#resource-svg-wrap::before,
+.roadmap-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: linear-gradient(
+      rgba(59, 130, 246, 0.03) 1px,
+      transparent 1px
+    ),
+    linear-gradient(90deg, rgba(59, 130, 246, 0.03) 1px, transparent 1px),
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(59, 130, 246, 0.05) 0%,
+      transparent 70%
+    );
+  background-size: 50px 50px, 50px 50px, 100% 100%;
+  pointer-events: none;
+  opacity: 0.4;
+  border-radius: 32px;
+  animation: gridPulse 4s ease-in-out infinite;
+}
+
+@keyframes gridPulse {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Animated corner accents */
+#resource-svg-wrap::after,
+.roadmap-container::after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  bottom: -1px;
+  border-radius: 32px;
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.2) 0%,
+    transparent 20%,
+    transparent 80%,
+    rgba(139, 92, 246, 0.2) 100%
+  );
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.6s ease;
+  z-index: -1;
 }
 
 #resource-svg-wrap svg,
 .roadmap-container svg {
-  border-radius: 16px;
   background: transparent;
+  width: 100%;
+  min-height: 100vh;
+  display: block;
+  position: relative;
+  z-index: 1;
+
+  /* Allow SVG to grow naturally */
+  overflow: visible;
 }
 
-/* Loader styling */
-.roadmap-loader {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 200px;
-  background: linear-gradient(
-    135deg,
-    rgba(10, 14, 26, 0.9) 0%,
-    rgba(15, 20, 32, 0.7) 100%
-  );
-  border-radius: 16px;
+/* Journey path styling - make it look like an actual roadmap */
+svg {
+  /* Add perspective for depth */
+  transform-style: preserve-3d;
 }
 
-/* Error styling */
+/* =====================================================
+   ERROR STATE - Clear & Helpful
+   ===================================================== */
+
 .error {
-  background: rgba(239, 68, 68, 0.1);
-  border: 1px solid rgba(239, 68, 68, 0.3);
-  border-radius: 12px;
-  padding: 2rem;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1.5px solid rgba(239, 68, 68, 0.3);
+  border-radius: 16px;
+  padding: 2.5rem;
   color: #fca5a5;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(12px);
+  max-width: 600px;
+  margin: 2rem auto;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(239, 68, 68, 0.2);
+}
+
+.error strong {
+  display: block;
+  font-size: 1.25rem;
+  color: #ef4444;
+  margin-bottom: 0.75rem;
+  font-weight: 700;
+}
+
+/* =====================================================
+   LINES & CONNECTORS - Mind-Map Style with Glow
+   ===================================================== */
+
+@keyframes flowAnimation {
+  0% {
+    stroke-dashoffset: 1000;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes connectorGlow {
+  0%,
+  100% {
+    stroke: rgba(59, 130, 246, 0.2);
+    filter: drop-shadow(0 0 4px rgba(59, 130, 246, 0.3));
+  }
+  50% {
+    stroke: rgba(59, 130, 246, 0.4);
+    filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.5));
+  }
+}
+
+svg line,
+svg path:not(.clickable-group *) {
+  stroke: rgba(59, 130, 246, 0.25);
+  stroke-width: 2px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: all 0.4s ease;
+  filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.3));
+}
+
+svg line:hover,
+svg path:hover:not(.clickable-group *) {
+  stroke: rgba(59, 130, 246, 0.6);
+  stroke-width: 3px;
+  filter: drop-shadow(0 0 12px rgba(59, 130, 246, 0.6));
+  animation: connectorGlow 2s ease-in-out infinite;
+}
+
+/* Animated dashed lines for optional paths */
+svg line[stroke-dasharray],
+svg path[stroke-dasharray] {
+  stroke: rgba(139, 92, 246, 0.2);
+  stroke-dasharray: 8, 6;
+  stroke-width: 2px;
+  filter: drop-shadow(0 0 4px rgba(139, 92, 246, 0.2));
+  animation: dashFlow 20s linear infinite;
+}
+
+@keyframes dashFlow {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 1000;
+  }
+}
+
+/* =====================================================
+   ARROWS & DECORATIONS - Enhanced with Glow
+   ===================================================== */
+
+svg marker {
+  fill: rgba(59, 130, 246, 0.4);
+  filter: drop-shadow(0 0 4px rgba(59, 130, 246, 0.3));
+}
+
+svg polygon {
+  fill: rgba(59, 130, 246, 0.25);
+  stroke: rgba(59, 130, 246, 0.4);
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.2));
+}
+
+svg polygon:hover {
+  fill: rgba(59, 130, 246, 0.4);
+  stroke: rgba(59, 130, 246, 0.6);
+  filter: drop-shadow(0 0 12px rgba(59, 130, 246, 0.4));
+}
+
+/* =====================================================
+   INTERACTIVE NODES - Floating Effect
+   ===================================================== */
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+svg .clickable-group {
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* Ripple effect on click */
+@keyframes ripple {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* Removed ripple animation on click for better stability */
+
+/* Gradient text effect for important nodes */
+svg .clickable-group[data-group-id*="important"] text,
+svg .clickable-group[data-group-id*="critical"] text {
+  fill: url(#textGradient) !important;
+  font-weight: 700;
+}
+
+/* Add shimmer effect to completed items */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+svg .done::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(16, 185, 129, 0.3),
+    transparent
+  );
+  animation: shimmer 3s infinite;
+  pointer-events: none;
+}
+
+/* =====================================================
+   ACCESSIBILITY & RESPONSIVE
+   ===================================================== */
+
+@media (max-width: 768px) {
+  #resource-svg-wrap,
+  .roadmap-container {
+    padding: 1rem;
+    border-radius: 16px;
+  }
+
+  svg text,
+  svg text tspan {
+    font-size: 12px;
+  }
+
+  .clickable-group rect {
+    stroke-width: 1.5px;
+  }
+
+  svg .clickable-group:hover {
+    transform: translate3d(0, -1px, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  svg .clickable-group,
+  .clickable-group rect,
+  #resource-svg-wrap,
+  .roadmap-container {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  svg .clickable-group > rect {
+    stroke-width: 3px !important;
+  }
+
+  svg text {
+    fill: #ffffff !important;
+    font-weight: 700 !important;
+  }
+}
+
+/* Focus visible for keyboard navigation */
+svg .clickable-group:focus-visible {
+  outline: 3px solid #3b82f6;
+  outline-offset: 6px;
 }
 
 /************************************
     Aspect ratio implementation
   *************************************/
-[style*='--aspect-ratio'] > :first-child {
+[style*="--aspect-ratio"] > :first-child {
   width: 100%;
 }
 
-[style*='--aspect-ratio'] > img {
+[style*="--aspect-ratio"] > img {
   height: auto;
 }
 
 @supports (--custom: property) {
-  [style*='--aspect-ratio'] {
+  [style*="--aspect-ratio"] {
     position: relative;
   }
 
-  [style*='--aspect-ratio']::before {
-    content: '';
+  [style*="--aspect-ratio"]::before {
+    content: "";
     display: block;
     /*noinspection CssUnresolvedCustomProperty*/
     padding-bottom: calc(100% / (var(--aspect-ratio)));
   }
 
-  [style*='--aspect-ratio'] > :first-child {
+  [style*="--aspect-ratio"] > :first-child {
     position: absolute;
     top: 0;
     left: 0;

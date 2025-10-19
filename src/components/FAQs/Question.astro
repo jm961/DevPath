@@ -10,18 +10,20 @@ const { question, isActive = false } = Astro.props;
 ---
 
 <div
-  class='faq-item rounded-md border border-white/10 bg-surface hover:bg-surface-elevated'
+  class='faq-item group rounded-2xl border border-white/10 bg-surface/50 backdrop-blur-sm transition-all duration-300 hover:border-primary/30 hover:bg-surface/80 hover:shadow-lg hover:shadow-primary/5'
 >
   <button
     faq-question
-    class='flex w-full flex-row items-center justify-between p-2 sm:p-3'
+    class='flex w-full flex-row items-center justify-between gap-4 p-4 text-left sm:p-6'
   >
-    <span class='text-left text-sm font-medium text-white sm:text-base'
+    <span class='text-base font-semibold text-white transition-colors group-hover:text-primary sm:text-lg'
       >{question}</span
     >
-    <Icon icon='down' class='hidden h-6 text-muted sm:block' />
+    <div class='flex-shrink-0 rounded-lg bg-white/5 p-2 transition-all duration-300 group-hover:bg-primary/10'>
+      <Icon icon='chevron-down' class='h-4 w-4 text-muted transition-transform duration-300 group-hover:text-primary faq-chevron' />
+    </div>
   </button>
-  <div class:list={['answer', { hidden: !isActive }]} faq-answer>
+  <div class:list={['answer transition-all duration-300', { hidden: !isActive }]} faq-answer>
     <slot />
   </div>
 </div>
@@ -29,16 +31,33 @@ const { question, isActive = false } = Astro.props;
 <script>
   document.querySelectorAll('[faq-question]').forEach((el) => {
     el.addEventListener('click', () => {
-      // Hide any other visible answers
+      const parent = el.closest('.faq-item');
+      const answer = el.nextElementSibling;
+      const chevron = el.querySelector('.faq-chevron');
+      const isCurrentlyOpen = answer && !answer.classList.contains('hidden');
+
+      // Hide all answers and reset chevrons
       document.querySelectorAll('[faq-answer]').forEach((element) => {
         element.classList.add('hidden');
       });
+      document.querySelectorAll('.faq-chevron').forEach((icon) => {
+        icon.style.transform = 'rotate(0deg)';
+      });
 
-      // Show the current answer
-      const answer = el.nextElementSibling;
-      if (answer) {
+      // If it wasn't open, open it
+      if (!isCurrentlyOpen && answer && chevron) {
         answer.classList.remove('hidden');
+        chevron.style.transform = 'rotate(180deg)';
       }
     });
+  });
+
+  // Set initial chevron state
+  document.querySelectorAll('.faq-item').forEach((item) => {
+    const answer = item.querySelector('[faq-answer]');
+    const chevron = item.querySelector('.faq-chevron');
+    if (answer && chevron && !answer.classList.contains('hidden')) {
+      chevron.style.transform = 'rotate(180deg)';
+    }
   });
 </script>

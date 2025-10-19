@@ -64,7 +64,7 @@ const contentContributionLink = `https://github.com/kamranahmedse/developer-road
     isUpcoming={bestPracticeData.isUpcoming}
   />
 
-  <div class='bg-gray-50 py-4 sm:py-12'>
+  <div class='relative py-8 sm:py-12 lg:py-16'>
     {
       !bestPracticeData.isUpcoming && bestPracticeData.jsonUrl && (
         <div class='max-w-[1000px] container relative'>
@@ -86,12 +86,48 @@ const contentContributionLink = `https://github.com/kamranahmedse/developer-road
 
     {
       !bestPracticeData.isUpcoming && !bestPracticeData.jsonUrl && (
-        <MarkdownFile>
-          <bestPracticeFile.Content />
-        </MarkdownFile>
+        <div class='container'>
+          <article class='best-practice-content-card'>
+            <div class='best-practice-content-inner'>
+              <MarkdownFile>
+                <bestPracticeFile.Content />
+              </MarkdownFile>
+            </div>
+          </article>
+        </div>
       )
     }
   </div>
 
   {bestPracticeData.isUpcoming && <UpcomingForm />}
+
+  <style>
+    .best-practice-content-card {
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+    }
+
+    .best-practice-content-inner {
+      position: relative;
+      background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.05) 0%,
+        rgba(255, 255, 255, 0.02) 100%
+      );
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      backdrop-filter: blur(20px) saturate(180%);
+      padding: 2rem;
+      box-shadow: 
+        0 4px 16px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(59, 130, 246, 0.05) inset;
+    }
+
+    @media (min-width: 640px) {
+      .best-practice-content-inner {
+        padding: 3rem;
+      }
+    }
+  </style>
 </BaseLayout>

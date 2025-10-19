@@ -1,11 +1,52 @@
 ---
 import GridItem from '../components/GridItem.astro';
-import SimplePageHeader from '../components/SimplePageHeader.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getRoadmapsByTag } from '../lib/roadmap';
 
 const roleRoadmaps = await getRoadmapsByTag('role-roadmap');
 const skillRoadmaps = await getRoadmapsByTag('skill-roadmap');
+
+// Define difficulty levels and recommended learning times for roadmaps
+const roadmapMeta: Record<string, { difficulty: 'beginner' | 'intermediate' | 'advanced', timeEstimate: string, recommended?: boolean }> = {
+  'frontend': { difficulty: 'beginner', timeEstimate: '3-6 months', recommended: true },
+  'backend': { difficulty: 'beginner', timeEstimate: '4-6 months', recommended: true },
+  'javascript': { difficulty: 'beginner', timeEstimate: '2-4 months', recommended: true },
+  'python': { difficulty: 'beginner', timeEstimate: '2-4 months', recommended: true },
+  'react': { difficulty: 'intermediate', timeEstimate: '2-3 months' },
+  'nodejs': { difficulty: 'intermediate', timeEstimate: '2-4 months' },
+  'angular': { difficulty: 'intermediate', timeEstimate: '2-3 months' },
+  'vue': { difficulty: 'intermediate', timeEstimate: '2-3 months' },
+  'typescript': { difficulty: 'intermediate', timeEstimate: '1-2 months' },
+  'java': { difficulty: 'intermediate', timeEstimate: '3-5 months' },
+  'golang': { difficulty: 'intermediate', timeEstimate: '2-3 months' },
+  'devops': { difficulty: 'advanced', timeEstimate: '6-12 months' },
+  'kubernetes': { difficulty: 'advanced', timeEstimate: '3-4 months' },
+  'system-design': { difficulty: 'advanced', timeEstimate: '4-6 months' },
+  'software-architect': { difficulty: 'advanced', timeEstimate: '6-12 months' },
+  'cyber-security': { difficulty: 'advanced', timeEstimate: '6-12 months' },
+  'blockchain': { difficulty: 'advanced', timeEstimate: '4-6 months' },
+  'graphql': { difficulty: 'intermediate', timeEstimate: '1-2 months' },
+  'mongodb': { difficulty: 'intermediate', timeEstimate: '2-3 months' },
+  'postgresql-dba': { difficulty: 'advanced', timeEstimate: '4-6 months' },
+  'android': { difficulty: 'intermediate', timeEstimate: '4-6 months' },
+  'flutter': { difficulty: 'intermediate', timeEstimate: '3-4 months' },
+  'react-native': { difficulty: 'intermediate', timeEstimate: '3-4 months' },
+  'qa': { difficulty: 'intermediate', timeEstimate: '3-5 months' },
+  'aspnet-core': { difficulty: 'intermediate', timeEstimate: '3-5 months' },
+  'spring-boot': { difficulty: 'intermediate', timeEstimate: '3-5 months' },
+  'computer-science': { difficulty: 'intermediate', timeEstimate: '12+ months' },
+  'software-design-architecture': { difficulty: 'advanced', timeEstimate: '4-6 months' },
+  'design-system': { difficulty: 'intermediate', timeEstimate: '2-3 months' },
+  'ux-design': { difficulty: 'beginner', timeEstimate: '3-5 months' },
+};
+
+// Separate roadmaps by difficulty
+const beginnerRoadmaps = [...roleRoadmaps, ...skillRoadmaps].filter(r => roadmapMeta[r.id]?.difficulty === 'beginner');
+const intermediateRoadmaps = [...roleRoadmaps, ...skillRoadmaps].filter(r => roadmapMeta[r.id]?.difficulty === 'intermediate');
+const advancedRoadmaps = [...roleRoadmaps, ...skillRoadmaps].filter(r => roadmapMeta[r.id]?.difficulty === 'advanced');
+
+// Get recommended starting roadmaps
+const recommendedRoadmaps = beginnerRoadmaps.filter(r => roadmapMeta[r.id]?.recommended);
 ---
 
 <BaseLayout
@@ -13,38 +54,164 @@ const skillRoadmaps = await getRoadmapsByTag('skill-roadmap');
   description={'Step by step guides and paths to learn different tools or technologies'}
   permalink={'/roadmaps'}
 >
-  <SimplePageHeader
-    title='Developer Roadmaps'
-    description='Paths to learn tools and technologies with confidence'
-    showYouTubeAlert={false}
-  />
+  <!-- Landing-like background and hero to match homepage -->
+  <div class='relative'>
+    <div class='animated-landing-bg'>
+      <div class='gradient-orb gradient-orb-1'></div>
+      <div class='gradient-orb gradient-orb-2'></div>
+      <div class='gradient-orb gradient-orb-3'></div>
+      <div class='gradient-orb gradient-orb-4'></div>
+      <div class='gradient-orb gradient-orb-5'></div>
+    </div>
 
-  <div
-    class='bg-gradient-to-b from-bg to-surface/30 pb-20 pt-8 sm:pb-28 sm:pt-12'
-  >
-    <div class='container'>
-      <div class='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:gap-5'>
-        {
-          roleRoadmaps.map((roleRoadmap) => (
-            <GridItem
-              url={`/${roleRoadmap.id}`}
-              isNew={roleRoadmap.frontmatter.isNew}
-              title={roleRoadmap.frontmatter.title}
-              description={roleRoadmap.frontmatter.description}
-            />
-          ))
-        }
+    <!-- Hero Section -->
+    <div class='relative'>
+      <div class='container px-6 py-14 sm:py-24 lg:py-28'>
+        <div class='mx-auto max-w-5xl text-center'>
+          <h1 class='mb-6 text-5xl font-black leading-[1.1] tracking-tight text-white sm:text-7xl'>
+            Choose Your Path
+          </h1>
+          <p class='mx-auto max-w-2xl text-lg text-muted sm:text-xl'>
+            Clear, structured paths from beginner to expert. Start where you are, learn what you need.
+          </p>
+        </div>
+      </div>
+    </div>
 
-        {
-          skillRoadmaps.map((skillRoadmap) => (
+    <!-- Quick Start Guide -->
+    <div class='pb-12 pt-4'>
+      <div class='container'>
+        <div class='mx-auto max-w-4xl rounded-3xl border border-primary/20 bg-gradient-to-br from-primary/10 via-transparent to-accent/5 p-8 backdrop-blur-sm'>
+          <div class='mb-4 flex items-center gap-3'>
+            <div class='flex h-10 w-10 items-center justify-center rounded-full bg-primary/20'>
+              <svg class='h-5 w-5 text-primary' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M13 10V3L4 14h7v7l9-11h-7z'></path>
+              </svg>
+            </div>
+            <h2 class='text-2xl font-bold text-white'>New to Development?</h2>
+          </div>
+          <p class='mb-6 text-muted'>
+            Start with one of our beginner-friendly roadmaps below. Each includes a clear starting point, 
+            structured learning path, and estimated completion time.
+          </p>
+          <div class='flex flex-wrap gap-3'>
+            <a href='#beginner-roadmaps' class='inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white transition-all hover:bg-primary/90'>
+              <span>View Beginner Roadmaps</span>
+              <svg class='h-4 w-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recommended Starting Points -->
+    {recommendedRoadmaps.length > 0 && (
+      <div class='pb-16 pt-4'>
+        <div class='container'>
+          <div class='mb-8 text-center'>
+            <div class='mb-3 inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-2 ring-1 ring-accent/20'>
+              <svg class='h-4 w-4 text-accent' fill='currentColor' viewBox='0 0 20 20'>
+                <path d='M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z'></path>
+              </svg>
+              <span class='text-sm font-semibold text-accent'>Recommended Starting Points</span>
+            </div>
+            <h2 class='text-3xl font-black text-white sm:text-4xl'>Perfect for Beginners</h2>
+            <p class='mx-auto mt-2 max-w-2xl text-muted'>The most popular paths to start your developer journey</p>
+          </div>
+          <div class='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:gap-5'>
+            {recommendedRoadmaps.map((roadmap) => (
+              <GridItem
+                url={`/${roadmap.id}`}
+                isNew={roadmap.frontmatter.isNew}
+                title={roadmap.frontmatter.title}
+                description={roadmap.frontmatter.description}
+                difficulty={roadmapMeta[roadmap.id]?.difficulty}
+                timeEstimate={roadmapMeta[roadmap.id]?.timeEstimate}
+                isRecommended={true}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    )}
+
+    <!-- Beginner Roadmaps -->
+    <div id='beginner-roadmaps' class='scroll-mt-24 pb-16 pt-4'>
+      <div class='container'>
+        <div class='mb-8'>
+          <div class='mb-3 inline-flex items-center gap-2 rounded-full bg-green-500/10 px-4 py-2 ring-1 ring-green-500/20'>
+            <div class='h-2 w-2 rounded-full bg-green-500'></div>
+            <span class='text-sm font-semibold text-green-400'>Beginner Friendly</span>
+          </div>
+          <h2 class='text-3xl font-black text-white sm:text-4xl'>Start Here</h2>
+          <p class='mt-2 text-muted'>No prior experience required. Clear paths from zero to job-ready.</p>
+        </div>
+        <div class='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:gap-5'>
+          {beginnerRoadmaps.map((roadmap) => (
             <GridItem
-              url={`/${skillRoadmap.id}`}
-              isNew={skillRoadmap.frontmatter.isNew}
-              title={skillRoadmap.frontmatter.title}
-              description={skillRoadmap.frontmatter.description}
+              url={`/${roadmap.id}`}
+              isNew={roadmap.frontmatter.isNew}
+              title={roadmap.frontmatter.title}
+              description={roadmap.frontmatter.description}
+              difficulty={roadmapMeta[roadmap.id]?.difficulty}
+              timeEstimate={roadmapMeta[roadmap.id]?.timeEstimate}
             />
-          ))
-        }
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- Intermediate Roadmaps -->
+    <div class='pb-16 pt-4'>
+      <div class='container'>
+        <div class='mb-8'>
+          <div class='mb-3 inline-flex items-center gap-2 rounded-full bg-yellow-500/10 px-4 py-2 ring-1 ring-yellow-500/20'>
+            <div class='h-2 w-2 rounded-full bg-yellow-500'></div>
+            <span class='text-sm font-semibold text-yellow-400'>Intermediate</span>
+          </div>
+          <h2 class='text-3xl font-black text-white sm:text-4xl'>Level Up Your Skills</h2>
+          <p class='mt-2 text-muted'>For developers with some experience looking to specialize or expand their toolkit.</p>
+        </div>
+        <div class='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:gap-5'>
+          {intermediateRoadmaps.map((roadmap) => (
+            <GridItem
+              url={`/${roadmap.id}`}
+              isNew={roadmap.frontmatter.isNew}
+              title={roadmap.frontmatter.title}
+              description={roadmap.frontmatter.description}
+              difficulty={roadmapMeta[roadmap.id]?.difficulty}
+              timeEstimate={roadmapMeta[roadmap.id]?.timeEstimate}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- Advanced Roadmaps -->
+    <div class='pb-20 pt-4 sm:pb-28'>
+      <div class='container'>
+        <div class='mb-8'>
+          <div class='mb-3 inline-flex items-center gap-2 rounded-full bg-red-500/10 px-4 py-2 ring-1 ring-red-500/20'>
+            <div class='h-2 w-2 rounded-full bg-red-500'></div>
+            <span class='text-sm font-semibold text-red-400'>Advanced</span>
+          </div>
+          <h2 class='text-3xl font-black text-white sm:text-4xl'>Master Complex Systems</h2>
+          <p class='mt-2 text-muted'>Advanced topics for experienced developers ready to tackle complex challenges.</p>
+        </div>
+        <div class='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:gap-5'>
+          {advancedRoadmaps.map((roadmap) => (
+            <GridItem
+              url={`/${roadmap.id}`}
+              isNew={roadmap.frontmatter.isNew}
+              title={roadmap.frontmatter.title}
+              description={roadmap.frontmatter.description}
+              difficulty={roadmapMeta[roadmap.id]?.difficulty}
+              timeEstimate={roadmapMeta[roadmap.id]?.timeEstimate}
+            />
+          ))}
+        </div>
       </div>
     </div>
   </div>

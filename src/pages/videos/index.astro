@@ -1,10 +1,19 @@
 ---
 import VideoListItem from '../../components/VideoListItem.astro';
-import SimplePageHeader from '../../components/SimplePageHeader.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getAllVideos } from '../../lib/video';
 
 const videos = await getAllVideos();
+
+// Get recent videos (last 6 months)
+const sixMonthsAgo = new Date();
+sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+const recentVideos = videos.filter(video => 
+  new Date(video.frontmatter.date) >= sixMonthsAgo
+);
+const olderVideos = videos.filter(video => 
+  new Date(video.frontmatter.date) < sixMonthsAgo
+);
 ---
 
 <BaseLayout
@@ -12,17 +21,84 @@ const videos = await getAllVideos();
   description={'Graphical video demonstrations on software engineering topics.'}
   permalink={`/videos`}
 >
-  <SimplePageHeader
-    title='Videos'
-    description='Illustrated walkthroughs of engineering concepts.'
-  />
+  <!-- Landing-like background and hero to match homepage -->
+  <div class='relative'>
+    <div class='animated-landing-bg'>
+      <div class='gradient-orb gradient-orb-1'></div>
+      <div class='gradient-orb gradient-orb-2'></div>
+      <div class='gradient-orb gradient-orb-3'></div>
+      <div class='gradient-orb gradient-orb-4'></div>
+      <div class='gradient-orb gradient-orb-5'></div>
+    </div>
 
-  <div
-    class='bg-gradient-to-b from-bg to-surface/30 pb-20 pt-8 sm:pb-28 sm:pt-12'
-  >
-    <div class='container'>
-      <div class='space-y-3 sm:space-y-4'>
-        {videos.map((video) => <VideoListItem video={video} />)}
+    <!-- Hero Section -->
+    <div class='relative'>
+      <div class='container px-6 py-14 sm:py-24 lg:py-28'>
+        <div class='mx-auto max-w-5xl text-center'>
+          <h1 class='mb-6 text-5xl font-black leading-[1.1] tracking-tight text-white sm:text-7xl'>
+            Video Tutorials
+          </h1>
+          <p class='mx-auto max-w-2xl text-lg text-muted sm:text-xl'>
+            Illustrated walkthroughs of engineering concepts. Watch, learn, and master complex topics visually.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Info Guide -->
+    <div class='pb-12 pt-4'>
+      <div class='container'>
+        <div class='mx-auto max-w-4xl rounded-3xl border border-primary/20 bg-gradient-to-br from-primary/10 via-transparent to-accent/5 p-8 backdrop-blur-sm'>
+          <div class='mb-4 flex items-center gap-3'>
+            <div class='flex h-10 w-10 items-center justify-center rounded-full bg-primary/20'>
+              <svg class='h-5 w-5 text-primary' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z'></path>
+                <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M21 12a9 9 0 11-18 0 9 9 0 0118 0z'></path>
+              </svg>
+            </div>
+            <h2 class='text-2xl font-bold text-white'>Visual Learning Made Easy</h2>
+          </div>
+          <p class='mb-6 text-muted'>
+            Each video combines graphics, animations, and clear explanations to help you 
+            understand complex topics in minutes instead of hours.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Videos -->
+    {recentVideos.length > 0 && (
+      <div class='pb-16 pt-4'>
+        <div class='container'>
+          <div class='mb-8'>
+            <div class='mb-3 inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-2 ring-1 ring-accent/20'>
+              <svg class='h-4 w-4 text-accent' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M13 10V3L4 14h7v7l9-11h-7z'></path>
+              </svg>
+              <span class='text-sm font-semibold text-accent'>Recently Added</span>
+            </div>
+            <h2 class='text-3xl font-black text-white sm:text-4xl'>Latest Videos</h2>
+            <p class='mt-2 text-muted'>Fresh video content covering modern development techniques and tools</p>
+          </div>
+          <div class='space-y-3 sm:space-y-4'>
+            {recentVideos.map((video) => <VideoListItem video={video} />)}
+          </div>
+        </div>
+      </div>
+    )}
+
+    <!-- All Videos / Older Videos -->
+    <div class='pb-20 pt-4 sm:pb-28'>
+      <div class='container'>
+        {recentVideos.length > 0 && olderVideos.length > 0 && (
+          <div class='mb-8'>
+            <h2 class='text-3xl font-black text-white sm:text-4xl'>All Videos</h2>
+            <p class='mt-2 text-muted'>Complete collection of illustrated tutorials and walkthroughs</p>
+          </div>
+        )}
+        <div class='space-y-3 sm:space-y-4'>
+          {(recentVideos.length > 0 ? olderVideos : videos).map((video) => <VideoListItem video={video} />)}
+        </div>
       </div>
     </div>
   </div>

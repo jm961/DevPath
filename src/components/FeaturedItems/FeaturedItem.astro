@@ -13,7 +13,7 @@ const { isUpcoming = false, isNew = false, text, url } = Astro.props;
 
 <a
   class:list={[
-    'group relative block overflow-hidden rounded-2xl border border-white/10 p-6 no-underline transition-all duration-300 hover:border-primary/30 hover:bg-white/[0.02]',
+    'group relative block overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] p-6 no-underline transition-all duration-300 hover:border-primary/30 hover:bg-white/[0.04]',
     {
       'opacity-60 hover:opacity-80': isUpcoming,
     },
@@ -23,7 +23,7 @@ const { isUpcoming = false, isNew = false, text, url } = Astro.props;
   <!-- Content -->
   <div class='flex items-center justify-between gap-4'>
     <h3
-      class='text-base font-semibold text-white transition-colors group-hover:text-primary sm:text-lg'
+      class='flex-1 text-base font-semibold text-white transition-colors group-hover:text-primary sm:text-lg'
     >
       {text}
     </h3>

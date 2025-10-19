@@ -1,6 +1,6 @@
 ---
 layout: ../layouts/MarkdownLayout.astro
-title: Terms and Conditions - roadmap.sh
+title: Terms and Conditions
 noIndex: true
 ---
 
@@ -8,9 +8,9 @@ noIndex: true
 
 PLEASE NOTE THAT YOUR USE OF AND ACCESS TO OUR SERVICES (DEFINED BELOW) ARE SUBJECT TO THE FOLLOWING TERMS; IF YOU DO NOT AGREE TO ALL OF THE FOLLOWING, YOU MAY NOT USE OR ACCESS THE SERVICES IN ANY MANNER.
 
-Welcome to roadmap.sh. Please read on to learn the rules and restrictions that govern your use of our website(s), products, services and applications (the “Services”). If you have any questions, comments, or concerns regarding these terms or the Services, please contact us at kamranahmed.se@gmail.com.
+Welcome to DevPath. Please read on to learn the rules and restrictions that govern your use of our website(s), products, services and applications (the "Services"). If you have any questions, comments, or concerns regarding these terms or the Services, please contact us at kamranahmed.se@gmail.com.
 
-These Terms of Use (the “Terms”) are a binding contract between you and roadmap.sh (“roadmap.sh,” “we”, and “us”). You must agree to and accept all of the Terms, or you don’t have the right to use the Services. Your using the Services in any way means that you agree to all of these Terms, and these Terms will remain in effect while you use the Services. These Terms include the provisions in this document, as well as those in the Privacy Policy and Copyright Dispute Policy.
+These Terms of Use (the "Terms") are a binding contract between you and DevPath ("DevPath," "we", and "us"). You must agree to and accept all of the Terms, or you don't have the right to use the Services. Your using the Services in any way means that you agree to all of these Terms, and these Terms will remain in effect while you use the Services. These Terms include the provisions in this document, as well as those in the Privacy Policy and Copyright Dispute Policy.
 
 ## Will these Terms ever change?
 

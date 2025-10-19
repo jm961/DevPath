@@ -27,11 +27,45 @@ const { video } = Astro.props;
 >
   <VideoHeader video={video} />
 
-  <div class='bg-gray-50 py-5 sm:py-10'>
-    <div
-      class='container prose prose-code:bg-transparent prose-h2:text-3xl prose-h2:mt-4 prose-h2:mb-2 prose-h3:mt-2 prose-img:mt-1'
-    >
-      <video.Content />
+  <div class='bg-gradient-to-b from-bg to-surface/30 py-8 sm:py-16'>
+    <div class='container'>
+      <div class='mx-auto max-w-[900px]'>
+        <article class='video-content-card rounded-3xl border border-white/10 bg-surface/30 p-6 backdrop-blur-sm sm:p-12'>
+          <div
+            class='prose prose-invert max-w-none prose-headings:text-white prose-p:text-muted prose-a:text-primary prose-a:no-underline hover:prose-a:text-accent prose-strong:text-white prose-code:rounded prose-code:bg-white/5 prose-code:px-1.5 prose-code:py-0.5 prose-code:text-primary prose-code:before:content-none prose-code:after:content-none prose-pre:bg-white/5 prose-pre:border prose-pre:border-white/10 prose-blockquote:border-primary/30 prose-blockquote:text-muted prose-img:rounded-xl prose-img:border prose-img:border-white/10'
+          >
+            <video.Content />
+          </div>
+        </article>
+      </div>
     </div>
   </div>
 </BaseLayout>
+
+<style>
+  .video-content-card {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .video-content-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    opacity: 0.3;
+    z-index: 0;
+  }
+
+  .video-content-card :global(.prose) {
+    position: relative;
+    z-index: 1;
+  }
+</style>

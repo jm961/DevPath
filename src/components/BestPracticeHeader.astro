@@ -18,88 +18,94 @@ const isBestPracticeReady = !isUpcoming;
 
 <LoginPopup />
 
-<div class='border-b'>
-  <div class='container relative py-5 sm:py-12'>
-    <div class='mb-3 mt-0 sm:mb-6'>
-      <h1 class='mb-0.5 text-2xl font-bold sm:mb-2 sm:text-4xl'>
+<div class='relative border-b border-white/5 bg-gradient-to-b from-surface/50 to-transparent'>
+  <div class='container relative py-8 sm:py-16'>
+    <!-- Breadcrumb navigation -->
+    <nav class='mb-6 flex items-center gap-2 text-sm' aria-label='Breadcrumb'>
+      <a href='/best-practices' class='text-muted transition-colors hover:text-primary'>
+        All Best Practices
+      </a>
+      <svg class='h-4 w-4 text-muted' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 5l7 7-7 7'></path>
+      </svg>
+      <span class='font-medium text-white'>{title}</span>
+    </nav>
+
+    <!-- Title and description -->
+    <div class='mb-6 sm:mb-8'>
+      <div class='mb-4 flex flex-wrap items-center gap-2'>
+        <span class='inline-flex items-center gap-1.5 rounded-full bg-accent/10 px-2.5 py-0.5 text-xs font-semibold text-accent ring-1 ring-accent/20'>
+          <svg class='h-3 w-3' fill='currentColor' viewBox='0 0 20 20'>
+            <path d='M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z'></path>
+          </svg>
+          Best Practice
+        </span>
+      </div>
+      
+      <h1 class='mb-3 text-3xl font-black leading-tight text-white sm:text-5xl lg:text-6xl'>
         {title}
       </h1>
-      <p class='text-sm text-gray-500 sm:text-lg'>{description}</p>
+      <p class='max-w-3xl text-base text-muted sm:text-lg'>{description}</p>
     </div>
 
-    <div class='flex justify-between'>
-      <div class='flex gap-1 sm:gap-2'>
-        <a
-          href='/best-practices'
-          class='rounded-md bg-gray-500 px-3 py-1.5 text-xs font-medium text-white hover:bg-gray-600 sm:text-sm'
-          aria-label='Back to All Best Practices'
-        >
-          &larr;<span class='hidden sm:inline'>&nbsp;All Best Practices</span>
-        </a>
-
-        {
-          isBestPracticeReady && (
-            <button
-              data-guest-required
-              data-popup='login-popup'
-              class='hidden inline-flex items-center justify-center rounded-md bg-yellow-400 px-3 py-1.5 text-xs font-medium hover:bg-yellow-500 sm:text-sm'
-              aria-label='Download Roadmap'
-              ga-category='Subscription'
-              ga-action='Clicked Popup Opener'
-              ga-label='Download Roadmap Popup'
-            >
-              <Icon icon='download' />
-              <span class='ml-2 hidden sm:inline'>Download</span>
-            </button>
-          )
-        }
-
-        {
-          isBestPracticeReady && (
-            <a
-              data-auth-required
-              class='inline-flex hidden items-center justify-center rounded-md bg-yellow-400 px-3 py-1.5 text-xs font-medium hover:bg-yellow-500 sm:text-sm'
-              aria-label='Download Roadmap'
-              ga-category='Subscription'
-              ga-action='Clicked Popup Opener'
-              ga-label='Download Roadmap Popup'
-              target="_blank"
-              href={`/pdfs/best-practices/${bestPracticeId}.pdf`}
-            >
-              <Icon icon='download' />
-              <span class='ml-2 hidden sm:inline'>Download</span>
-            </a>
-          )
-        }
-
-        <button
-          data-guest-required
-          data-popup='login-popup'
-          class='inline-flex hidden items-center justify-center rounded-md bg-yellow-400 px-3 py-1.5 text-xs font-medium hover:bg-yellow-500 sm:text-sm'
-          aria-label='Subscribe for Updates'
-          ga-category='Subscription'
-          ga-action='Clicked Popup Opener'
-          ga-label='Subscribe Best Practice Popup'
-        >
-          <Icon icon='email' />
-          <span class='ml-2'>Subscribe</span>
-        </button>
-      </div>
-
-      {
-        isBestPracticeReady && (
-          <a
-            href={`https://github.com/kamranahmedse/developer-roadmap/issues/new?title=[Suggestion] ${title}`}
-            target='_blank'
-            class='inline-flex items-center justify-center rounded-md bg-gray-500 px-3 py-1.5 text-xs font-medium text-white hover:bg-gray-600 sm:text-sm'
-            aria-label='Suggest Changes'
+    <!-- Actions -->
+    <div class='flex flex-wrap items-center gap-2 sm:gap-3'>
+      {isBestPracticeReady && (
+        <>
+          <button
+            data-guest-required
+            data-popup='login-popup'
+            class='btn-primary inline-flex hidden items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium'
+            aria-label='Download Best Practice'
+            ga-category='Subscription'
+            ga-action='Clicked Popup Opener'
+            ga-label='Download Roadmap Popup'
           >
-            <Icon icon='comment' class='h-3 w-3' />
-            <span class='ml-2 hidden sm:inline'>Suggest Changes</span>
-            <span class='ml-2 inline sm:hidden'>Suggest</span>
+            <Icon icon='download' class='h-4 w-4' />
+            <span>Download PDF</span>
+          </button>
+
+          <a
+            data-auth-required
+            class='btn-primary inline-flex hidden items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium'
+            aria-label='Download Best Practice'
+            ga-category='Subscription'
+            ga-action='Clicked Popup Opener'
+            ga-label='Download Roadmap Popup'
+            target='_blank'
+            href={`/pdfs/best-practices/${bestPracticeId}.pdf`}
+          >
+            <Icon icon='download' class='h-4 w-4' />
+            <span>Download PDF</span>
           </a>
-        )
-      }
+        </>
+      )}
+
+      <button
+        data-guest-required
+        data-popup='login-popup'
+        class='btn-ghost hidden items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium'
+        aria-label='Subscribe for Updates'
+        ga-category='Subscription'
+        ga-action='Clicked Popup Opener'
+        ga-label='Subscribe Best Practice Popup'
+      >
+        <Icon icon='email' class='h-4 w-4' />
+        <span>Subscribe</span>
+      </button>
+
+      {isBestPracticeReady && (
+        <a
+          href={`https://github.com/kamranahmedse/developer-roadmap/issues/new?title=[Suggestion] ${title}`}
+          target='_blank'
+          class='btn-ghost inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium'
+          aria-label='Suggest Changes'
+        >
+          <Icon icon='comment' class='h-4 w-4' />
+          <span class='hidden sm:inline'>Suggest Changes</span>
+          <span class='inline sm:hidden'>Suggest</span>
+        </a>
+      )}
     </div>
 
     <BestPracticeHint bestPracticeId={bestPracticeId} />

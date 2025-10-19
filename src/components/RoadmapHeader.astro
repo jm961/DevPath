@@ -15,6 +15,8 @@ export interface Props {
   isUpcoming?: boolean;
   hasSearch?: boolean;
   hasTopics?: boolean;
+  difficulty?: 'beginner' | 'intermediate' | 'advanced';
+  timeEstimate?: string;
 }
 
 const {
@@ -26,111 +28,135 @@ const {
   hasSearch = false,
   note,
   hasTopics = false,
+  difficulty,
+  timeEstimate,
 } = Astro.props;
 
 const isRoadmapReady = !isUpcoming;
+
+const difficultyConfig = {
+  beginner: { color: 'text-green-400', bg: 'bg-green-500/10', ring: 'ring-green-500/20', label: 'Beginner' },
+  intermediate: { color: 'text-yellow-400', bg: 'bg-yellow-500/10', ring: 'ring-yellow-500/20', label: 'Intermediate' },
+  advanced: { color: 'text-red-400', bg: 'bg-red-500/10', ring: 'ring-red-500/20', label: 'Advanced' },
+};
+
+const difficultyStyle = difficulty ? difficultyConfig[difficulty] : null;
 ---
 
 <LoginPopup />
 
-<div class='border-b border-white/5'>
-  <div class='container relative py-5 sm:py-12'>
+<div class='relative border-b border-white/5 bg-gradient-to-b from-surface/50 to-transparent'>
+  <div class='container relative py-8 sm:py-16'>
     <YouTubeAlert />
 
-    <div class='mb-3 mt-0 sm:mb-4 sm:mt-4'>
-      <h1 class='mb-0.5 text-2xl font-bold text-white sm:mb-2 sm:text-4xl'>
+    <!-- Breadcrumb navigation -->
+    <nav class='mb-6 flex items-center gap-2 text-sm' aria-label='Breadcrumb'>
+      <a href='/roadmaps' class='text-muted transition-colors hover:text-primary'>
+        All Roadmaps
+      </a>
+      <svg class='h-4 w-4 text-muted' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 5l7 7-7 7'></path>
+      </svg>
+      <span class='font-medium text-white'>{title}</span>
+    </nav>
+
+    <!-- Title and metadata -->
+    <div class='mb-6 sm:mb-8'>
+      <div class='mb-4 flex flex-wrap items-center gap-2'>
+        {difficultyStyle && (
+          <span class={`inline-flex items-center gap-1.5 rounded-full ${difficultyStyle.bg} ${difficultyStyle.ring} px-2.5 py-0.5 text-xs font-semibold ${difficultyStyle.color} ring-1`}>
+            <div class={`h-1.5 w-1.5 rounded-full ${difficultyStyle.color.replace('text-', 'bg-')}`}></div>
+            {difficultyStyle.label}
+          </span>
+        )}
+        {timeEstimate && (
+          <span class='inline-flex items-center gap-1.5 rounded-full bg-white/5 px-2.5 py-0.5 text-xs font-medium text-muted ring-1 ring-white/10'>
+            <svg class='h-3 w-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+              <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'></path>
+            </svg>
+            {timeEstimate}
+          </span>
+        )}
+      </div>
+      
+      <h1 class='mb-3 text-3xl font-black leading-tight text-white sm:text-5xl lg:text-6xl'>
         {title}
       </h1>
-      <p class='text-sm text-muted sm:text-lg'>{description}</p>
+      <p class='max-w-3xl text-base text-muted sm:text-lg'>{description}</p>
     </div>
 
-    <div class='flex justify-between'>
-      <div class='flex gap-1 sm:gap-2'>
-        {
-          !hasSearch && (
+    <!-- Actions -->
+    <div class='flex flex-wrap items-center gap-2 sm:gap-3'>
+      {!hasSearch && (
+        <>
+          {isRoadmapReady && (
             <>
-              <a
-                href='/roadmaps'
-                class='btn-ghost rounded-md px-3 py-1.5 text-xs font-medium sm:text-sm'
-                aria-label='Back to All Roadmaps'
-              >
-                &larr;<span class='hidden sm:inline'>&nbsp;All Roadmaps</span>
-              </a>
-
-              {isRoadmapReady && (
-                <>
-                  <button
-                    data-guest-required
-                    data-popup='login-popup'
-                    class='btn-primary inline-flex hidden items-center justify-center rounded-md px-3 py-1.5 text-xs font-medium sm:text-sm'
-                    aria-label='Download Roadmap'
-                  >
-                    <Icon icon='download' />
-                    <span class='ml-2 hidden sm:inline'>Download</span>
-                  </button>
-
-                  <a
-                    data-auth-required
-                    class='btn-primary inline-flex hidden items-center justify-center rounded-md px-3 py-1.5 text-xs font-medium sm:text-sm'
-                    aria-label='Download Roadmap'
-                    target='_blank'
-                    href={`/pdfs/roadmaps/${roadmapId}.pdf`}
-                  >
-                    <Icon icon='download' />
-                    <span class='ml-2 hidden sm:inline'>Download</span>
-                  </a>
-                </>
-              )}
-
               <button
                 data-guest-required
                 data-popup='login-popup'
-                class='btn-ghost inline-flex hidden items-center justify-center rounded-md px-3 py-1.5 text-xs font-medium sm:text-sm'
-                aria-label='Subscribe for Updates'
+                class='btn-primary inline-flex hidden items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium'
+                aria-label='Download Roadmap'
               >
-                <Icon icon='email' />
-                <span class='ml-2'>Subscribe</span>
+                <Icon icon='download' class='h-4 w-4' />
+                <span>Download PDF</span>
               </button>
+
+              <a
+                data-auth-required
+                class='btn-primary inline-flex hidden items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium'
+                aria-label='Download Roadmap'
+                target='_blank'
+                href={`/pdfs/roadmaps/${roadmapId}.pdf`}
+              >
+                <Icon icon='download' class='h-4 w-4' />
+                <span>Download PDF</span>
+              </a>
             </>
-          )
-        }
+          )}
 
-        {
-          hasSearch && (
-            <a
-              href={`/${roadmapId}`}
-              class='btn-ghost rounded-md px-3 py-1.5 text-xs font-medium sm:text-sm'
-              aria-label='Back to Visual Roadmap'
-            >
-              &larr;
-              <span class='inline'>&nbsp;Visual Roadmap</span>
-            </a>
-          )
-        }
-      </div>
-
-      {
-        isRoadmapReady && (
-          <a
-            href={`https://github.com/kamranahmedse/developer-roadmap/issues/new?title=[Suggestion] ${title}`}
-            target='_blank'
-            class='btn-ghost inline-flex items-center justify-center rounded-md px-3 py-1.5 text-xs font-medium sm:text-sm'
-            aria-label='Suggest Changes'
+          <button
+            data-guest-required
+            data-popup='login-popup'
+            class='btn-ghost hidden items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium'
+            aria-label='Subscribe for Updates'
           >
-            <Icon icon='comment' class='h-3 w-3' />
-            <span class='ml-2 hidden sm:inline'>Suggest Changes</span>
-            <span class='ml-2 inline sm:hidden'>Suggest</span>
-          </a>
-        )
-      }
+            <Icon icon='email' class='h-4 w-4' />
+            <span>Subscribe</span>
+          </button>
+
+          {isRoadmapReady && (
+            <a
+              href={`https://github.com/kamranahmedse/developer-roadmap/issues/new?title=[Suggestion] ${title}`}
+              target='_blank'
+              class='btn-ghost inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium'
+              aria-label='Suggest Changes'
+            >
+              <Icon icon='comment' class='h-4 w-4' />
+              <span class='hidden sm:inline'>Suggest Changes</span>
+              <span class='inline sm:hidden'>Suggest</span>
+            </a>
+          )}
+        </>
+      )}
+
+      {hasSearch && (
+        <a
+          href={`/${roadmapId}`}
+          class='btn-ghost inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium'
+          aria-label='Back to Visual Roadmap'
+        >
+          <svg class='h-4 w-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+            <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M10 19l-7-7m0 0l7-7m-7 7h18'></path>
+          </svg>
+          <span>Back to Roadmap</span>
+        </a>
+      )}
     </div>
 
     <!-- Desktop: Roadmap Resources - Alert -->
-    {
-      hasTopics && (
-        <RoadmapHint roadmapId={roadmapId} tnsBannerLink={tnsBannerLink} />
-      )
-    }
+    {hasTopics && (
+      <RoadmapHint roadmapId={roadmapId} tnsBannerLink={tnsBannerLink} />
+    )}
 
     {hasSearch && <TopicSearch />}
   </div>

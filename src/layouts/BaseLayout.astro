@@ -126,51 +126,11 @@ const commitUrl = `https://github.com/kamranahmedse/developer-roadmap/commit/${
     }
   </head>
   <body class='bg-bg text-text antialiased'>
-    <!-- Animated Background System -->
-    <div class='animated-bg'>
-      <!-- Gradient Mesh Animation -->
-      <div class='gradient-mesh'></div>
-
-      <!-- Floating Orbs -->
-      <div class='floating-orbs'>
-        <div class='orb'></div>
-        <div class='orb'></div>
-        <div class='orb'></div>
-        <div class='orb'></div>
-        <div class='orb'></div>
-      </div>
-
-      <!-- Particle System -->
-      <div class='particles'>
-        <div class='particle' style='left: 10%; animation-delay: 0s;'></div>
-        <div class='particle' style='left: 20%; animation-delay: 2s;'></div>
-        <div class='particle' style='left: 30%; animation-delay: 4s;'></div>
-        <div class='particle' style='left: 40%; animation-delay: 6s;'></div>
-        <div class='particle' style='left: 50%; animation-delay: 8s;'></div>
-        <div class='particle' style='left: 60%; animation-delay: 10s;'></div>
-        <div class='particle' style='left: 70%; animation-delay: 12s;'></div>
-        <div class='particle' style='left: 80%; animation-delay: 14s;'></div>
-        <div class='particle' style='left: 90%; animation-delay: 16s;'></div>
-        <div class='particle' style='left: 15%; animation-delay: 18s;'></div>
-        <div class='particle' style='left: 25%; animation-delay: 20s;'></div>
-        <div class='particle' style='left: 35%; animation-delay: 22s;'></div>
-        <div class='particle' style='left: 45%; animation-delay: 24s;'></div>
-        <div class='particle' style='left: 55%; animation-delay: 26s;'></div>
-        <div class='particle' style='left: 65%; animation-delay: 28s;'></div>
-        <div class='particle' style='left: 75%; animation-delay: 30s;'></div>
-        <div class='particle' style='left: 85%; animation-delay: 32s;'></div>
-        <div class='particle' style='left: 95%; animation-delay: 34s;'></div>
-      </div>
-
-      <!-- Grid Pattern Animation -->
-      <div class='grid-pattern'></div>
-
-      <!-- Pulse Rings -->
-      <div class='pulse-rings'>
-        <div class='ring'></div>
-        <div class='ring'></div>
-        <div class='ring'></div>
-      </div>
+    <!-- Animated Background -->
+    <div class='animated-background'>
+      <div class='gradient-orb gradient-orb-1'></div>
+      <div class='gradient-orb gradient-orb-2'></div>
+      <div class='gradient-orb gradient-orb-3'></div>
     </div>
 
     <slot name='page-header'>
@@ -184,7 +144,6 @@ const commitUrl = `https://github.com/kamranahmedse/developer-roadmap/commit/${
     <slot name='page-footer'>
       <OpenSourceBanner />
       <Footer />
-      {sponsor && <Sponsor sponsor={sponsor} />}
     </slot>
 
     <Analytics />
