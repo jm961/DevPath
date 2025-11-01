@@ -91,7 +91,7 @@ if (roadmapFAQs.length) {
   jsonLdSchema.push(generateFAQSchema(roadmapFAQs));
 }
 
-const contentContributionLink = `https://github.com/kamranahmedse/developer-roadmap/tree/master/src/data/roadmaps/${roadmapId}/content`;
+const contentContributionLink = `/feedback?url=${encodeURIComponent(`/${roadmapId}`)}&type=suggestion`;
 
 // Get metadata for this roadmap
 const metadata = roadmapMeta[roadmapId];
@@ -160,10 +160,17 @@ const metadata = roadmapMeta[roadmapId];
 
     {
       !roadmapData.isUpcoming && !roadmapData.jsonUrl && (
-        <div class='mt-0 pb-14 sm:-mt-6'>
-          <MarkdownFile>
-            <roadmapFile.Content />
-          </MarkdownFile>
+        <div class='container relative max-w-[1000px]'>
+          <ShareIcons
+            description={roadmapData.briefDescription}
+            pageUrl={`https://devpath.app/${roadmapId}`}
+          />
+          
+          <div id='resource-svg-wrap' class='roadmap-container'>
+            <MarkdownFile>
+              <roadmapFile.Content />
+            </MarkdownFile>
+          </div>
         </div>
       )
     }

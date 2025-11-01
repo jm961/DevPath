@@ -2,11 +2,11 @@
 title: 'Consistency Patterns'
 description: 'Everything you need to know about Week, Strong and Eventual Consistency'
 author:
-  name: 'Kamran Ahmed'
-  url: 'https://twitter.com/kamranahmedse'
-  imageUrl: '/authors/kamranahmedse.jpeg'
+  name: 'Jean Michel Eid'
+  url: 'https://github.com/jm961'
+  imageUrl: '/authors/IMG_3110.jpg'
 seo:
-  title: 'Consistency Patterns - roadmap.sh'
+  title: 'Consistency Patterns - devpath.sh'
   description: 'Everything you need to know about Week, Strong and Eventual Consistency'
 isNew: true
 canonicalUrl: 'https://cs.fyi/guide/consistency-patterns-week-strong-eventual/'

@@ -28,7 +28,7 @@ const { frontmatter: guideData } = guide;
   permalink={`/guides/${guideId}`}
   canonicalUrl={guideData.canonicalUrl}
 >
-  <GuideHeader guide={guide} />
+  <GuideHeader guide={guide} guideId={guideId} />
 
   <div class='bg-gradient-to-b from-bg to-surface/30 py-8 sm:py-16'>
     <div class='container'>

@@ -2,11 +2,11 @@
 title: "Guide to Let's Encrypt SSL Setup"
 description: "Learn how to protect your website using Let's Encrypt SSL Certificates."
 author:
-  name: 'Kamran Ahmed'
-  url: 'https://twitter.com/kamranahmedse'
-  imageUrl: '/authors/kamranahmedse.jpeg'
+  name: 'Jean Michel Eid'
+  url: 'https://github.com/jm961'
+  imageUrl: '/authors/IMG_3110.jpg'
 seo:
-  title: "Guide to Let's Encrypt SSL Setup - roadmap.sh"
+  title: "Guide to Let's Encrypt SSL Setup - devpath.sh"
   description: "Learn how to protect your website using Let's Encrypt SSL Certificates."
 isNew: true
 type: 'textual'
@@ -69,7 +69,7 @@ sudo certbot --apache \
   -m you@email.com \
   --no-eff-email \
   --redirect \
-  --domains news.roadmap.sh
+  --domains news.devpath.sh
 ```
 
 This command will obtain an SSL certificate for the specified domain name, install it for you, and redirect HTTP traffic to HTTPS. The SSL certificate is valid for three months, after which it will expire.

@@ -2,11 +2,11 @@
 title: 'SSL vs TLS vs SSH'
 description: 'Quick tidbit on the differences between SSL, TLS, HTTPS and SSH'
 author:
-  name: 'Kamran Ahmed'
-  url: 'https://twitter.com/kamranahmedse'
-  imageUrl: '/authors/kamranahmedse.jpeg'
+  name: 'Jean Michel Eid'
+  url: 'https://github.com/jm961'
+  imageUrl: '/authors/IMG_3110.jpg'
 seo:
-  title: 'SSL vs TLS vs SSH - roadmap.sh'
+  title: 'SSL vs TLS vs SSH - devpath.sh'
   description: 'Quick tidbit on the differences between SSL, TLS, HTTPS and SSH'
 isNew: false
 type: 'visual'

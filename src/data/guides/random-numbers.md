@@ -2,11 +2,11 @@
 title: 'Random Numbers: Are they?'
 description: 'Learn how they are generated and why they may not be truly random.'
 author:
-  name: 'Kamran Ahmed'
-  url: 'https://twitter.com/kamranahmedse'
-  imageUrl: '/authors/kamranahmedse.jpeg'
+  name: 'Jean Michel Eid'
+  url: 'https://github.com/jm961'
+  imageUrl: '/authors/IMG_3110.jpg'
 seo:
-  title: 'Random Numbers: Are they? - roadmap.sh'
+  title: 'Random Numbers: Are they? - devpath.sh'
   description: 'Learn how they are generated and why they may not be truly random.'
 isNew: false
 type: 'visual'

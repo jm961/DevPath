@@ -2,11 +2,11 @@
 title: 'Unfamiliar Codebase'
 description: 'Tips on getting familiar with an unfamiliar codebase'
 author:
-  name: 'Kamran Ahmed'
-  url: 'https://twitter.com/kamranahmedse'
-  imageUrl: '/authors/kamranahmedse.jpeg'
+  name: 'Jean Michel Eid'
+  url: 'https://github.com/jm961'
+  imageUrl: '/authors/IMG_3110.jpg'
 seo:
-  title: 'Unfamiliar Codebase - roadmap.sh'
+  title: 'Unfamiliar Codebase - devpath.sh'
   description: 'Tips on getting familiar with an unfamiliar codebase'
 isNew: false
 type: 'visual'

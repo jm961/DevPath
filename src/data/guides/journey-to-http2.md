@@ -1,23 +1,23 @@
 ---
-title: 'Journey to HTTP/2'
-description: 'The evolution of HTTP. How it all started and where we stand today'
+title: "Journey to HTTP/2"
+description: "The evolution of HTTP. How it all started and where we stand today"
 author:
-  name: 'Kamran Ahmed'
-  url: 'https://twitter.com/kamranahmedse'
-  imageUrl: '/authors/kamranahmedse.jpeg'
+  name: "Jean Michel Eid"
+  url: 'https://github.com/jm961'
+  imageUrl: '/authors/IMG_3110.jpg'
 seo:
-  title: 'Journey to HTTP/2 - roadmap.sh'
-  description: 'The evolution of HTTP. How it all started and where we stand today'
+  title: "Journey to HTTP/2 - devpath.sh"
+  description: "The evolution of HTTP. How it all started and where we stand today"
 isNew: false
-type: 'textual'
+type: "textual"
 date: 2018-12-04
 sitemap:
   priority: 0.7
-  changefreq: 'weekly'
+  changefreq: "weekly"
 tags:
-  - 'guide'
-  - 'textual-guide'
-  - 'guide-sitemap'
+  - "guide"
+  - "textual-guide"
+  - "guide-sitemap"
 ---
 
 HTTP is the protocol that every web developer should know as it powers the whole web and knowing it is definitely going to help you develop better applications. In this guide, I am going to be discussing what HTTP is, how it came to be, where it is today and how did we get here.
@@ -57,8 +57,8 @@ Unlike `HTTP/0.9` which was only designed for HTML response, `HTTP/1.0` could no
 Here is how a sample `HTTP/1.0` request and response might have looked like:
 
 ```html
-GET / HTTP/1.0 Host: kamranahmed.info User-Agent: Mozilla/5.0 (Macintosh; Intel
-Mac OS X 10_10_5) Accept: */*
+GET / HTTP/1.0 Host: jm_eid.info User-Agent: Mozilla/5.0 (Macintosh; Intel Mac
+OS X 10_10_5) Accept: */*
 ```
 
 As you can see, alongside the request, client has also sent its personal information, required response type etc. While in `HTTP/0.9` client could never send such information because there were no headers.
@@ -162,7 +162,7 @@ By now, you must be convinced that why we needed another revision of the HTTP pr
 
 ##### Frames and Streams
 
-HTTP messages are now composed of one or more frames. There is a `HEADERS` frame for the meta data and `DATA` frame for the payload and there exist several other types of frames (`HEADERS`, `DATA`, `RST_STREAM`, `SETTINGS`, `PRIORITY` etc) that you can check through [the `HTTP/2` specs](https:/http2.github.iohttp2-spec/#FrameTypes).
+HTTP messages are now composed of one or more frames. There is a `HEADERS` frame for the meta data and `DATA` frame for the payload and there exist several other types of frames (`HEADERS`, `DATA`, `RST_STREAM`, `SETTINGS`, `PRIORITY` etc)
 
 Every `HTTP/2` request and response is given a unique stream ID and it is divided into frames. Frames are nothing but binary pieces of data. A collection of frames is called a Stream. Each frame has a stream id that identifies the stream to which it belongs and each frame has a common header. Also, apart from stream ID being unique, it is worth mentioning that, any request initiated by client uses odd numbers and the response from server has even numbers stream IDs.
 
@@ -199,7 +199,5 @@ Without any priority information, server processes the requests asynchronously i
 There was extensive discussion on whether security (through `TLS`) should be made mandatory for `HTTP/2` or not. In the end, it was decided not to make it mandatory. However, most vendors stated that they will only support `HTTP/2` when it is used over `TLS`. So, although `HTTP/2` doesn't require encryption by specs but it has kind of become mandatory by default anyway. With that out of the way, `HTTP/2` when implemented over `TLS` does impose some requirements i.e. `TLS` version `1.2` or higher must be used, there must be a certain level of minimum key sizes, ephemeral keys are required etc.
 
 `HTTP/2` is here and it has already [surpassed SPDY in adaption](https://caniuse.com/#search=http2) which is gradually increasing. `HTTP/2` has alot to offer in terms of performance gain and it is about time we should start using it.
-
-For anyone interested in further details here is the [link to specs](https:/http2.github.iohttp2-spec) and a link [demonstrating the performance benefits of `HTTP/2`](https://www.http2demo.io/).
 
 And that about wraps it up. Until next time! stay tuned.

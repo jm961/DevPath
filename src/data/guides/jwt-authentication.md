@@ -2,11 +2,11 @@
 title: 'JWT Authentication'
 description: 'Understand what is JWT authentication and how is it implemented'
 author:
-  name: 'Kamran Ahmed'
-  url: 'https://twitter.com/kamranahmedse'
-  imageUrl: '/authors/kamranahmedse.jpeg'
+  name: 'Jean Michel Eid'
+  url: 'https://github.com/jm961'
+  imageUrl: '/authors/IMG_3110.jpg'
 seo:
-  title: 'JWT Authentication - roadmap.sh'
+  title: 'JWT Authentication - devpath.sh'
   description: 'Understand what is JWT authentication and how is it implemented'
 isNew: false
 type: 'visual'

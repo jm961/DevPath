@@ -2,11 +2,11 @@
 title: 'Single Command Database Setup'
 description: 'Learn how to run MySQL, PostgreSQL, or MongoDB in Docker with single Command'
 author:
-  name: 'Kamran Ahmed'
-  url: 'https://twitter.com/kamranahmedse'
-  imageUrl: '/authors/kamranahmedse.jpeg'
+  name: 'Jean Michel Eid'
+  url: 'https://github.com/jm961'
+  imageUrl: '/authors/IMG_3110.jpg'
 seo:
-  title: 'Single Command Database Setup - roadmap.sh'
+  title: 'Single Command Database Setup - devpath.sh'
   description: 'Learn how to run MySQL, PostgreSQL, or MongoDB in Docker with single Command'
 isNew: true
 type: 'textual'
@@ -81,5 +81,3 @@ Now, you can use the following to run commands against the MongoDB instance:
 docker exec -it mdb \
   mongo
 ```
-
-Feel free to [submit a pull request](https://github.com/kamranahmedse/roadmap.sh/tree/master/src/data/guides/single-command-database-setup.md) by adding additional databases to this guide.

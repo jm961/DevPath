@@ -32,7 +32,7 @@ if (bestPracticeData.schema) {
   const bestPracticeSchema = bestPracticeData.schema;
   jsonLdSchema.push(
     generateArticleSchema({
-      url: `https://roadmap.sh/best-practices/${bestPracticeId}`,
+      url: `https://devpath.sh/best-practices/${bestPracticeId}`,
       headline: bestPracticeSchema.headline,
       description: bestPracticeSchema.description,
       datePublished: bestPracticeSchema.datePublished,
@@ -42,7 +42,7 @@ if (bestPracticeData.schema) {
   );
 }
 
-const contentContributionLink = `https://github.com/kamranahmedse/developer-roadmap/tree/master/src/data/best-practices/${bestPracticeId}/content`;
+const contentContributionLink = `/feedback?url=${encodeURIComponent(`/best-practices/${bestPracticeId}`)}&type=suggestion`;
 ---
 
 <BaseLayout
@@ -70,7 +70,7 @@ const contentContributionLink = `https://github.com/kamranahmedse/developer-road
         <div class='max-w-[1000px] container relative'>
           <ShareIcons
             description={bestPracticeData.briefDescription}
-            pageUrl={`https://roadmap.sh/best-practices/${bestPracticeId}`}
+            pageUrl={`https://devpath.sh/best-practices/${bestPracticeId}`}
           />
           <TopicOverlay contentContributionLink={contentContributionLink} />
 

@@ -1,30 +1,28 @@
 ---
-title: 'HTTP Basic Authentication'
-description: 'Learn what is HTTP Basic Authentication and how to implement it in Node.js'
+title: "HTTP Basic Authentication"
+description: "Learn what is HTTP Basic Authentication and how to implement it in Node.js"
 author:
-  name: 'Kamran Ahmed'
-  url: 'https://twitter.com/kamranahmedse'
-  imageUrl: '/authors/kamranahmedse.jpeg'
+  name: "Jean Michel Eid"
+  url: 'https://github.com/jm961'
+  imageUrl: '/authors/IMG_3110.jpg'
 seo:
-  title: 'HTTP Basic Authentication - roadmap.sh'
-  description: 'Learn what is HTTP Basic Authentication and how to implement it in Node.js'
+  title: "HTTP Basic Authentication - devpath.sh"
+  description: "Learn what is HTTP Basic Authentication and how to implement it in Node.js"
 isNew: false
-type: 'textual'
+type: "textual"
 date: 2022-10-03
 sitemap:
   priority: 0.7
-  changefreq: 'weekly'
+  changefreq: "weekly"
 tags:
-  - 'guide'
-  - 'textual-guide'
-  - 'guide-sitemap'
+  - "guide"
+  - "textual-guide"
+  - "guide-sitemap"
 ---
 
-Our last guide was about the [basics of authentication](/guides/basics-of-authentication), where we discussed authentication, authorization, types of authentication, authentication factors, authentication strategies, and so on.
+Building on our [previous guide about the basics of authentication](/guides/basics-of-authentication), where we covered authentication, authorization, authentication factors, and various authentication strategies, this guide focuses specifically on HTTP Basic Authentication.
 
-In this guide today, we will be learning about basic authentication, and we will see how we can implement Basic Authentication in Node.js. We have a [visual guide on the basic authentication](/guides/basic-authentication) and an illustrative video, watch the video below or continue reading:
-
-<iframe class="w-full aspect-video mb-5" src="https://www.youtube.com/embed/mwccHwUn7Gc" title="HTTP Basic Authentication"></iframe>
+In this comprehensive guide, you'll learn what HTTP Basic Authentication is, how it works under the hood, and how to implement it in a Node.js application. We'll explore the complete authentication flow and provide practical code examples.
 
 ## What is Basic Authentication?
 
@@ -67,15 +65,11 @@ Upon receiving the request, the server will decode and verify the credentials. I
 
 So that is how Basic Authentication works.
 
-## Basic Authentication in Node.js
-
-I have prepared the sample project in Node.js, which can be found on GitHub [kamranahmedse/node-basic-auth-example](https://github.com/kamranahmedse/node-basic-auth-example). If you look at the codebase of the project, we have two files `index.js` with the following content:
-
 ```javascript
 // src/index.js
 
-const express = require('express');
-const authMiddleware = require('./auth');
+const express = require("express");
+const authMiddleware = require("./auth");
 
 const app = express();
 const port = 3000;
@@ -84,8 +78,8 @@ const port = 3000;
 // basic authentication implementation
 app.use(authMiddleware);
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
+app.get("/", (req, res) => {
+  res.send("Hello World!");
 });
 
 app.listen(port, () => {
@@ -97,7 +91,7 @@ As you can see, it's just a regular express server. `authMiddleware` registratio
 
 ```javascript
 // src/auth.js
-const base64 = require('base-64');
+const base64 = require("base-64");
 
 function decodeCredentials(authHeader) {
   // ...
@@ -106,17 +100,17 @@ function decodeCredentials(authHeader) {
 module.exports = function (req, res, next) {
   // Take the header and decode credentials
   const [username, password] = decodeCredentials(
-    req.headers.authorization || ''
+    req.headers.authorization || ""
   );
 
   // Verify the credentials
-  if (username === 'admin' && password === 'admin') {
+  if (username === "admin" && password === "admin") {
     return next();
   }
 
   // Respond with authenticate header on auth failure.
-  res.set('WWW-Authenticate', 'Basic realm="user_pages"');
-  res.status(401).send('Authentication required.');
+  res.set("WWW-Authenticate", 'Basic realm="user_pages"');
+  res.status(401).send("Authentication required.");
 };
 ```
 

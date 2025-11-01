@@ -1,5 +1,16 @@
 node_modules/
 .env
+.env.local
+.env.*.local
 *.log
 .DS_Store
+coverage/
+.vscode/
+.idea/
 
+# Docker
+docker-compose.override.yml
+
+# Database
+*.sql
+*.dump

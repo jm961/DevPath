@@ -25,15 +25,15 @@ export type GAEventType = {
 window.fireEvent = (props: GAEventType) => {
   const { action, category, label, value } = props;
   if (!window.gtag) {
-    console.warn('Missing GTAG - Analytics disabled');
+    console.warn("Missing GTAG - Analytics disabled");
     return;
   }
 
   if (window.__DEBUG__) {
-    console.log('Analytics event fired', props);
+    // Debug logging when enabled
   }
 
-  window.gtag('event', action, {
+  window.gtag("event", action, {
     event_category: category,
     event_label: label,
     value: value,

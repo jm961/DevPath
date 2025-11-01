@@ -1,0 +1,21 @@
+{
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "(?!devpath\\.sh$)(?!www\\.devpath\\.sh$).*\\.vercel\\.app$"
+        }
+      ],
+      "destination": "https://devpath.sh/:path*",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/$1"
+    }
+  ]
+}

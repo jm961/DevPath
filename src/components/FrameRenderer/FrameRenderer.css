@@ -377,7 +377,7 @@ svg .clickable-group:focus {
   box-shadow: 0 16px 64px rgba(0, 0, 0, 0.6),
     0 0 0 1px rgba(59, 130, 246, 0.25) inset, 0 0 80px rgba(59, 130, 246, 0.2),
     0 0 120px rgba(139, 92, 246, 0.1);
-  overflow: visible;
+  overflow: hidden;
   transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   padding: 3rem;
@@ -453,8 +453,9 @@ svg .clickable-group:focus {
   position: relative;
   z-index: 1;
 
-  /* Allow SVG to grow naturally */
+  /* Contain SVG properly */
   overflow: visible;
+  max-width: 100%;
 }
 
 /* Journey path styling - make it look like an actual roadmap */

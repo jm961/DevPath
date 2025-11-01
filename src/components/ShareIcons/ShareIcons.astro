@@ -8,7 +8,7 @@ export interface Props {
 
 const { pageUrl, description } = Astro.props;
 
-const twitterUrl = `https://twitter.com/intent/tweet?text=${description}&url=${pageUrl}`;
+const githubUrl = `https://github.com/jm961`;
 const fbUrl = `https://www.facebook.com/sharer/sharer.php?quote=${description}&u=${pageUrl}`;
 const hnUrl = `https://news.ycombinator.com/submitlink?t=${description}&u=${pageUrl}`;
 const redditUrl = `https://www.reddit.com/submit?title=${description}&url=${pageUrl}`;
@@ -17,10 +17,10 @@ const redditUrl = `https://www.reddit.com/submit?title=${description}&url=${page
 <div class='absolute left-[-60px] top-[110px] h-full hidden' id='page-share-icons'>
   <div class='flex sticky top-[100px] flex-col gap-3'>
     <a 
-      href={twitterUrl} 
+      href={githubUrl} 
       target='_blank' 
       class='flex h-10 w-10 items-center justify-center rounded-lg bg-white/5 text-muted transition-all hover:bg-primary/20 hover:text-primary'
-      aria-label='Share on Twitter'
+      aria-label='Visit GitHub Profile'
     >
       <Icon icon='twitter' />
     </a>

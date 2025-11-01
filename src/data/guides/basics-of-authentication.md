@@ -1,32 +1,28 @@
 ---
-title: 'Basics of Authentication'
-description: 'Learn the basics of Authentication and Authorization'
+title: "Basics of Authentication"
+description: "Learn the basics of Authentication and Authorization"
 author:
-  name: 'Kamran Ahmed'
-  url: 'https://twitter.com/kamranahmedse'
-  imageUrl: '/authors/kamranahmedse.jpeg'
+  name: "Jean Michel Eid"
+  url: 'https://github.com/jm961'
+  imageUrl: '/authors/IMG_3110.jpg'
 seo:
-  title: 'Basics of Authentication - roadmap.sh'
-  description: 'Learn the basics of Authentication and Authorization'
+  title: "Basics of Authentication - devpath.sh"
+  description: "Learn the basics of Authentication and Authorization"
 isNew: false
-type: 'textual'
+type: "textual"
 date: 2022-09-21
 sitemap:
   priority: 0.7
-  changefreq: 'weekly'
+  changefreq: "weekly"
 tags:
-  - 'guide'
-  - 'textual-guide'
-  - 'guide-sitemap'
+  - "guide"
+  - "textual-guide"
+  - "guide-sitemap"
 ---
 
-Our last video series was about data structures. We looked at the most common data structures, their use cases, pros and cons, and the different operations you could perform on each data structure.
+Authentication is a fundamental concept in software development and cybersecurity. Understanding how authentication works is crucial for building secure applications and protecting user data.
 
-Today, we are kicking off a similar series for Authentication strategies where we will discuss everything you need to know about authentication and authentication strategies.
-
-In this guide today will be talking about what authentication is, and we will cover some terminology that will help us later in the series. You can watch the video below or continue reading this guide.
-
-<iframe class="w-full aspect-video mb-5" src="https://www.youtube.com/embed/Mcyt9SrZT6g" title="Basics of Authentication"></iframe>
+This comprehensive guide covers the basics of authentication, exploring different authentication factors, strategies, and the key differences between authentication and authorization. Whether you're a beginner or looking to solidify your understanding, this guide will provide you with the essential knowledge you need.
 
 ## What is Authentication?
 
@@ -101,6 +97,4 @@ Given below is the list of common authentication strategies:
 - OAuth - Open Authorization
 - Single Sign On (SSO)
 
-In this series of illustrated videos and textual guides, we will be going through each of the strategies discussing what they are, how they are implemented, the pros and cons and so on.
-
-So stay tuned, and I will see you in the next one.
+Throughout this series, we will explore each of these authentication strategies in detail, covering their implementations, use cases, advantages, and potential drawbacks. This knowledge will help you make informed decisions when designing and implementing authentication in your applications.

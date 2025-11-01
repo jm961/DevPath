@@ -2,11 +2,11 @@
 title: 'HTTP Caching'
 description: 'Everything you need to know about web caching'
 author:
-  name: 'Kamran Ahmed'
-  url: 'https://twitter.com/kamranahmedse'
-  imageUrl: '/authors/kamranahmedse.jpeg'
+  name: 'Jean Michel Eid'
+  url: 'https://github.com/jm961'
+  imageUrl: '/authors/IMG_3110.jpg'
 seo:
-  title: 'HTTP Caching - roadmap.sh'
+  title: 'HTTP Caching - devpath.sh'
   description: 'Everything you need to know about web caching'
 isNew: false
 type: 'textual'

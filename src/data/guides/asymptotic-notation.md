@@ -2,11 +2,11 @@
 title: 'Asymptotic Notation'
 description: 'Learn the basics of measuring the time and space complexity of algorithms'
 author:
-  name: 'Kamran Ahmed'
-  url: 'https://twitter.com/kamranahmedse'
-  imageUrl: '/authors/kamranahmedse.jpeg'
+  name: 'Jean Michel Eid'
+  url: 'https://github.com/jm961'
+  imageUrl: '/authors/IMG_3110.jpg'
 seo:
-  title: 'Asymptotic Notation - roadmap.sh'
+  title: 'Asymptotic Notation - devpath.sh'
   description: 'Learn the basics of measuring the time and space complexity of algorithms'
 isNew: false
 type: 'visual'

@@ -1,4 +1,4 @@
-import type { FAQType } from '../components/FAQs/FAQs.astro';
+import type { FAQType } from "../components/FAQs/FAQs.astro";
 
 type ArticleSchemaProps = {
   url: string;
@@ -14,26 +14,26 @@ export function generateArticleSchema(article: ArticleSchemaProps) {
     article;
 
   return {
-    '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
     mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': url,
+      "@type": "WebPage",
+      "@id": url,
     },
     headline: headline,
     description: description,
     image: imageUrl,
     author: {
-      '@type': 'Person',
-      name: 'Kamran Ahmed',
-      url: 'https://twitter.com/kamranahmedse',
+      "@type": "Person",
+      name: "Jean Michel Eid",
+      url: "https://github.com/jm961",
     },
     publisher: {
-      '@type': 'Organization',
-      name: 'roadmap.sh',
+      "@type": "Organization",
+      name: "devpath.sh",
       logo: {
-        '@type': 'ImageObject',
-        url: 'https://roadmap.sh/images/brand-square.png',
+        "@type": "ImageObject",
+        url: "https://devpath.sh/images/brand-square.png",
       },
     },
     datePublished: datePublished,
@@ -43,14 +43,14 @@ export function generateArticleSchema(article: ArticleSchemaProps) {
 
 export function generateFAQSchema(faqs: FAQType[]) {
   return {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
     mainEntity: faqs.map((faq) => ({
-      '@type': 'Question',
+      "@type": "Question",
       name: faq.question,
       acceptedAnswer: {
-        '@type': 'Answer',
-        text: faq.answer.join(' '),
+        "@type": "Answer",
+        text: faq.answer.join(" "),
       },
     })),
   };

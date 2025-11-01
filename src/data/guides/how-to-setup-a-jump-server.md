@@ -2,11 +2,11 @@
 title: 'Jump Servers: What, Why and How'
 description: 'Learn what is a Jump Server and how to set it up for SSH access.'
 author:
-  name: 'Kamran Ahmed'
-  url: 'https://twitter.com/kamranahmedse'
-  imageUrl: '/authors/kamranahmedse.jpeg'
+  name: 'Jean Michel Eid'
+  url: 'https://github.com/jm961'
+  imageUrl: '/authors/IMG_3110.jpg'
 seo:
-  title: 'Jump Servers: What, Why and How - roadmap.sh'
+  title: 'Jump Servers: What, Why and How - devpath.sh'
   description: 'Learn what is a Jump Server and how to set it up for SSH access.'
 isNew: true
 type: 'textual'

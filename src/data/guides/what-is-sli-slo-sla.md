@@ -2,11 +2,11 @@
 title: 'SLIs, SLOs and SLAs'
 description: 'Learn what are different indicators for performance identification of any service.'
 author:
-  name: 'Kamran Ahmed'
-  url: 'https://twitter.com/kamranahmedse'
-  imageUrl: '/authors/kamranahmedse.jpeg'
+  name: 'Jean Michel Eid'
+  url: 'https://github.com/jm961'
+  imageUrl: '/authors/IMG_3110.jpg'
 seo:
-  title: 'SLIs, SLOs and SLAs - roadmap.sh'
+  title: 'SLIs, SLOs and SLAs - devpath.sh'
   description: 'Learn what are different indicators for performance identification of any service.'
 isNew: false
 type: 'visual'

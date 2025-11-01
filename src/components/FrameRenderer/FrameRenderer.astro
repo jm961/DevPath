@@ -36,10 +36,8 @@ const {
 </div>
 
 <script>
-  console.log('🔧 Loading roadmap renderer module...');
   
   import('./renderer.js').then(module => {
-    console.log('✅ Renderer module loaded');
     const renderer = new module.Renderer();
     renderer.init();
   }).catch(error => {

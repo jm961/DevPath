@@ -89,31 +89,6 @@ const difficultyStyle = difficulty ? difficultyConfig[difficulty] : null;
     <div class='flex flex-wrap items-center gap-2 sm:gap-3'>
       {!hasSearch && (
         <>
-          {isRoadmapReady && (
-            <>
-              <button
-                data-guest-required
-                data-popup='login-popup'
-                class='btn-primary inline-flex hidden items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium'
-                aria-label='Download Roadmap'
-              >
-                <Icon icon='download' class='h-4 w-4' />
-                <span>Download PDF</span>
-              </button>
-
-              <a
-                data-auth-required
-                class='btn-primary inline-flex hidden items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium'
-                aria-label='Download Roadmap'
-                target='_blank'
-                href={`/pdfs/roadmaps/${roadmapId}.pdf`}
-              >
-                <Icon icon='download' class='h-4 w-4' />
-                <span>Download PDF</span>
-              </a>
-            </>
-          )}
-
           <button
             data-guest-required
             data-popup='login-popup'
@@ -126,8 +101,7 @@ const difficultyStyle = difficulty ? difficultyConfig[difficulty] : null;
 
           {isRoadmapReady && (
             <a
-              href={`https://github.com/kamranahmedse/developer-roadmap/issues/new?title=[Suggestion] ${title}`}
-              target='_blank'
+              href={`/feedback?url=${encodeURIComponent(`/${roadmapId}`)}&type=suggestion`}
               class='btn-ghost inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium'
               aria-label='Suggest Changes'
             >

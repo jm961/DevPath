@@ -2,11 +2,11 @@
 title: 'Session Based Authentication'
 description: 'Learn what is Session Based Authentication and how to implement it in Node.js'
 author:
-  name: 'Kamran Ahmed'
-  url: 'https://twitter.com/kamranahmedse'
-  imageUrl: '/authors/kamranahmedse.jpeg'
+  name: 'Jean Michel Eid'
+  url: 'https://github.com/jm961'
+  imageUrl: '/authors/IMG_3110.jpg'
 seo:
-  title: 'Session Based Authentication - roadmap.sh'
+  title: 'Session Based Authentication - devpath.sh'
   description: 'Learn what is Session Based Authentication and how to implement it in Node.js'
 isNew: false
 type: 'textual'
@@ -43,7 +43,6 @@ And that is how session-based authentication works.
 
 Now that we know what session-based authentication is, let's see how we can implement session-based authentication in Node.js.
 
-Please note that, for the sake of simplicity, I have intentionally kept the project strictly relevant to the Session Based Authentication and have left out a lot of details that a production-ready application may require. Also, if you don't want to follow along, project [codebase can be found on GitHub](https://github.com/kamranahmedse/node-session-auth-example).
 
 First things first, create an empty directory that will be holding our application.
 

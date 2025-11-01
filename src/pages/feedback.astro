@@ -1,0 +1,73 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FeedbackForm from '../components/FeedbackForm';
+---
+
+<BaseLayout
+  title='Feedback & Suggestions - DevPath'
+  description='Share your suggestions, corrections, or questions to help us improve DevPath.'
+  permalink='/feedback'
+>
+  <div class='container px-6 py-16 sm:py-24'>
+    <div class='mx-auto max-w-4xl'>
+      <!-- Header -->
+      <div class='mb-12 text-center'>
+        <h1 class='mb-4 text-4xl font-black text-white sm:text-5xl'>
+          We'd Love Your Feedback
+        </h1>
+        <p class='mx-auto max-w-2xl text-lg text-gray-400'>
+          Found an error? Have a suggestion? Want to see something new? 
+          Let us know! Your feedback helps make DevPath better for everyone.
+        </p>
+      </div>
+
+      <!-- Features Grid -->
+      <div class='mb-12 grid gap-4 sm:grid-cols-3'>
+        <div class='rounded-xl border border-white/5 bg-white/[0.02] p-6 text-center'>
+          <div class='mb-3 inline-flex h-12 w-12 items-center justify-center rounded-full bg-blue-500/10 text-blue-400 ring-1 ring-blue-500/20'>
+            <svg class='h-6 w-6' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+              <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z'></path>
+            </svg>
+          </div>
+          <h3 class='mb-2 font-bold text-white'>Suggestions</h3>
+          <p class='text-sm text-gray-400'>Share ideas for new features or improvements</p>
+        </div>
+
+        <div class='rounded-xl border border-white/5 bg-white/[0.02] p-6 text-center'>
+          <div class='mb-3 inline-flex h-12 w-12 items-center justify-center rounded-full bg-green-500/10 text-green-400 ring-1 ring-green-500/20'>
+            <svg class='h-6 w-6' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+              <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'></path>
+            </svg>
+          </div>
+          <h3 class='mb-2 font-bold text-white'>Corrections</h3>
+          <p class='text-sm text-gray-400'>Report typos, errors, or outdated content</p>
+        </div>
+
+        <div class='rounded-xl border border-white/5 bg-white/[0.02] p-6 text-center'>
+          <div class='mb-3 inline-flex h-12 w-12 items-center justify-center rounded-full bg-purple-500/10 text-purple-400 ring-1 ring-purple-500/20'>
+            <svg class='h-6 w-6' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+              <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'></path>
+            </svg>
+          </div>
+          <h3 class='mb-2 font-bold text-white'>Questions</h3>
+          <p class='text-sm text-gray-400'>Ask about content or request clarification</p>
+        </div>
+      </div>
+
+      <!-- Feedback Form -->
+      <div class='rounded-2xl border border-white/10 bg-white/[0.02] p-8 sm:p-12'>
+        <FeedbackForm client:load />
+      </div>
+
+      <!-- Additional Info -->
+      <div class='mt-8 text-center text-sm text-gray-500'>
+        <p>
+          Prefer email? Reach us at 
+          <a href='mailto:feedback@devpath.sh' class='text-primary hover:text-primary-light'>
+            feedback@devpath.sh
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

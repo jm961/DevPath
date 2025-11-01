@@ -1,49 +1,49 @@
 // https://astro.build/config
-import sitemap from '@astrojs/sitemap';
-import tailwind from '@astrojs/tailwind';
-import { defineConfig } from 'astro/config';
-import compress from 'astro-compress';
-import rehypeExternalLinks from 'rehype-external-links';
-import { serializeSitemap, shouldIndexPage } from './sitemap.mjs';
-import preact from '@astrojs/preact';
+import sitemap from "@astrojs/sitemap";
+import tailwind from "@astrojs/tailwind";
+import { defineConfig } from "astro/config";
+import compress from "astro-compress";
+import rehypeExternalLinks from "rehype-external-links";
+import { serializeSitemap, shouldIndexPage } from "./sitemap.mjs";
+import preact from "@astrojs/preact";
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://roadmap.sh/',
+  site: "https://devpath.sh/",
   markdown: {
     shikiConfig: {
-      theme: 'dracula',
+      theme: "dracula",
     },
     rehypePlugins: [
       [
         rehypeExternalLinks,
         {
-          target: '_blank',
+          target: "_blank",
           rel: function (element) {
             const href = element.properties.href;
             const whiteListedStarts = [
-              '/',
-              '#',
-              'mailto:',
-              'https://github.com/kamranahmedse',
-              'https://thenewstack.io',
-              'https://cs.fyi',
-              'https://roadmap.sh',
+              "/",
+              "#",
+              "mailto:",
+              "https://thenewstack.io",
+              "https://cs.fyi",
+              "https://devpath.sh",
             ];
 
             if (whiteListedStarts.some((start) => href.startsWith(start))) {
               return [];
             }
 
-            return 'noopener noreferrer nofollow';
+            return "noopener noreferrer nofollow";
           },
         },
       ],
     ],
   },
   build: {
-    format: 'file',
+    format: "directory",
   },
+  trailingSlash: "ignore",
   integrations: [
     tailwind({
       config: {

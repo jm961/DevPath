@@ -2,11 +2,11 @@
 title: 'SSO — Single Sign On'
 description: 'Learn the basics of SAML and understand how does Single Sign On work.'
 author:
-  name: 'Kamran Ahmed'
-  url: 'https://twitter.com/kamranahmedse'
-  imageUrl: '/authors/kamranahmedse.jpeg'
+  name: 'Jean Michel Eid'
+  url: 'https://github.com/jm961'
+  imageUrl: '/authors/IMG_3110.jpg'
 seo:
-  title: 'SSO — Single Sign On - roadmap.sh'
+  title: 'SSO — Single Sign On - devpath.sh'
   description: 'Learn the basics of SAML and understand how does Single Sign On work.'
 isNew: false
 type: 'visual'

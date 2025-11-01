@@ -132,10 +132,7 @@ body {
   .btn {
     @apply relative inline-flex items-center justify-center overflow-hidden rounded-full px-8 py-3.5 text-sm font-bold;
     letter-spacing: 0.02em;
-    transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1),
-      box-shadow 0.15s cubic-bezier(0.4, 0, 0.2, 1),
-      background-color 0.15s cubic-bezier(0.4, 0, 0.2, 1),
-      border-color 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: transform;
     backface-visibility: hidden;
     -webkit-font-smoothing: subpixel-antialiased;
@@ -153,13 +150,13 @@ body {
   }
 
   .btn-primary:hover {
-    transform: translate3d(0, -2px, 0);
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4),
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.45),
       inset 0 1px 0 rgba(255, 255, 255, 0.3);
   }
 
   .btn-primary:active {
-    transform: translate3d(0, 0, 0);
+    transform: translateY(0);
     box-shadow: 0 1px 4px rgba(59, 130, 246, 0.3),
       inset 0 1px 0 rgba(255, 255, 255, 0.2);
   }
@@ -177,13 +174,13 @@ body {
   .btn-ghost:hover {
     background: rgba(255, 255, 255, 0.1);
     border-color: rgba(59, 130, 246, 0.4);
-    transform: translate3d(0, -2px, 0);
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15),
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.2),
       inset 0 1px 0 rgba(255, 255, 255, 0.2);
   }
 
   .btn-ghost:active {
-    transform: translate3d(0, 0, 0);
+    transform: translateY(0);
   }
 
   .btn-outline {

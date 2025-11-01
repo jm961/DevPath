@@ -15,6 +15,9 @@ export class Topic {
     this.activeResourceId = null;
     this.activeTopicId = null;
 
+    // Cache for content to avoid redundant fetches
+    this.contentCache = new Map();
+
     this.handleRoadmapTopicClick = this.handleRoadmapTopicClick.bind(this);
     this.handleBestPracticeTopicClick =
       this.handleBestPracticeTopicClick.bind(this);
@@ -65,20 +68,12 @@ export class Topic {
   }
 
   rightClickListener(e) {
-    console.log(e.detail);
     const groupId = e.target?.closest("g")?.dataset?.groupId;
     if (!groupId) {
       return;
     }
 
     e.preventDefault();
-
-    console.log(
-      "Right click on topic",
-      groupId,
-      this.activeResourceId,
-      this.activeResourceType
-    );
 
     if (this.isTopicDone(groupId)) {
       this.markAsPending(
@@ -138,22 +133,43 @@ export class Topic {
   }
 
   renderTopicFromUrl(url) {
-    return fetch(url)
+    // Use the optimized content-only endpoint
+    const contentUrl = `/content${url}`;
+
+    // Check cache first for instant loading
+    if (this.contentCache.has(contentUrl)) {
+      const cachedContent = this.contentCache.get(contentUrl);
+      this.populate(cachedContent.cloneNode(true));
+      return Promise.resolve();
+    }
+
+    return fetch(contentUrl)
       .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
         return res.text();
       })
-      .then((topicHtml) => {
-        // It's full HTML with page body, head etc.
-        // We only need the inner HTML of the #main-content
-        const node = new DOMParser().parseFromString(topicHtml, "text/html");
+      .then((contentHtml) => {
+        // The content endpoint returns just the #main-content element
+        // Parse it directly without needing to extract from full page
+        const node = new DOMParser().parseFromString(contentHtml, "text/html");
+        const content =
+          node.getElementById("main-content") || node.body.firstElementChild;
 
-        return node.getElementById("main-content");
+        // Cache the content for future use
+        if (content && this.contentCache.size < 50) {
+          // Limit cache size to prevent memory issues
+          this.contentCache.set(contentUrl, content.cloneNode(true));
+        }
+
+        return content;
       })
       .then((content) => {
         this.populate(content);
       })
       .catch((e) => {
-        console.error(e);
+        console.error("Error loading topic content:", e);
         this.populate("Error loading the content!");
       });
   }
@@ -161,7 +177,6 @@ export class Topic {
   handleBestPracticeTopicToggle(e) {
     const { resourceId: bestPracticeId, topicId } = e.detail;
     if (!topicId || !bestPracticeId) {
-      console.log("Missing topic or bestPracticeId: ", e.detail);
       return;
     }
 
@@ -180,7 +195,6 @@ export class Topic {
   handleBestPracticeTopicPending(e) {
     const { resourceId: bestPracticeId, topicId } = e.detail;
     if (!topicId || !bestPracticeId) {
-      console.log("Missing topic or bestPracticeId: ", e.detail);
       return;
     }
 
@@ -190,7 +204,6 @@ export class Topic {
   handleBestPracticeTopicClick(e) {
     const { resourceId: bestPracticeId, topicId } = e.detail;
     if (!topicId || !bestPracticeId) {
-      console.log("Missing topic or bestPracticeId: ", e.detail);
       return;
     }
 
@@ -210,9 +223,7 @@ export class Topic {
 
   handleRoadmapTopicClick(e) {
     const { resourceId: roadmapId, topicId } = e.detail;
-    console.log(e.detail);
     if (!topicId || !roadmapId) {
-      console.log("Missing topic or roadmap: ", e.detail);
       return;
     }
 
@@ -269,8 +280,6 @@ export class Topic {
   async markAsDone(topicId, resourceId, resourceType) {
     const updatedTopicId = topicId.replace(/^\d+-/, "");
 
-    console.log("Marking as done: ", updatedTopicId, resourceId, resourceType);
-
     const { response, error } = await toggleMarkResourceDoneApi({
       resourceId,
       topicId: updatedTopicId,
@@ -283,7 +292,6 @@ export class Topic {
     });
 
     if (response) {
-      console.log("✅ Marked as done in backend");
       this.close();
     } else {
       console.warn("⚠️ Backend API failed, but UI updated locally:", error);
@@ -310,7 +318,6 @@ export class Topic {
     });
 
     if (response) {
-      console.log("✅ Marked as pending in backend");
       this.close();
     } else {
       console.warn("⚠️ Backend API failed, but UI updated locally:", error);

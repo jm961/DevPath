@@ -1,23 +1,23 @@
 ---
-title: 'How does the internet work?'
-description: 'Learn the basics of internet and everything involved with this short video series'
+title: "How does the internet work?"
+description: "Learn the basics of internet and everything involved with this short video series"
 author:
-  name: 'Kamran Ahmed'
-  url: 'https://twitter.com/kamranahmedse'
-  imageUrl: '/authors/kamranahmedse.jpeg'
+  name: "Jean Michel Eid"
+  url: 'https://github.com/jm961'
+  imageUrl: '/authors/IMG_3110.jpg'
 seo:
-  title: 'How does the internet work? - roadmap.sh'
-  description: 'Learn the basics of internet and everything involved with this short video series'
+  title: "How does the internet work? - devpath.sh"
+  description: "Learn the basics of internet and everything involved with this short video series"
 isNew: false
-type: 'textual'
+type: "textual"
 date: 2021-02-29
 sitemap:
   priority: 0.7
-  changefreq: 'weekly'
+  changefreq: "weekly"
 tags:
-  - 'guide'
-  - 'textual-guide'
-  - 'guide-sitemap'
+  - "guide"
+  - "textual-guide"
+  - "guide-sitemap"
 ---
 
 Since the explosive growth of web-based applications, every developer stands to benefit from understanding how the Internet works. Through this article and its accompanying introductory series of short videos about the Internet from [code.org](https://code.org), you will learn the basics of the Internet and how it works. After going through this article, you will be able to answer the following questions:
@@ -80,4 +80,4 @@ Cybersecurity refers to the protective measures against criminal activity accomp
 
 <iframe class="w-full aspect-video mb-5" width="100%" height="400" src="https://www.youtube.com/embed/AuYNXgO_f3Y" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-And that wraps it up for this article. To learn more about the Internet, [Kamran Ahmed](https://twitter.com/kamranahmedse) has a nice little guide on [DNS: How a website is found on the Internet](/guides/dns-in-one-picture). Also, go through the episodes of [howdns.works](https://howdns.works/) and read this [cartoon intro to DNS over HTTPS](https://hacks.mozilla.org/2018/05/a-cartoon-intro-to-dns-over-https/).
+And that wraps it up for this article. To learn more about the Internet, go through the episodes of [howdns.works](https://howdns.works/) and read this [cartoon intro to DNS over HTTPS](https://hacks.mozilla.org/2018/05/a-cartoon-intro-to-dns-over-https/).

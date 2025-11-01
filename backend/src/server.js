@@ -58,7 +58,7 @@ if (process.env.NODE_ENV === "production") {
   app.use((req, res, next) => {
     const allowedHosts = ["api.devpath.sh"];
     const host = req.get("host");
-    
+
     if (!allowedHosts.includes(host)) {
       return res.status(403).json({
         status: "error",

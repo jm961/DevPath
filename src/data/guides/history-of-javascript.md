@@ -2,11 +2,11 @@
 title: 'Brief History of JavaScript'
 description: 'How JavaScript was introduced and evolved over the years'
 author:
-  name: 'Kamran Ahmed'
-  url: 'https://twitter.com/kamranahmedse'
-  imageUrl: '/authors/kamranahmedse.jpeg'
+  name: 'Jean Michel Eid'
+  url: 'https://github.com/jm961'
+  imageUrl: '/authors/IMG_3110.jpg'
 seo:
-  title: 'Brief History of JavaScript - roadmap.sh'
+  title: 'Brief History of JavaScript - devpath.sh'
   description: 'How JavaScript was introduced and evolved over the years'
 isNew: false
 type: 'textual'

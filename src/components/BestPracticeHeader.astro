@@ -50,37 +50,6 @@ const isBestPracticeReady = !isUpcoming;
 
     <!-- Actions -->
     <div class='flex flex-wrap items-center gap-2 sm:gap-3'>
-      {isBestPracticeReady && (
-        <>
-          <button
-            data-guest-required
-            data-popup='login-popup'
-            class='btn-primary inline-flex hidden items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium'
-            aria-label='Download Best Practice'
-            ga-category='Subscription'
-            ga-action='Clicked Popup Opener'
-            ga-label='Download Roadmap Popup'
-          >
-            <Icon icon='download' class='h-4 w-4' />
-            <span>Download PDF</span>
-          </button>
-
-          <a
-            data-auth-required
-            class='btn-primary inline-flex hidden items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium'
-            aria-label='Download Best Practice'
-            ga-category='Subscription'
-            ga-action='Clicked Popup Opener'
-            ga-label='Download Roadmap Popup'
-            target='_blank'
-            href={`/pdfs/best-practices/${bestPracticeId}.pdf`}
-          >
-            <Icon icon='download' class='h-4 w-4' />
-            <span>Download PDF</span>
-          </a>
-        </>
-      )}
-
       <button
         data-guest-required
         data-popup='login-popup'
@@ -96,8 +65,7 @@ const isBestPracticeReady = !isUpcoming;
 
       {isBestPracticeReady && (
         <a
-          href={`https://github.com/kamranahmedse/developer-roadmap/issues/new?title=[Suggestion] ${title}`}
-          target='_blank'
+          href={`/feedback?url=${encodeURIComponent(`/best-practices/${bestPracticeId}`)}&type=suggestion`}
           class='btn-ghost inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium'
           aria-label='Suggest Changes'
         >

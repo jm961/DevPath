@@ -2,11 +2,11 @@
 title: 'DHCP in One Picture'
 description: 'Here is what happens when a new device joins the network.'
 author:
-  name: 'Kamran Ahmed'
-  url: 'https://twitter.com/kamranahmedse'
-  imageUrl: '/authors/kamranahmedse.jpeg'
+  name: 'Jean Michel Eid'
+  url: 'https://github.com/jm961'
+  imageUrl: '/authors/IMG_3110.jpg'
 seo:
-  title: 'DHCP in One Picture - roadmap.sh'
+  title: 'DHCP in One Picture - devpath.sh'
   description: 'Here is what happens when a new device joins the network.'
 isNew: false
 type: 'visual'

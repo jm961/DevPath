@@ -23,7 +23,7 @@ sponsor:
 schema:
   headline: 'API Security Best Practices'
   description: 'Detailed list of best practices to make your APIs secure. Each best practice carries further details and how to implement that best practice.'
-  imageUrl: 'https://roadmap.sh/best-practices/api-security.png'
+  imageUrl: 'https://devpath.sh/best-practices/api-security.png'
   datePublished: '2023-02-21'
   dateModified: '2023-02-21'
 seo:

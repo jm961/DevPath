@@ -69,8 +69,6 @@ export class Renderer {
     const svg = this.containerEl.querySelector("svg");
     if (!svg) return;
 
-    console.log("🎨 Enhancing SVG with curved connectors...");
-
     // Add gradient definitions
     this.addGradientDefinitions(svg);
 
@@ -171,8 +169,6 @@ export class Renderer {
       `;
       document.head.appendChild(style);
     }
-
-    console.log("✨ Enhanced", lines.length, "connectors");
   }
 
   /**
@@ -224,8 +220,6 @@ export class Renderer {
         resizedCount++;
       }
     });
-
-    console.log("📏 Resized", resizedCount, "boxes to fit content");
   }
 
   /**
@@ -355,33 +349,22 @@ export class Renderer {
       return null;
     }
 
-    console.log(
-      "🚀 Loading roadmap:",
-      this.resourceType,
-      this.resourceId,
-      jsonUrl
-    );
-
     this.containerEl.innerHTML = "";
     return Promise.all([
       fetch(jsonUrl)
         .then((res) => {
-          console.log("📦 Fetch response:", res.status);
           if (!res.ok) {
             throw new Error(`Failed to fetch: ${res.status} ${res.statusText}`);
           }
           return res.json();
         })
         .then((json) => {
-          console.log("✅ JSON loaded, converting to SVG...");
           return wireframeJSONToSVG(json, {
             fontURL: "/fonts/balsamiq.woff2",
           });
         })
         .then((svg) => {
-          console.log("🎨 SVG created successfully");
           this.containerEl.replaceChildren(svg);
-          console.log("✨ Roadmap rendered!");
 
           // Enhance with curved connectors after a short delay
           setTimeout(() => {
@@ -521,20 +504,51 @@ export class Renderer {
     );
   }
 
-  init() {
-    console.log("🎯 Renderer.init() called");
+  handleSvgHover(e) {
+    // Prefetch content on hover for instant loading
+    const targetGroup = e.target.closest("g") || {};
+    const groupId = targetGroup.dataset ? targetGroup.dataset.groupId : "";
 
+    if (!groupId || /^ext_link|^json:|^check:/.test(groupId)) {
+      return;
+    }
+
+    const normalizedGroupId = groupId.replace(/^\d+-/, "");
+    const topicUrl = `/${this.resourceId}/${normalizedGroupId.replaceAll(
+      ":",
+      "/"
+    )}`;
+    const contentUrl = `/content${topicUrl}`;
+
+    // Prefetch the content (browser will cache it)
+    if (!this.prefetchedUrls) {
+      this.prefetchedUrls = new Set();
+    }
+
+    if (!this.prefetchedUrls.has(contentUrl)) {
+      this.prefetchedUrls.add(contentUrl);
+      fetch(contentUrl, { priority: "low" }).catch(() => {
+        // Silently fail - this is just a prefetch
+      });
+    }
+  }
+
+  init() {
     if (document.readyState === "loading") {
       window.addEventListener("DOMContentLoaded", this.onDOMLoaded);
     } else {
       // DOM already loaded, run immediately
-      console.log("📄 DOM already loaded, running onDOMLoaded now");
       this.onDOMLoaded();
     }
 
     // Only listen for clicks on the SVG container, not the entire window
     if (this.containerEl) {
       this.containerEl.addEventListener("click", this.handleSvgClick);
+      // Add hover prefetching for faster loading
+      this.containerEl.addEventListener(
+        "mouseover",
+        this.handleSvgHover.bind(this)
+      );
     }
     // window.addEventListener('contextmenu', this.handleSvgClick);
   }
