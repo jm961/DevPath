@@ -9,13 +9,8 @@ const pool = new Pool(
   useConnectionString
     ? {
         connectionString: process.env.DATABASE_URL,
-        // Most managed Postgres (including Supabase) require SSL.
-        // For Supabase specifically, SSL is required; rejectUnauthorized=false
-        // avoids needing a CA bundle in many managed environments.
-        ssl:
-          process.env.NODE_ENV === "production"
-            ? { rejectUnauthorized: false }
-            : false,
+        // Supabase requires SSL in all environments
+        ssl: { rejectUnauthorized: false },
         max: 20,
         idleTimeoutMillis: 30000,
         connectionTimeoutMillis: 5000,

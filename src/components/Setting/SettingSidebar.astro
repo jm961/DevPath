@@ -11,20 +11,20 @@ export interface Props {
 <div
   class='container flex min-h-[calc(100vh-37px-70px)] items-stretch sm:min-h-[calc(100vh-37px-96px)]'
 >
-  <aside class='hidden w-56 border-r border-slate-200 py-10 pr-5 md:block'>
+  <aside class='hidden w-56 border-r border-white/10 py-10 pr-5 md:block'>
     <nav>
       <ul class='space-y-1'>
         <li>
           <a
             href='/settings/update-profile'
-            class=`block w-full rounded px-2 py-1.5 font-regular text-slate-900 hover:bg-slate-100 ${pageUrl === 'profile' ? 'bg-slate-100' : ''}`
+            class=`block w-full rounded-lg px-3 py-2 text-sm font-medium transition-all ${pageUrl === 'profile' ? 'bg-white/10 text-white' : 'text-[#8b949e] hover:bg-white/5 hover:text-white'}`
             >Profile</a
           >
         </li>
         <li>
           <a
             href='/settings/update-password'
-            class=`block w-full rounded px-2 py-1.5 font-regular text-slate-900 hover:bg-slate-100 ${pageUrl === 'change-password' ? 'bg-slate-100' : ''}`
+            class=`block w-full rounded-lg px-3 py-2 text-sm font-medium transition-all ${pageUrl === 'change-password' ? 'bg-white/10 text-white' : 'text-[#8b949e] hover:bg-white/5 hover:text-white'}`
             >Security</a
           >
         </li>
@@ -34,7 +34,7 @@ export interface Props {
   <div class='grow py-10 pl-0 md:p-10 md:pr-0'>
     <div class='relative mb-5 md:hidden'>
       <button
-        class='flex h-10 w-full items-center justify-between rounded-md bg-slate-800 px-2 text-center font-medium text-slate-100'
+        class='flex h-10 w-full items-center justify-between rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm font-medium text-white backdrop-blur-xl transition-all hover:bg-white/8'
         id='settings-menu'
       >
         {name}
@@ -42,20 +42,20 @@ export interface Props {
       </button>
       <ul
         id='settings-menu-dropdown'
-        class='absolute mt-1 hidden w-full space-y-1.5 rounded-md bg-white p-2 shadow-lg'
+        class='absolute mt-1 hidden w-full space-y-1 rounded-xl border border-white/10 bg-[#0d1117]/95 p-2 shadow-2xl backdrop-blur-xl'
       >
         <li>
           <a
             href='/settings/update-profile'
-            class=`block w-full rounded px-2 py-1.5 font-medium text-slate-900 hover:bg-slate-200 ${pageUrl === 'profile' ? 'bg-slate-100' : ''}`
+            class=`block w-full rounded-lg px-3 py-2 text-sm font-medium transition-all ${pageUrl === 'profile' ? 'bg-white/10 text-white' : 'text-[#8b949e] hover:bg-white/5 hover:text-white'}`
             >Profile</a
           >
         </li>
         <li>
           <a
             href='/settings/update-password'
-            class=`block w-full rounded px-2 py-1.5 font-medium text-slate-900 hover:bg-slate-200 ${pageUrl === 'change-password' ? 'bg-slate-100' : ''}`
-            >Change password</a
+            class=`block w-full rounded-lg px-3 py-2 text-sm font-medium transition-all ${pageUrl === 'change-password' ? 'bg-white/10 text-white' : 'text-[#8b949e] hover:bg-white/5 hover:text-white'}`
+            >Security</a
           >
         </li>
       </ul>

@@ -8,7 +8,7 @@ noIndex: true
 
 BY ACCESSING OR USING OUR PLATFORM, YOU ACKNOWLEDGE THAT YOU HAVE READ, UNDERSTOOD, AND AGREE TO BE BOUND BY THESE TERMS. IF YOU DO NOT ACCEPT THESE TERMS, YOU MUST NOT USE OUR SERVICES.
 
-Thank you for choosing DevPath. These terms outline the guidelines and conditions for using our platform, including our website, tools, resources, and all related services (collectively referred to as the "Platform"). Should you have any inquiries or feedback about these terms, feel free to reach out to us at jeanmicheleid@gmail.com.
+Thank you for choosing DevPath. These terms outline the guidelines and conditions for using our platform, including our website, tools, resources, and all related services (collectively referred to as the "Platform"). Should you have any inquiries or feedback about these terms, feel free to reach out to us at contact@devpath.sh.
 
 These Terms of Service (the "Agreement") constitute a legally binding agreement between you (the user) and DevPath. By accessing or using our Platform in any capacity, you confirm your acceptance of this Agreement. This Agreement remains valid for the duration of your use of our Platform and incorporates our Privacy Policy and any other referenced policies.
 
@@ -24,7 +24,7 @@ Changes to this Agreement are only valid when made by us through official channe
 
 Our current [Privacy Policy is available here](/privacy) and details how we handle your personal information.
 
-We comply with the Children's Online Privacy Protection Act (COPPA). We do not intentionally gather personally identifiable information from users under the age of 13. If you are under 13 years old, please do not create an account or share personal details with us. Should we discover that we have inadvertently collected information from a child under 13, we will promptly remove it. If you suspect a child under 13 has provided us with personal information, please contact us immediately at jeanmicheleid@gmail.com.
+We comply with the Children's Online Privacy Protection Act (COPPA). We do not intentionally gather personally identifiable information from users under the age of 13. If you are under 13 years old, please do not create an account or share personal details with us. Should we discover that we have inadvertently collected information from a child under 13, we will promptly remove it. If you suspect a child under 13 has provided us with personal information, please contact us immediately at contact@devpath.sh.
 
 ## Account creation and responsibilities
 
@@ -96,7 +96,7 @@ The devpath.sh Services are currently free, but we reserve the right to charge f
 
 ## What if I want to stop using devpath.sh?
 
-You're free to do that at any time, by contacting us at jeanmicheleid@gmail.com; please refer to our Privacy Policy, as well as the licenses above, to understand how we treat information you provide to us after you have stopped using our Services. devpath.sh is also free to terminate (or suspend access to) your use of the Services or your account, for any reason in our discretion, including your breach of these Terms. devpath.sh has the sole right to decide whether you are in violation of any of the restrictions set forth in these Terms.
+You're free to do that at any time, by contacting us at contact@devpath.sh; please refer to our Privacy Policy, as well as the licenses above, to understand how we treat information you provide to us after you have stopped using our Services. devpath.sh is also free to terminate (or suspend access to) your use of the Services or your account, for any reason in our discretion, including your breach of these Terms. devpath.sh has the sole right to decide whether you are in violation of any of the restrictions set forth in these Terms.
 
 Account termination may result in destruction of any Content associated with your account, so keep that in mind before you decide to terminate your account. We will try to provide advance notice to you prior to our terminating your account so that you are able to retrieve any important User Submissions you may have stored in your account (to the extent allowed by law and these Terms), but we may not do so if we determine it would be impractical, illegal, not in the interest of someone’s safety or security, or otherwise harmful to the rights or property of devpath.sh.
 

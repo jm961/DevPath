@@ -1,0 +1,38 @@
+---
+import FAQs from '../../../components/FAQs/FAQs.astro';
+
+const faqs = [
+  {
+    question: 'What is PHP?',
+    answer:
+      'PHP (Hypertext Preprocessor) is a widely-used, open-source server-side scripting language designed for web development. It can be embedded into HTML and is especially suited for creating dynamic web pages and applications.',
+  },
+  {
+    question: 'Why should I learn PHP in 2025?',
+    answer:
+      'PHP powers over 75% of websites including platforms like WordPress, Facebook, and Wikipedia. It\'s mature, has excellent framework support (Laravel, Symfony), great hosting availability, and continues to evolve with modern features in PHP 8+.',
+  },
+  {
+    question: 'How long does it take to learn PHP?',
+    answer:
+      'For beginners, it typically takes 2-4 months to learn PHP basics and start building simple applications. Becoming proficient with frameworks like Laravel and advanced concepts may take 6-12 months of dedicated practice.',
+  },
+  {
+    question: 'What are the prerequisites for learning PHP?',
+    answer:
+      'You should have a basic understanding of HTML, CSS, and general programming concepts. Knowledge of JavaScript is helpful but not required. Understanding how the web works (HTTP, servers, databases) will also be beneficial.',
+  },
+  {
+    question: 'What is the best PHP framework to learn?',
+    answer:
+      'Laravel is currently the most popular and recommended PHP framework for beginners and professionals alike. It offers elegant syntax, excellent documentation, and a large community. Symfony is another excellent choice for enterprise applications.',
+  },
+  {
+    question: 'Is PHP still relevant?',
+    answer:
+      'Absolutely! PHP 8+ brings modern features like JIT compilation, union types, and attributes. With frameworks like Laravel and the ecosystem around WordPress, PHP remains highly relevant and in-demand in 2025.',
+  },
+];
+---
+
+<FAQs faqs={faqs} />

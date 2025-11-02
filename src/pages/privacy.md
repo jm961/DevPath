@@ -12,7 +12,7 @@ By using our Platform, you consent to the data practices described in this Priva
 
 This Policy describes how we handle personally identifiable information ("Personal Data") we collect when you use the Platform. It doesn’t apply to services we don’t own or control. We collect different categories of Personal Data to operate and improve the Platform, create and manage accounts, communicate with you, fulfill requests, and analyze usage. We only share Personal Data as described in this Policy.
 
-Consistent with our Terms of Service, we do not knowingly collect information from children under 13. If you are under 13, do not register or send us Personal Information. If we learn that we’ve collected information from a child under 13, we will delete it. If you believe a child has provided us information, contact us at jeanmicheleid@gmail.com.
+Consistent with our Terms of Service, we do not knowingly collect information from children under 13. If you are under 13, do not register or send us Personal Information. If we learn that we’ve collected information from a child under 13, we will delete it. If you believe a child has provided us information, contact us at contact@devpath.sh.
 
 ## Can devpath.sh modify this Privacy Policy?
 
@@ -24,7 +24,7 @@ Information you provide directly:
 
 We collect and store information you choose to give us. During sign up and in account settings, we may collect Personal Information such as your name, role, email, phone number, and credentials for third‑party platforms (for example, Twitter). If you connect a third‑party account or authenticate through it, certain content or information from that account (“Third Party Account Information”) may be transferred to your account with us, subject to your authorization. That information is covered by this Policy. Some details may be required to register or to use specific features.
 
-We may contact you using the details you provide. For example, if you share your email, we may send product updates or partner offers, and we may track email opens to improve our communications. You can opt out of non‑essential emails by writing to jeanmicheleid@gmail.com.
+We may contact you using the details you provide. For example, if you share your email, we may send product updates or partner offers, and we may track email opens to improve our communications. You can opt out of non‑essential emails by writing to contact@devpath.sh.
 
 ## Automatically Gathered Information
 
@@ -77,16 +77,16 @@ From your account settings, you can access and, in some cases, edit or delete in
 - age or birthday
 - username
 
-Available options may change as the Services evolve. For questions about viewing or updating your information, email us at jeanmicheleid@gmail.com.
+Available options may change as the Services evolve. For questions about viewing or updating your information, email us at contact@devpath.sh.
 
-Under California Civil Code Sections 1798.83–1798.84, California residents may request a notice identifying the categories of Personal Information we share with affiliates and/or third parties for marketing and the relevant contact information for those entities. To request this notice, email jeanmicheleid@gmail.com.
+Under California Civil Code Sections 1798.83–1798.84, California residents may request a notice identifying the categories of Personal Information we share with affiliates and/or third parties for marketing and the relevant contact information for those entities. To request this notice, email contact@devpath.sh.
 
 ## What choices do I have?
 
 You can choose not to provide information, but some data may be required to register or use certain features.
 
-You may add, update, or delete information as described above. We may retain copies of earlier versions in our records. You may request deletion of your account by contacting jeanmicheleid@gmail.com; we will disassociate your email address and Twitter account from content or other information you provided. Some information may remain in our records after deletion. We may use aggregated data derived from your Personal Information after you update or delete it, but not in a way that identifies you personally.
+You may add, update, or delete information as described above. We may retain copies of earlier versions in our records. You may request deletion of your account by contacting contact@devpath.sh; we will disassociate your email address and Twitter account from content or other information you provided. Some information may remain in our records after deletion. We may use aggregated data derived from your Personal Information after you update or delete it, but not in a way that identifies you personally.
 
 ## What if I have questions about this policy?
 
-If you have questions or concerns about these practices, email a detailed message to jeanmicheleid@gmail.com and we’ll work to resolve them.
+If you have questions or concerns about these practices, email a detailed message to contact@devpath.sh and we’ll work to resolve them.

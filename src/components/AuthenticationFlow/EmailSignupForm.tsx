@@ -6,7 +6,8 @@ import { TOKEN_COOKIE_NAME } from "../../lib/jwt";
 const EmailSignupForm: FunctionComponent = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
 
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -25,16 +26,30 @@ const EmailSignupForm: FunctionComponent = () => {
       body: JSON.stringify({
         email,
         password,
-        name,
+        name: `${firstName} ${lastName}`.trim(),
       }),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        console.log("Signup response status:", res.status);
+        return res.json();
+      })
       .then((data) => {
+        console.log("Signup response data:", data);
+
         if (!data.token) {
           setIsLoading(false);
-          setError(
-            data.message || "Something went wrong. Please try again later."
-          );
+
+          // Show validation errors if available
+          if (data.errors && Array.isArray(data.errors)) {
+            const errorMessages = data.errors
+              .map((err: any) => err.message)
+              .join(". ");
+            setError(errorMessages);
+          } else {
+            setError(
+              data.message || "Something went wrong. Please try again later."
+            );
+          }
           return;
         }
 
@@ -43,6 +58,7 @@ const EmailSignupForm: FunctionComponent = () => {
         window.location.href = "/";
       })
       .catch((err) => {
+        console.error("Signup error:", err);
         setIsLoading(false);
         setError("Something went wrong. Please try again later.");
       });
@@ -50,21 +66,38 @@ const EmailSignupForm: FunctionComponent = () => {
 
   return (
     <form className="flex w-full flex-col gap-2" onSubmit={onSubmit}>
-      <label htmlFor="name" className="sr-only">
-        Name
-      </label>
-      <input
-        name="name"
-        type="text"
-        autoComplete="name"
-        min={3}
-        max={50}
-        required
-        className="block w-full rounded-lg border border-gray-300 px-3 py-2 outline-none placeholder:text-gray-400 focus:ring-2 focus:ring-black focus:ring-offset-1"
-        placeholder="Full Name"
-        value={name}
-        onInput={(e) => setName(String((e.target as any).value))}
-      />
+      <div className="flex gap-2">
+        <div className="flex-1">
+          <label htmlFor="firstName" className="sr-only">
+            First Name
+          </label>
+          <input
+            name="firstName"
+            type="text"
+            autoComplete="given-name"
+            required
+            className="block w-full rounded-lg border border-gray-300 px-3 py-2 outline-none placeholder:text-gray-400 focus:ring-2 focus:ring-black focus:ring-offset-1"
+            placeholder="First Name"
+            value={firstName}
+            onInput={(e) => setFirstName(String((e.target as any).value))}
+          />
+        </div>
+        <div className="flex-1">
+          <label htmlFor="lastName" className="sr-only">
+            Last Name
+          </label>
+          <input
+            name="lastName"
+            type="text"
+            autoComplete="family-name"
+            required
+            className="block w-full rounded-lg border border-gray-300 px-3 py-2 outline-none placeholder:text-gray-400 focus:ring-2 focus:ring-black focus:ring-offset-1"
+            placeholder="Last Name"
+            value={lastName}
+            onInput={(e) => setLastName(String((e.target as any).value))}
+          />
+        </div>
+      </div>
       <label htmlFor="email" className="sr-only">
         Email address
       </label>
@@ -84,15 +117,18 @@ const EmailSignupForm: FunctionComponent = () => {
       <input
         name="password"
         type="password"
-        autoComplete="current-password"
-        min={6}
-        max={50}
+        autoComplete="new-password"
+        minLength={8}
         required
         className="block w-full rounded-lg border border-gray-300 px-3 py-2 outline-none placeholder:text-gray-400 focus:ring-2 focus:ring-black focus:ring-offset-1"
         placeholder="Password"
         value={password}
         onInput={(e) => setPassword(String((e.target as any).value))}
       />
+      <p className="text-xs text-gray-500 -mt-1">
+        Password must contain at least 8 characters, one uppercase, one
+        lowercase, and one number
+      </p>
 
       {error && (
         <p className="rounded-lg bg-red-100 p-2 text-red-700">{error}.</p>

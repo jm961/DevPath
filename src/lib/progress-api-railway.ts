@@ -33,7 +33,9 @@ export async function getUserResourceProgressApi({
   resourceType: "roadmap" | "best-practice";
 }) {
   const { response, error } = await httpGet(
-    `${import.meta.env.PUBLIC_API_URL}/v1-progress?resourceType=${resourceType}&resourceId=${resourceId}`
+    `${
+      import.meta.env.PUBLIC_API_URL
+    }/v1-progress?resourceType=${resourceType}&resourceId=${resourceId}`
   );
 
   if (error || !response) {

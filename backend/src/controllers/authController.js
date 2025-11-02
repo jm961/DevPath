@@ -126,7 +126,7 @@ exports.login = async (req, res) => {
 exports.me = async (req, res) => {
   try {
     const result = await pool.query(
-      "SELECT id, email, name, created_at FROM users WHERE id = $1",
+      "SELECT id, email, name, github, linkedin, twitter, website, created_at FROM users WHERE id = $1",
       [req.userId]
     );
 
@@ -137,9 +137,19 @@ exports.me = async (req, res) => {
       });
     }
 
+    const user = result.rows[0];
+    
     res.json({
-      status: "ok",
-      user: result.rows[0],
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      links: {
+        github: user.github,
+        linkedin: user.linkedin,
+        twitter: user.twitter,
+        website: user.website,
+      },
+      created_at: user.created_at,
     });
   } catch (error) {
     console.error("Get user error:", error);
@@ -152,13 +162,13 @@ exports.me = async (req, res) => {
 
 // Update profile
 exports.updateProfile = async (req, res) => {
-  const { name } = req.body;
+  const { name, github, linkedin, twitter, website } = req.body;
 
   try {
-    await pool.query("UPDATE users SET name = $1 WHERE id = $2", [
-      name,
-      req.userId,
-    ]);
+    await pool.query(
+      "UPDATE users SET name = $1, github = $2, linkedin = $3, twitter = $4, website = $5, updated_at = NOW() WHERE id = $6",
+      [name, github || null, linkedin || null, twitter || null, website || null, req.userId]
+    );
 
     res.json({
       status: "ok",

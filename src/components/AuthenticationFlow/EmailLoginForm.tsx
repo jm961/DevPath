@@ -27,8 +27,12 @@ const EmailLoginForm: FunctionComponent<{}> = () => {
         password,
       }),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        console.log('Response status:', res.status);
+        return res.json();
+      })
       .then((data) => {
+        console.log('Response data:', data);
         if (data.type === 'user_not_verified') {
           window.location.href = `/verification-pending?email=${encodeURIComponent(
             email
@@ -52,6 +56,7 @@ const EmailLoginForm: FunctionComponent<{}> = () => {
         window.location.reload();
       })
       .catch((err) => {
+        console.error('Login error:', err);
         setIsLoading(false);
         setError('Something went wrong. Please try again later.');
       });

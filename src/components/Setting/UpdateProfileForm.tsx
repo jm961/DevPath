@@ -1,11 +1,12 @@
 import { useEffect, useState } from "preact/hooks";
-import { httpGet, httpPost } from "../../lib/http";
+import { httpGet, httpPatch } from "../../lib/http";
 import Cookies from "js-cookie";
 import { TOKEN_COOKIE_NAME } from "../../lib/jwt";
 import Spinner from "../Spinner";
 
 export function UpdateProfileForm() {
-  const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [github, setGithub] = useState("");
   const [twitter, setTwitter] = useState("");
@@ -56,10 +57,10 @@ export function UpdateProfileForm() {
       return;
     }
 
-    const { response, error } = await httpPost(
+    const { response, error } = await httpPatch(
       `${import.meta.env.PUBLIC_API_URL}/v1-update-profile`,
       {
-        name,
+        name: `${firstName} ${lastName}`.trim(),
         github: github || undefined,
         linkedin: linkedin || undefined,
         twitter: twitter || undefined,
@@ -88,9 +89,13 @@ export function UpdateProfileForm() {
     setIsLoading(true);
     setError("");
 
+    console.log('🔍 Fetching profile from:', `${import.meta.env.PUBLIC_API_URL}/v1-me`);
+
     const { error, response } = await httpGet(
       `${import.meta.env.PUBLIC_API_URL}/v1-me`
     );
+
+    console.log('📦 Profile response:', { error, response });
 
     if (error || !response) {
       if (error?.status === 401) {
@@ -106,9 +111,21 @@ export function UpdateProfileForm() {
       return;
     }
 
+    console.log('✅ Setting profile data:', {
+      name: response.name,
+      email: response.email,
+      links: response.links
+    });
+
     const { name, email, links } = response;
 
-    setName(name || "");
+    // Split name into first and last name
+    const nameParts = (name || "").trim().split(" ");
+    const first = nameParts[0] || "";
+    const last = nameParts.slice(1).join(" ") || "";
+
+    setFirstName(first);
+    setLastName(last);
     setEmail(email);
     setGithub(links?.github || "");
     setLinkedin(links?.linkedin || "");
@@ -135,25 +152,48 @@ export function UpdateProfileForm() {
 
       <div className="mt-8 space-y-6">
         {/* Personal Information */}
-        <div className="flex w-full flex-col">
-          <label
-            htmlFor="name"
-            className='mb-2 text-sm font-medium text-[#f0f6fc] after:ml-1 after:text-[#ef4444] after:content-["*"]'
-          >
-            Full Name
-          </label>
-          <input
-            type="text"
-            name="name"
-            id="name"
-            autoComplete="name"
-            className="input block w-full rounded-2xl border-[1.5px] border-white/10 bg-white/5 px-5 py-3.5 text-[#f0f6fc] shadow-[inset_0_2px_4px_rgba(0,0,0,0.2)] backdrop-blur-xl outline-none transition-all duration-300 placeholder:text-[#6e7681] focus:border-[#3b82f6] focus:bg-white/8 focus:shadow-[0_0_0_4px_rgba(59,130,246,0.15),0_8px_24px_rgba(59,130,246,0.15),inset_0_2px_4px_rgba(0,0,0,0.1)] focus:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50"
-            required
-            placeholder="John Doe"
-            value={name}
-            disabled={isLoading}
-            onInput={(e) => setName((e.target as HTMLInputElement).value)}
-          />
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <div className="flex w-full flex-col">
+            <label
+              htmlFor="firstName"
+              className='mb-2 text-sm font-medium text-[#f0f6fc] after:ml-1 after:text-[#ef4444] after:content-["*"]'
+            >
+              First Name
+            </label>
+            <input
+              type="text"
+              name="firstName"
+              id="firstName"
+              autoComplete="given-name"
+              className="input block w-full rounded-2xl border-[1.5px] border-white/10 bg-white/5 px-5 py-3.5 text-[#f0f6fc] shadow-[inset_0_2px_4px_rgba(0,0,0,0.2)] backdrop-blur-xl outline-none transition-all duration-300 placeholder:text-[#6e7681] focus:border-[#3b82f6] focus:bg-white/8 focus:shadow-[0_0_0_4px_rgba(59,130,246,0.15),0_8px_24px_rgba(59,130,246,0.15),inset_0_2px_4px_rgba(0,0,0,0.1)] focus:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50"
+              required
+              placeholder="John"
+              value={firstName}
+              disabled={isLoading}
+              onInput={(e) => setFirstName((e.target as HTMLInputElement).value)}
+            />
+          </div>
+
+          <div className="flex w-full flex-col">
+            <label
+              htmlFor="lastName"
+              className='mb-2 text-sm font-medium text-[#f0f6fc] after:ml-1 after:text-[#ef4444] after:content-["*"]'
+            >
+              Last Name
+            </label>
+            <input
+              type="text"
+              name="lastName"
+              id="lastName"
+              autoComplete="family-name"
+              className="input block w-full rounded-2xl border-[1.5px] border-white/10 bg-white/5 px-5 py-3.5 text-[#f0f6fc] shadow-[inset_0_2px_4px_rgba(0,0,0,0.2)] backdrop-blur-xl outline-none transition-all duration-300 placeholder:text-[#6e7681] focus:border-[#3b82f6] focus:bg-white/8 focus:shadow-[0_0_0_4px_rgba(59,130,246,0.15),0_8px_24px_rgba(59,130,246,0.15),inset_0_2px_4px_rgba(0,0,0,0.1)] focus:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50"
+              required
+              placeholder="Doe"
+              value={lastName}
+              disabled={isLoading}
+              onInput={(e) => setLastName((e.target as HTMLInputElement).value)}
+            />
+          </div>
         </div>
 
         <div className="flex w-full flex-col">

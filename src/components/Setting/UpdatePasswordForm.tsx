@@ -2,7 +2,7 @@ import { useEffect, useState } from "preact/hooks";
 import Cookies from "js-cookie";
 import Spinner from "../Spinner";
 import { TOKEN_COOKIE_NAME } from "../../lib/jwt";
-import { httpGet, httpPost } from "../../lib/http";
+import { httpGet, httpPatch } from "../../lib/http";
 
 export default function UpdatePasswordForm() {
   const [authProvider, setAuthProvider] = useState("");
@@ -29,12 +29,11 @@ export default function UpdatePasswordForm() {
       return;
     }
 
-    const { response, error } = await httpPost(
+    const { response, error } = await httpPatch(
       `${import.meta.env.PUBLIC_API_URL}/v1-update-password`,
       {
-        oldPassword: authProvider === "email" ? currentPassword : "social-auth",
-        password: newPassword,
-        confirmPassword: newPasswordConfirmation,
+        oldPassword: currentPassword,
+        newPassword: newPassword,
       }
     );
 
@@ -102,31 +101,29 @@ export default function UpdatePasswordForm() {
       </p>
 
       <div className="mt-8 space-y-6">
-        {authProvider === "email" && (
-          <div className="flex w-full flex-col">
-            <label
-              htmlFor="current-password"
-              className='mb-2 text-sm font-medium text-[#f0f6fc] after:ml-1 after:text-[#ef4444] after:content-["*"]'
-            >
-              Current Password
-            </label>
-            <input
-              disabled={authProvider !== "email"}
-              type="password"
-              name="current-password"
-              id="current-password"
-              autoComplete="current-password"
-              className="input block w-full rounded-2xl border-[1.5px] border-white/10 bg-white/5 px-5 py-3.5 text-[#f0f6fc] shadow-[inset_0_2px_4px_rgba(0,0,0,0.2)] backdrop-blur-xl outline-none transition-all duration-300 placeholder:text-[#6e7681] focus:border-[#3b82f6] focus:bg-white/8 focus:shadow-[0_0_0_4px_rgba(59,130,246,0.15),0_8px_24px_rgba(59,130,246,0.15),inset_0_2px_4px_rgba(0,0,0,0.1)] focus:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50"
-              required
-              minLength={6}
-              placeholder="Enter your current password"
-              value={currentPassword}
-              onInput={(e) =>
-                setCurrentPassword((e.target as HTMLInputElement).value)
-              }
-            />
-          </div>
-        )}
+        <div className="flex w-full flex-col">
+          <label
+            htmlFor="current-password"
+            className='mb-2 text-sm font-medium text-[#f0f6fc] after:ml-1 after:text-[#ef4444] after:content-["*"]'
+          >
+            Current Password
+          </label>
+          <input
+            type="password"
+            name="current-password"
+            id="current-password"
+            autoComplete="current-password"
+            className="input block w-full rounded-2xl border-[1.5px] border-white/10 bg-white/5 px-5 py-3.5 text-[#f0f6fc] shadow-[inset_0_2px_4px_rgba(0,0,0,0.2)] backdrop-blur-xl outline-none transition-all duration-300 placeholder:text-[#6e7681] focus:border-[#3b82f6] focus:bg-white/8 focus:shadow-[0_0_0_4px_rgba(59,130,246,0.15),0_8px_24px_rgba(59,130,246,0.15),inset_0_2px_4px_rgba(0,0,0,0.1)] focus:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50"
+            required
+            minLength={8}
+            placeholder="Enter your current password"
+            value={currentPassword}
+            disabled={isLoading}
+            onInput={(e) =>
+              setCurrentPassword((e.target as HTMLInputElement).value)
+            }
+          />
+        </div>
 
         <div className="flex w-full flex-col">
           <label
@@ -142,7 +139,7 @@ export default function UpdatePasswordForm() {
             autoComplete="new-password"
             className="input block w-full rounded-2xl border-[1.5px] border-white/10 bg-white/5 px-5 py-3.5 text-[#f0f6fc] shadow-[inset_0_2px_4px_rgba(0,0,0,0.2)] backdrop-blur-xl outline-none transition-all duration-300 placeholder:text-[#6e7681] focus:border-[#3b82f6] focus:bg-white/8 focus:shadow-[0_0_0_4px_rgba(59,130,246,0.15),0_8px_24px_rgba(59,130,246,0.15),inset_0_2px_4px_rgba(0,0,0,0.1)] focus:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50"
             required
-            minLength={6}
+            minLength={8}
             placeholder="Enter your new password"
             value={newPassword}
             disabled={isLoading}
@@ -151,7 +148,7 @@ export default function UpdatePasswordForm() {
             }
           />
           <span className="mt-1.5 text-xs text-[#6e7681]">
-            Minimum 6 characters
+            Password must be at least 8 characters with 1 uppercase, 1 lowercase, and 1 number
           </span>
         </div>
 
