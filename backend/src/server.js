@@ -28,10 +28,10 @@ const limiter = rateLimit({
   legacyHeaders: false,
 });
 
-// Stricter rate limit for auth endpoints
+// Stricter rate limit for auth endpoints (relaxed in development)
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 5, // 5 requests per window
+  max: process.env.NODE_ENV === 'development' ? 100 : 5, // 100 in dev, 5 in production
   message: {
     status: 429,
     message: "Too many login attempts, please try again later.",
@@ -59,7 +59,10 @@ if (process.env.NODE_ENV === "production") {
     const allowedHosts = ["api.devpath.sh"];
     const host = req.get("host");
 
-    if (!allowedHosts.includes(host)) {
+    // Allow Railway deployment domains
+    const isRailwayDomain = host && host.includes('.railway.app');
+    
+    if (!allowedHosts.includes(host) && !isRailwayDomain) {
       return res.status(403).json({
         status: "error",
         message: "Access denied. Please use api.devpath.sh",
@@ -69,10 +72,23 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-// CORS
+// CORS - Allow multiple origins in development
+const allowedOrigins = process.env.NODE_ENV === 'development' 
+  ? ['http://localhost:3000', 'http://localhost:3003', 'http://localhost:4321', 'http://localhost:5173']
+  : (process.env.FRONTEND_URL || 'https://devpath.sh').split(',').map(url => url.trim());
+
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || "http://localhost:3000",
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps or curl)
+      if (!origin) return callback(null, true);
+      
+      if (allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     credentials: true,
   })
 );
