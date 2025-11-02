@@ -1,0 +1,17 @@
+<!DOCTYPE html><link href=/_astro/_...topicId_.bad8bb91.css rel=stylesheet /><main class=prose-custom id=main-content><h1 id=instanceof-operator>instanceOf operator</h1><p>The <code>instanceof</code> operator is a way to narrow down the type of a variable. It is used to check if an object is an instance of a class, interface, or type.</p><pre class="astro-code dracula" is:raw="" style=background-color:#282a36;overflow-x:auto tabindex=0><code><span class=line><span style=color:#ff79c6>class</span><span style=color:#f8f8f2> </span><span style=color:#8be9fd>Bird</span><span style=color:#f8f8f2> {</span></span>
+<span class=line><span style=color:#f8f8f2>  </span><span style=color:#50fa7b>fly</span><span style=color:#f8f8f2>() {</span></span>
+<span class=line><span style=color:#f8f8f2>    console.</span><span style=color:#50fa7b>log</span><span style=color:#f8f8f2>(</span><span style=color:#e9f284>'</span><span style=color:#f1fa8c>flying...</span><span style=color:#e9f284>'</span><span style=color:#f8f8f2>);</span></span>
+<span class=line><span style=color:#f8f8f2>  }</span></span>
+<span class=line><span style=color:#f8f8f2>  </span><span style=color:#50fa7b>layEggs</span><span style=color:#f8f8f2>() {</span></span>
+<span class=line><span style=color:#f8f8f2>    console.</span><span style=color:#50fa7b>log</span><span style=color:#f8f8f2>(</span><span style=color:#e9f284>'</span><span style=color:#f1fa8c>laying eggs...</span><span style=color:#e9f284>'</span><span style=color:#f8f8f2>);</span></span>
+<span class=line><span style=color:#f8f8f2>  }</span></span>
+<span class=line><span style=color:#f8f8f2>}</span></span>
+<span class=line></span>
+<span class=line><span style=color:#ff79c6>const</span><span style=color:#f8f8f2> pet </span><span style=color:#ff79c6>=</span><span style=color:#f8f8f2> </span><span style=color:#ff79c6;font-weight:700>new</span><span style=color:#f8f8f2> </span><span style=color:#50fa7b>Bird</span><span style=color:#f8f8f2>();</span></span>
+<span class=line></span>
+<span class=line><span style=color:#6272a4>// instanceof</span></span>
+<span class=line><span style=color:#ff79c6>if</span><span style=color:#f8f8f2> (pet </span><span style=color:#ff79c6>instanceof</span><span style=color:#f8f8f2> </span><span style=color:#8be9fd;font-style:italic>Bird</span><span style=color:#f8f8f2>) {</span></span>
+<span class=line><span style=color:#f8f8f2>  pet.</span><span style=color:#50fa7b>fly</span><span style=color:#f8f8f2>();</span></span>
+<span class=line><span style=color:#f8f8f2>} </span><span style=color:#ff79c6>else</span><span style=color:#f8f8f2> {</span></span>
+<span class=line><span style=color:#f8f8f2>  console.</span><span style=color:#50fa7b>log</span><span style=color:#f8f8f2>(</span><span style=color:#e9f284>'</span><span style=color:#f1fa8c>pet is not a bird</span><span style=color:#e9f284>'</span><span style=color:#f8f8f2>);</span></span>
+<span class=line><span style=color:#f8f8f2>}</span></span></code></pre><p>Learn more from the following links:</p><ul><li><a href=https://www.typescriptlang.org/docs/handbook/2/narrowing.html#instanceof-narrowing rel="noopener noreferrer nofollow" target=_blank>instanceOf Operator</a></li></ul></main>
