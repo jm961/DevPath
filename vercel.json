@@ -1,4 +1,7 @@
 {
+  "buildCommand": "astro build",
+  "outputDirectory": "dist",
+  "framework": "astro",
   "redirects": [
     {
       "source": "/:path*",
