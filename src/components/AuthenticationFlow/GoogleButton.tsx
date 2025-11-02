@@ -54,7 +54,11 @@ export function GoogleButton(props: GoogleButtonProps) {
         localStorage.removeItem(GOOGLE_LAST_PAGE);
 
         // Clean up URL and redirect
-        window.history.replaceState({}, document.title, window.location.pathname);
+        window.history.replaceState(
+          {},
+          document.title,
+          window.location.pathname
+        );
         window.location.href = redirectUrl;
       });
     }
@@ -74,7 +78,9 @@ export function GoogleButton(props: GoogleButtonProps) {
       // Use Supabase OAuth
       const supabase = getSupabase();
       if (!supabase) {
-        setError("Authentication is not configured. Please contact the site owner.");
+        setError(
+          "Authentication is not configured. Please contact the site owner."
+        );
         setIsLoading(false);
         return;
       }

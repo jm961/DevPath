@@ -118,10 +118,11 @@ At https://console.cloud.google.com/apis/credentials:
 3. Set environment variables in your hosting dashboard:
 
    **Via Vercel CLI:**
+
    ```bash
    # Link your project first (if not already linked)
    vercel link
-   
+
    # Add environment variables to all environments
    echo "https://api.devpath.sh/api" | vercel env add PUBLIC_API_URL production preview
    echo "https://zylbnzptiktszbutpelm.supabase.co" | vercel env add PUBLIC_SUPABASE_URL production preview
@@ -129,8 +130,10 @@ At https://console.cloud.google.com/apis/credentials:
    ```
 
    **Or via Vercel Dashboard:**
+
    - Go to Project Settings → Environment Variables
    - Add the following variables for Production and Preview:
+
    ```
    PUBLIC_API_URL=https://api.devpath.sh/api
    PUBLIC_SUPABASE_URL=https://zylbnzptiktszbutpelm.supabase.co

@@ -5,7 +5,7 @@
 Your DevPath project now uses **100% Supabase** instead of Railway backend:
 
 - ✅ **Authentication**: Supabase Auth (Google OAuth, Email/Password)
-- ✅ **Database**: Supabase PostgreSQL 
+- ✅ **Database**: Supabase PostgreSQL
 - ✅ **APIs**: Supabase client queries (no custom backend!)
 - ✅ **Hosting**: Vercel (frontend only)
 
@@ -29,6 +29,7 @@ PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 ```
 
 You can check with:
+
 ```bash
 vercel env ls
 ```
@@ -80,13 +81,16 @@ After deployment:
 ## 🐛 Troubleshooting
 
 **"Authentication is not configured"**
+
 - Check Vercel env vars are set
 - Redeploy: `vercel --prod`
 
 **Progress not saving**
+
 - Run the SQL in `supabase-schema.sql`
 - Check Supabase logs for RLS policy errors
 
 **Still seeing Railway errors**
+
 - Clear browser cache/cookies
 - Hard refresh (Cmd+Shift+R)
