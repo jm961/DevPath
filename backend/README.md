@@ -4,9 +4,36 @@ Backend API for DevPath application with authentication and progress tracking.
 
 ## 🚀 Quick Start
 
-### Automated Setup (Recommended)
+### Option 1: Supabase (Recommended for Production) ⭐
 
-The easiest way to get started:
+**Best for:** Cloud deployment with managed database
+
+```bash
+cd backend
+./setup-supabase.sh
+```
+
+This will guide you through:
+
+- ✅ Supabase project setup
+- ✅ Secure JWT secret generation
+- ✅ Environment configuration
+- ✅ Database initialization
+- ✅ Dependencies installation
+
+Then start the server:
+
+```bash
+npm run dev
+```
+
+📖 **For deployment:** See [SUPABASE_DEPLOYMENT.md](./SUPABASE_DEPLOYMENT.md) for complete Supabase deployment guide with Render, Railway, Vercel, and more.
+
+---
+
+### Option 2: Local PostgreSQL (For Development)
+
+**Best for:** Local development and testing
 
 ```bash
 cd backend
@@ -16,11 +43,10 @@ cd backend
 This will:
 
 - ✅ Check PostgreSQL installation and status
-- ✅ Create the database
+- ✅ Create local database
 - ✅ Generate secure environment variables
 - ✅ Install dependencies
 - ✅ Initialize database tables
-- ✅ Test the connection
 
 Then start the server:
 
@@ -28,15 +54,18 @@ Then start the server:
 npm run dev
 ```
 
-### Manual Setup
+---
 
-If you prefer to set up manually, see [DATABASE_SETUP.md](./DATABASE_SETUP.md) for detailed instructions.
+### Option 3: Manual Setup
+
+If you prefer manual configuration, see [DATABASE_SETUP.md](./DATABASE_SETUP.md) for detailed instructions.
 
 ## 📋 Available Scripts
 
 - `npm run dev` - Start server in development mode with auto-reload
 - `npm start` - Start server in production mode
 - `npm run setup` - Interactive environment configuration
+- `npm run setup:supabase` - **Automated Supabase setup (recommended)** ⭐
 - `npm run init-db` - Initialize/recreate database tables
 - `npm run reset-db` - Drop all tables (destructive!)
 
@@ -132,7 +161,10 @@ Full API documentation is available in [API.md](./API.md).
 Environment variables in `.env`:
 
 ```bash
-# Database
+# Database (Option A: single connection string)
+DATABASE_URL=postgres://postgres:password@host:5432/postgres
+
+# Database (Option B: individual params)
 DB_HOST=localhost
 DB_PORT=5432
 DB_NAME=devpath_db
@@ -148,7 +180,11 @@ JWT_SECRET=your_secure_random_secret
 JWT_EXPIRES_IN=7d
 ```
 
-**Security Note:** Never commit `.env` to version control. Use `.env.example` as a template.
+Notes:
+
+- If `DATABASE_URL` is set (e.g., from Supabase), it will be used and SSL will be enabled automatically in production.
+- Otherwise the individual DB params are used.
+- Never commit `.env` to version control. Use `.env.example` as a template.
 
 ## 🛠️ Tech Stack
 
@@ -198,9 +234,20 @@ JWT_EXPIRES_IN=7d
    ```
 
 3. **Verify database exists:**
+
    ```bash
    psql -l | grep devpath_db
    ```
+
+4. **Using Supabase**
+
+- Ensure `DATABASE_URL` is set from Supabase (Settings > Database > Connection Info)
+- Supabase requires SSL; the server enables it automatically in production
+- Initialize tables with:
+
+  ```bash
+  npm run init-db
+  ```
 
 ### JWT Token Issues
 

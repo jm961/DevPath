@@ -31,13 +31,25 @@ async function setup() {
   }
 
   console.log("\n📝 Database Configuration\n");
+  console.log(
+    "You can either provide a single DATABASE_URL (e.g., from Supabase) or enter individual parameters.\n"
+  );
+  const useUrl = (await question("Use DATABASE_URL? (Y/n): ")) || "y";
 
-  const dbHost = (await question("Database host (localhost): ")) || "localhost";
-  const dbPort = (await question("Database port (5432): ")) || "5432";
-  const dbName =
-    (await question("Database name (devpath_db): ")) || "devpath_db";
-  const dbUser = (await question("Database user (postgres): ")) || "postgres";
-  const dbPassword = await question("Database password: ");
+  let dbSection = "";
+  if (useUrl.toLowerCase() === "y") {
+    const databaseUrl = await question("DATABASE_URL: ");
+    dbSection += `# Database Configuration (connection string)\nDATABASE_URL=${databaseUrl}\n`;
+  } else {
+    const dbHost =
+      (await question("Database host (localhost): ")) || "localhost";
+    const dbPort = (await question("Database port (5432): ")) || "5432";
+    const dbName =
+      (await question("Database name (devpath_db): ")) || "devpath_db";
+    const dbUser = (await question("Database user (postgres): ")) || "postgres";
+    const dbPassword = await question("Database password: ");
+    dbSection += `# Database Configuration (individual params)\nDB_HOST=${dbHost}\nDB_PORT=${dbPort}\nDB_NAME=${dbName}\nDB_USER=${dbUser}\nDB_PASSWORD=${dbPassword}\n`;
+  }
 
   console.log("\n🔐 Security Configuration\n");
 
@@ -53,13 +65,7 @@ async function setup() {
     (await question("Frontend URL (http://localhost:4321): ")) ||
     "http://localhost:4321";
 
-  const envContent = `# Database Configuration
-DB_HOST=${dbHost}
-DB_PORT=${dbPort}
-DB_NAME=${dbName}
-DB_USER=${dbUser}
-DB_PASSWORD=${dbPassword}
-
+  const envContent = `${dbSection}
 # Server Configuration
 PORT=${port}
 FRONTEND_URL=${frontendUrl}
@@ -72,10 +78,11 @@ JWT_EXPIRES_IN=${jwtExpires}
   fs.writeFileSync(envPath, envContent);
   console.log("\n✅ .env file created successfully!\n");
   console.log("Next steps:");
-  console.log("1. Make sure PostgreSQL is running");
-  console.log("2. Create the database: createdb " + dbName);
-  console.log("3. Initialize tables: npm run init-db");
-  console.log("4. Start the server: npm run dev\n");
+  console.log("1. If using a local database, make sure PostgreSQL is running");
+  console.log(
+    "2. Initialize tables: npm run init-db (works for local DB or Supabase via DATABASE_URL)"
+  );
+  console.log("3. Start the server: npm run dev\n");
 
   rl.close();
 }

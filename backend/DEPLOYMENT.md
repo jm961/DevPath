@@ -12,7 +12,30 @@
 
 ## Deployment Options
 
-### Option 1: Docker Compose (Recommended for VPS/Cloud)
+### ⭐ Option 1: Supabase + Render (Recommended)
+
+**Best for:** Production deployments with managed database and easy hosting
+
+See detailed guide: **[SUPABASE_DEPLOYMENT.md](./SUPABASE_DEPLOYMENT.md)**
+
+**Quick Steps:**
+
+1. Create Supabase project and get DATABASE_URL
+2. Deploy API on Render (or Railway/Vercel)
+3. Set environment variables
+4. Run `npm run init-db`
+
+**Why this option?**
+
+- ✅ Free tier available
+- ✅ Auto-scaling database
+- ✅ Built-in backups
+- ✅ No database management needed
+- ✅ SSL certificates included
+
+---
+
+### Option 2: Docker Compose (Self-hosted)
 
 **Prerequisites:**
 
@@ -64,92 +87,56 @@
    http://your-server-ip:4000/health
    ```
 
-### Option 2: Railway
+### Option 3: Railway
 
-1. **Install Railway CLI:**
+**Note:** For Railway deployments, we recommend using Supabase for the database instead of Railway's PostgreSQL add-on for better scalability and management.
 
-   ```bash
-   npm i -g @railway/cli
-   ```
+See **[SUPABASE_DEPLOYMENT.md](./SUPABASE_DEPLOYMENT.md)** for complete Railway + Supabase setup instructions.
 
-2. **Login and initialize:**
+**Quick steps:**
 
-   ```bash
-   railway login
-   railway init
-   ```
+1. Get DATABASE_URL from Supabase
+2. Install Railway CLI: `npm i -g @railway/cli`
+3. Login: `railway login`
+4. Initialize: `railway init`
+5. Set environment variables with Supabase DATABASE_URL
+6. Deploy: `railway up`
 
-3. **Add PostgreSQL:**
+### Option 4: Render
 
-   ```bash
-   railway add -p postgres
-   ```
+**Note:** We recommend using Supabase for the database instead of Render's PostgreSQL for better features and free tier benefits.
 
-4. **Set environment variables:**
+See **[SUPABASE_DEPLOYMENT.md](./SUPABASE_DEPLOYMENT.md)** for complete Render + Supabase setup instructions.
 
-   ```bash
-   railway variables set NODE_ENV=production
-   railway variables set JWT_SECRET=<your-generated-secret>
-   railway variables set FRONTEND_URL=https://your-frontend.com
-   # Railway automatically sets DATABASE_URL for postgres
-   ```
+**Quick steps:**
 
-5. **Deploy:**
-   ```bash
-   railway up
-   ```
+1. Get DATABASE_URL from Supabase
+2. Create new Web Service on Render dashboard
+3. Connect your GitHub repository
+4. Configure build/start commands
+5. Add environment variables including Supabase DATABASE_URL
+6. Deploy
 
-### Option 3: Render
+### Option 5: Heroku
 
-1. **Create new Web Service** on Render dashboard
-2. **Connect your GitHub repository**
-3. **Configure:**
-   - **Build Command:** `npm install`
-   - **Start Command:** `npm start`
-   - **Environment:** Add all variables from `.env.example`
-4. **Add PostgreSQL database** from Render dashboard
-5. **Deploy**
+**Note:** Heroku no longer offers a free tier. We recommend Render or Railway instead.
 
-### Option 4: Heroku
+If using Heroku, consider using Supabase for the database to save costs.
 
-1. **Install Heroku CLI**
-2. **Create app:**
+See **[SUPABASE_DEPLOYMENT.md](./SUPABASE_DEPLOYMENT.md)** for alternative platforms.
 
-   ```bash
-   heroku create devpath-api
-   ```
+### Option 6: DigitalOcean App Platform
 
-3. **Add PostgreSQL:**
+**Note:** We recommend using Supabase for the database.
 
-   ```bash
-   heroku addons:create heroku-postgresql:mini
-   ```
+See **[SUPABASE_DEPLOYMENT.md](./SUPABASE_DEPLOYMENT.md)** for complete DigitalOcean + Supabase setup instructions.
 
-4. **Set environment variables:**
+**Quick steps:**
 
-   ```bash
-   heroku config:set NODE_ENV=production
-   heroku config:set JWT_SECRET=<your-secret>
-   heroku config:set FRONTEND_URL=https://your-frontend.com
-   ```
-
-5. **Deploy:**
-
-   ```bash
-   git push heroku main
-   ```
-
-6. **Initialize database:**
-   ```bash
-   heroku run npm run init-db
-   ```
-
-### Option 5: DigitalOcean App Platform
-
-1. **Create new App** from GitHub repository
-2. **Add PostgreSQL database** component
-3. **Configure environment variables** in dashboard
-4. **Deploy**
+1. Get DATABASE_URL from Supabase
+2. Create new App from GitHub repository
+3. Configure environment variables with Supabase DATABASE_URL
+4. Deploy
 
 ## Post-Deployment
 

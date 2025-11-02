@@ -25,7 +25,7 @@
 
 ### 📚 Documentation
 
-- ✅ **Deployment Guide** - Multi-platform (Railway, Render, Heroku, Docker, VPS)
+- ✅ **Deployment Guide** - Multi-platform (Supabase+Render, Railway, Docker, VPS)
 - ✅ **Environment Template** - .env.example with all variables
 - ✅ **Production Setup Script** - Automated configuration
 - ✅ **Docker Scripts** - Package.json shortcuts
@@ -91,11 +91,11 @@ npm start
 
 5. **Choose Deployment Platform**
 
-   - Railway (easiest, free tier)
-   - Render (good free tier)
-   - Heroku (reliable, paid)
-   - DigitalOcean (flexible)
-   - VPS with Docker (full control)
+   - **Supabase + Render** (recommended, free tier) - [See SUPABASE_DEPLOYMENT.md](./SUPABASE_DEPLOYMENT.md)
+   - Supabase + Railway (generous free tier)
+   - Supabase + Vercel (serverless)
+   - Supabase + DigitalOcean (full control)
+   - Docker with VPS (self-hosted)
 
 6. **Initialize Database**
 
@@ -162,33 +162,95 @@ npm start
 
 ## 📱 Platform-Specific Notes
 
-### Railway
+### ⭐ Supabase + Render (Recommended)
 
-- PostgreSQL plugin available
-- Automatic SSL
-- Zero-config deployment
-- Free tier: $5 credit/month
+**Database:** Supabase (Managed PostgreSQL)
 
-### Render
+- Free tier: 500 MB database
+- Automatic daily backups
+- Built-in SSL
+- Connection string in Settings > Database
 
-- Free PostgreSQL (90 days)
-- Automatic SSL
-- Good for side projects
-- Free tier available
+**Hosting:** Render
 
-### Heroku
+- Free tier with auto-sleep
+- Automatic SSL certificates
+- GitHub auto-deploy
+- Upgrade: $7/mo for always-on
 
-- Mature platform
-- Lots of add-ons
+**Total Cost:** $0/month (free tier) or $7/month (production-ready)
+
+**See:** [SUPABASE_DEPLOYMENT.md](./SUPABASE_DEPLOYMENT.md) for complete guide
+
+---
+
+### Supabase + Railway
+
+**Database:** Supabase
+
+- Same benefits as above
+
+**Hosting:** Railway
+
+- $5 free credits/month
+- Great developer experience
+- Simple CLI deployment
+- Automatic HTTPS
+
+**Total Cost:** $0-5/month depending on usage
+
+---
+
+### Supabase + Vercel (Serverless)
+
+**Database:** Supabase Connection Pooler
+
+- Use port 6543 for serverless
+- Better for auto-scaling workloads
+
+**Hosting:** Vercel
+
+- Generous free tier
+- Global CDN
+- Automatic scaling
+- Best for low-latency worldwide
+
+**Total Cost:** $0/month (free tier)
+
+**Note:** Best for variable workloads; may be more expensive at scale
+
+---
+
+### Docker on VPS (Self-Hosted)
+
+**Database:** Supabase or self-hosted PostgreSQL
+
+- Full control over infrastructure
+- Can run multiple services
+- Requires manual SSL setup (Nginx + Let's Encrypt)
+
+**Hosting:** VPS (DigitalOcean, Linode, AWS EC2)
+
+- Cost: $5-10/month
+- Requires server management
+- Best for learning and full control
+
+---
+
+### Legacy Options
+
+**Railway (with built-in PostgreSQL):**
+
+- Now recommend using Supabase instead for better free tier
+
+**Render (with built-in PostgreSQL):**
+
+- Now recommend using Supabase instead for better features
+
+**Heroku:**
+
 - No free tier (starts $7/mo)
-- Easy scaling
-
-### Docker (VPS)
-
-- Full control
-- Requires Nginx + SSL setup
-- Cost: $5-10/mo (DigitalOcean, Linode)
-- Best for learning
+- Consider Render or Railway instead
 
 ## 🆘 Support & Resources
 

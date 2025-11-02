@@ -7,6 +7,7 @@
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
     "setup": "node setup-env.js",
+    "setup:supabase": "./setup-supabase.sh",
     "init-db": "node src/scripts/init-db.js",
     "reset-db": "node src/scripts/reset-db.js",
     "docker:build": "docker build -t devpath-api .",

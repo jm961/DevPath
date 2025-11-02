@@ -19,7 +19,6 @@ export const siteConfig = {
       'backend developer',
       'sre',
       'devops',
-      'android developer',
       'dba',
       'blockchain developer',
       'qa',
