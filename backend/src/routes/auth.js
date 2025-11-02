@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const authController = require("../controllers/authController");
+const googleAuthController = require("../controllers/googleAuthController");
 const authMiddleware = require("../middleware/auth");
 const {
   signupValidation,
@@ -12,6 +13,9 @@ const {
 // Public routes
 router.post("/v1-signup", signupValidation, authController.signup);
 router.post("/v1-login", loginValidation, authController.login);
+
+// Google OAuth callback (from Supabase)
+router.post("/v1-google-callback", googleAuthController.googleCallback);
 
 // Protected routes
 router.get("/v1-me", authMiddleware, authController.me);
