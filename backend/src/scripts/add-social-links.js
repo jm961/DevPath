@@ -12,7 +12,7 @@ async function addSocialLinks() {
       ADD COLUMN IF NOT EXISTS twitter VARCHAR(500),
       ADD COLUMN IF NOT EXISTS website VARCHAR(500);
     `);
-    
+
     console.log("✅ Social links columns added successfully!");
     console.log("\n✨ Migration complete!\n");
     process.exit(0);

@@ -89,13 +89,16 @@ export function UpdateProfileForm() {
     setIsLoading(true);
     setError("");
 
-    console.log('🔍 Fetching profile from:', `${import.meta.env.PUBLIC_API_URL}/v1-me`);
+    console.log(
+      "🔍 Fetching profile from:",
+      `${import.meta.env.PUBLIC_API_URL}/v1-me`
+    );
 
     const { error, response } = await httpGet(
       `${import.meta.env.PUBLIC_API_URL}/v1-me`
     );
 
-    console.log('📦 Profile response:', { error, response });
+    console.log("📦 Profile response:", { error, response });
 
     if (error || !response) {
       if (error?.status === 401) {
@@ -111,10 +114,10 @@ export function UpdateProfileForm() {
       return;
     }
 
-    console.log('✅ Setting profile data:', {
+    console.log("✅ Setting profile data:", {
       name: response.name,
       email: response.email,
-      links: response.links
+      links: response.links,
     });
 
     const { name, email, links } = response;
@@ -170,7 +173,9 @@ export function UpdateProfileForm() {
               placeholder="John"
               value={firstName}
               disabled={isLoading}
-              onInput={(e) => setFirstName((e.target as HTMLInputElement).value)}
+              onInput={(e) =>
+                setFirstName((e.target as HTMLInputElement).value)
+              }
             />
           </div>
 

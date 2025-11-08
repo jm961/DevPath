@@ -1,26 +1,26 @@
-import Cookies from 'js-cookie';
-import type { FunctionComponent } from 'preact';
-import { useState } from 'preact/hooks';
-import Spinner from '../Spinner';
-import { httpPost } from '../../lib/http';
-import {TOKEN_COOKIE_NAME} from "../../lib/jwt";
+import Cookies from "js-cookie";
+import type { FunctionComponent } from "preact";
+import { useState } from "preact/hooks";
+import Spinner from "../Spinner";
+import { httpPost } from "../../lib/http";
+import { TOKEN_COOKIE_NAME } from "../../lib/jwt";
 
 const EmailLoginForm: FunctionComponent<{}> = () => {
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState("");
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleFormSubmit = async (e: Event) => {
     e.preventDefault();
     setIsLoading(true);
-    setError('');
+    setError("");
 
     fetch(`${import.meta.env.PUBLIC_API_URL}/v1-login`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         email,
@@ -28,12 +28,12 @@ const EmailLoginForm: FunctionComponent<{}> = () => {
       }),
     })
       .then((res) => {
-        console.log('Response status:', res.status);
+        console.log("Response status:", res.status);
         return res.json();
       })
       .then((data) => {
-        console.log('Response data:', data);
-        if (data.type === 'user_not_verified') {
+        console.log("Response data:", data);
+        if (data.type === "user_not_verified") {
           window.location.href = `/verification-pending?email=${encodeURIComponent(
             email
           )}`;
@@ -43,7 +43,7 @@ const EmailLoginForm: FunctionComponent<{}> = () => {
         if (!data.token) {
           setIsLoading(false);
           setError(
-            data.message || 'Something went wrong. Please try again later.'
+            data.message || "Something went wrong. Please try again later."
           );
           return;
         }
@@ -56,9 +56,9 @@ const EmailLoginForm: FunctionComponent<{}> = () => {
         window.location.reload();
       })
       .catch((err) => {
-        console.error('Login error:', err);
+        console.error("Login error:", err);
         setIsLoading(false);
-        setError('Something went wrong. Please try again later.');
+        setError("Something went wrong. Please try again later.");
       });
   };
 
@@ -109,7 +109,7 @@ const EmailLoginForm: FunctionComponent<{}> = () => {
         disabled={isLoading}
         className="inline-flex w-full items-center justify-center rounded-lg bg-black p-2 py-3 text-sm font-medium text-white outline-none focus:ring-2 focus:ring-black focus:ring-offset-1 disabled:bg-gray-400"
       >
-        {isLoading ? 'Please wait...' : 'Continue'}
+        {isLoading ? "Please wait..." : "Continue"}
       </button>
     </form>
   );

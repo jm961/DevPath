@@ -148,7 +148,8 @@ export default function UpdatePasswordForm() {
             }
           />
           <span className="mt-1.5 text-xs text-[#6e7681]">
-            Password must be at least 8 characters with 1 uppercase, 1 lowercase, and 1 number
+            Password must be at least 8 characters with 1 uppercase, 1
+            lowercase, and 1 number
           </span>
         </div>
 

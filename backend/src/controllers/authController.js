@@ -138,7 +138,7 @@ exports.me = async (req, res) => {
     }
 
     const user = result.rows[0];
-    
+
     res.json({
       id: user.id,
       email: user.email,
@@ -167,7 +167,14 @@ exports.updateProfile = async (req, res) => {
   try {
     await pool.query(
       "UPDATE users SET name = $1, github = $2, linkedin = $3, twitter = $4, website = $5, updated_at = NOW() WHERE id = $6",
-      [name, github || null, linkedin || null, twitter || null, website || null, req.userId]
+      [
+        name,
+        github || null,
+        linkedin || null,
+        twitter || null,
+        website || null,
+        req.userId,
+      ]
     );
 
     res.json({

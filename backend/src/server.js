@@ -31,7 +31,7 @@ const limiter = rateLimit({
 // Stricter rate limit for auth endpoints (relaxed in development)
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: process.env.NODE_ENV === 'development' ? 100 : 5, // 100 in dev, 5 in production
+  max: process.env.NODE_ENV === "development" ? 100 : 5, // 100 in dev, 5 in production
   message: {
     status: 429,
     message: "Too many login attempts, please try again later.",
@@ -56,12 +56,16 @@ if (process.env.NODE_ENV === "production") {
 // Domain restriction middleware (production only)
 if (process.env.NODE_ENV === "production") {
   app.use((req, res, next) => {
-    const allowedHosts = ["api.devpath.sh"];
+    // Comma-separated list of allowed hosts for the API (no protocol), e.g. "api.devpath.sh,api-preview.devpath.sh"
+    const allowedHosts = (process.env.ALLOWED_API_HOSTS || "api.devpath.sh")
+      .split(",")
+      .map((h) => h.trim())
+      .filter(Boolean);
     const host = req.get("host");
 
     // Allow Railway deployment domains
-    const isRailwayDomain = host && host.includes('.railway.app');
-    
+    const isRailwayDomain = host && host.includes(".railway.app");
+
     if (!allowedHosts.includes(host) && !isRailwayDomain) {
       return res.status(403).json({
         status: "error",
@@ -73,20 +77,45 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // CORS - Allow multiple origins in development
-const allowedOrigins = process.env.NODE_ENV === 'development' 
-  ? ['http://localhost:3000', 'http://localhost:3003', 'http://localhost:4321', 'http://localhost:5173']
-  : (process.env.FRONTEND_URL || 'https://devpath.sh').split(',').map(url => url.trim());
+const allowedOrigins =
+  process.env.NODE_ENV === "development"
+    ? [
+        "http://localhost:3000",
+        "http://localhost:3003",
+        "http://localhost:4321",
+        "http://localhost:5173",
+      ]
+    : (process.env.FRONTEND_URL || "https://devpath.sh")
+        .split(",")
+        .map((url) => url.trim())
+        .filter(Boolean);
+
+const wildcardOriginPatterns = allowedOrigins
+  .filter((origin) => origin.includes("*"))
+  .map(
+    (pattern) =>
+      new RegExp(
+        "^" +
+          pattern.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, ".*") +
+          "$"
+      )
+  );
+
+const exactOrigins = allowedOrigins.filter((origin) => !origin.includes("*"));
 
 app.use(
   cors({
     origin: function (origin, callback) {
       // Allow requests with no origin (like mobile apps or curl)
       if (!origin) return callback(null, true);
-      
-      if (allowedOrigins.indexOf(origin) !== -1) {
+
+      if (
+        exactOrigins.includes(origin) ||
+        wildcardOriginPatterns.some((regex) => regex.test(origin))
+      ) {
         callback(null, true);
       } else {
-        callback(new Error('Not allowed by CORS'));
+        callback(new Error("Not allowed by CORS"));
       }
     },
     credentials: true,
