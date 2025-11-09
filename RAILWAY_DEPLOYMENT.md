@@ -8,6 +8,7 @@
 ## 📋 Overview
 
 This is a monorepo with two services:
+
 - **Backend API** (Express + PostgreSQL) → Deploy on Railway
 - **Frontend** (Astro) → Deploy on Railway or Vercel
 
@@ -140,6 +141,7 @@ npm run init-db
 1. Open your browser
 2. Go to: `https://your-railway-domain.up.railway.app/health`
 3. You should see:
+
 ```json
 {
   "status": "ok",
@@ -185,6 +187,7 @@ PORT=3000
 ```
 
 **To get Supabase keys:**
+
 1. Go to Supabase Project → **Settings** → **API**
 2. Copy **"Project URL"** → `PUBLIC_SUPABASE_URL`
 3. Copy **"anon/public key"** → `PUBLIC_SUPABASE_ANON_KEY`
@@ -242,12 +245,14 @@ FRONTEND_URL=https://devpath.up.railway.app,https://*.vercel.app,http://localhos
 Once custom domains are active:
 
 **Backend variables:**
+
 ```bash
 PUBLIC_API_URL=https://api.devpath.sh/api
 FRONTEND_URL=https://devpath.sh,https://www.devpath.sh,https://*.vercel.app
 ```
 
 **Frontend variables:**
+
 ```bash
 PUBLIC_API_URL=https://api.devpath.sh/api
 ```
@@ -266,6 +271,7 @@ curl https://api.devpath.sh/health
 ```
 
 Expected response:
+
 ```json
 {
   "status": "ok",
@@ -349,11 +355,13 @@ Expected: Success response with user data
 ### View Logs
 
 **Railway Dashboard:**
+
 1. Click on service (`devpath-api` or `devpath-frontend`)
 2. Go to **Deployments** tab
 3. Click any deployment → **View Logs**
 
 **Real-time logs:**
+
 ```bash
 # Install Railway CLI
 npm i -g @railway/cli
@@ -376,6 +384,7 @@ railway logs
 ### Scaling
 
 Railway auto-scales based on traffic. For better performance:
+
 1. Upgrade Railway plan (if needed)
 2. Upgrade Supabase plan for more database connections
 
@@ -399,6 +408,7 @@ Railway auto-scales based on traffic. For better performance:
 ## 🔒 Security Notes
 
 ✅ **You're already secure with:**
+
 - Helmet.js security headers
 - Rate limiting on auth endpoints
 - CORS restricted to your domains
@@ -407,6 +417,7 @@ Railway auto-scales based on traffic. For better performance:
 - SSL/HTTPS (automatic on Railway)
 
 **Additional recommendations:**
+
 - Rotate JWT_SECRET periodically
 - Monitor Railway logs for suspicious activity
 - Set up error tracking (Sentry, etc.)
@@ -417,12 +428,14 @@ Railway auto-scales based on traffic. For better performance:
 ## 💰 Cost Estimate
 
 **Free Tier:**
+
 - Railway: $5/month credit (enough for small projects)
 - Supabase: Free tier (500MB database, 2GB bandwidth)
 
 **Estimated monthly cost:** $0-$5 for small/medium traffic
 
 **If you exceed free tier:**
+
 - Railway: ~$10-20/month
 - Supabase: ~$25/month (if you need more)
 
@@ -446,6 +459,7 @@ Railway auto-scales based on traffic. For better performance:
 5. Review this guide's troubleshooting section
 
 **Still stuck?** Open an issue on GitHub with:
+
 - Error message
 - Railway deployment logs
 - Steps you've completed

@@ -21,6 +21,7 @@ Use this checklist when deploying to Railway. Print it out or keep it open in a 
 - [ ] Password replaced in connection string
 
 **Connection string format:**
+
 ```
 postgresql://postgres:YOUR_PASSWORD@db.xxx.supabase.co:5432/postgres
 ```
@@ -30,12 +31,14 @@ postgresql://postgres:YOUR_PASSWORD@db.xxx.supabase.co:5432/postgres
 ## 🚂 Backend Deployment (10 min)
 
 ### Railway Setup
+
 - [ ] Railway project created
 - [ ] GitHub repo connected to Railway
 - [ ] Service name set to: `devpath-api`
 - [ ] Root directory set to: `backend`
 
 ### Environment Variables Set
+
 - [ ] `NODE_ENV=production`
 - [ ] `PORT=4000`
 - [ ] `DATABASE_URL=postgresql://...` (from Supabase)
@@ -47,6 +50,7 @@ postgresql://postgres:YOUR_PASSWORD@db.xxx.supabase.co:5432/postgres
 - [ ] `RATE_LIMIT_MAX_REQUESTS=100`
 
 ### Deployment
+
 - [ ] Backend deployed successfully (green checkmark)
 - [ ] Railway domain generated (Settings → Networking → Generate Domain)
 - [ ] Backend URL saved: `_______________________`
@@ -58,6 +62,7 @@ postgresql://postgres:YOUR_PASSWORD@db.xxx.supabase.co:5432/postgres
 ## 🎨 Frontend Deployment (10 min)
 
 ### Railway Setup
+
 - [ ] New service created in same Railway project
 - [ ] Service name set to: `devpath-frontend`
 - [ ] Root directory: `/` (root)
@@ -65,16 +70,19 @@ postgresql://postgres:YOUR_PASSWORD@db.xxx.supabase.co:5432/postgres
 - [ ] Start command: `npm start`
 
 ### Environment Variables Set
+
 - [ ] `PUBLIC_API_URL=https://devpath-api.up.railway.app/api`
 - [ ] `PUBLIC_SUPABASE_URL=https://xxx.supabase.co`
 - [ ] `PUBLIC_SUPABASE_ANON_KEY=...` (from Supabase Settings → API)
 - [ ] `PORT=3000`
 
 ### Update Backend CORS
+
 - [ ] Backend `FRONTEND_URL` updated to include frontend Railway domain
 - [ ] Backend redeployed with new FRONTEND_URL
 
 ### Deployment
+
 - [ ] Frontend deployed successfully
 - [ ] Frontend domain generated
 - [ ] Frontend loads without errors
@@ -85,6 +93,7 @@ postgresql://postgres:YOUR_PASSWORD@db.xxx.supabase.co:5432/postgres
 ## 🌐 Custom Domains (Optional, 15 min)
 
 ### Backend Domain (`api.devpath.sh`)
+
 - [ ] Custom domain added in Railway (Settings → Networking → Custom Domain)
 - [ ] CNAME record added to DNS provider
 - [ ] DNS propagated (5-10 minutes)
@@ -92,6 +101,7 @@ postgresql://postgres:YOUR_PASSWORD@db.xxx.supabase.co:5432/postgres
 - [ ] Health check works on custom domain
 
 ### Frontend Domain (`devpath.sh`)
+
 - [ ] Custom domain added in Railway
 - [ ] CNAME record added to DNS provider
 - [ ] DNS propagated
@@ -99,6 +109,7 @@ postgresql://postgres:YOUR_PASSWORD@db.xxx.supabase.co:5432/postgres
 - [ ] Site loads on custom domain
 
 ### Update Environment Variables
+
 - [ ] Backend `PUBLIC_API_URL=https://api.devpath.sh/api`
 - [ ] Backend `FRONTEND_URL=https://devpath.sh,https://www.devpath.sh`
 - [ ] Frontend `PUBLIC_API_URL=https://api.devpath.sh/api`
@@ -109,11 +120,13 @@ postgresql://postgres:YOUR_PASSWORD@db.xxx.supabase.co:5432/postgres
 ## ✅ Testing & Verification (5 min)
 
 ### Backend Tests
+
 - [ ] `/health` endpoint returns 200 OK
 - [ ] Response shows `"database": "connected"`
 - [ ] Response shows `"environment": "production"`
 
 ### Frontend Tests
+
 - [ ] Homepage loads
 - [ ] No console errors
 - [ ] User registration works
@@ -122,6 +135,7 @@ postgresql://postgres:YOUR_PASSWORD@db.xxx.supabase.co:5432/postgres
 - [ ] Roadmap progress loads
 
 ### Database Tests
+
 - [ ] Supabase table editor shows tables: `users`, `progress`
 - [ ] Test user created in database
 - [ ] Progress records visible
@@ -153,18 +167,23 @@ postgresql://postgres:YOUR_PASSWORD@db.xxx.supabase.co:5432/postgres
 ## 🐛 Common Issues & Quick Fixes
 
 ### Backend won't connect to database
+
 ✅ Fix: Verify `DATABASE_URL` in Railway variables matches Supabase exactly
 
 ### CORS error on frontend
+
 ✅ Fix: Add frontend domain to backend `FRONTEND_URL` variable
 
 ### Frontend shows API error
+
 ✅ Fix: Check `PUBLIC_API_URL` matches backend Railway domain
 
 ### Database tables not found
+
 ✅ Fix: Run `npm run init-db` in Railway backend shell
 
 ### Build fails
+
 ✅ Fix: Check Railway deployment logs, verify root directory is set correctly
 
 ---
@@ -172,10 +191,12 @@ postgresql://postgres:YOUR_PASSWORD@db.xxx.supabase.co:5432/postgres
 ## 📞 Emergency Contacts
 
 **Railway Support:**
+
 - Discord: https://discord.gg/railway
 - Docs: https://docs.railway.app
 
 **Supabase Support:**
+
 - Discord: https://discord.supabase.com
 - Docs: https://supabase.com/docs
 
@@ -192,7 +213,7 @@ Your deployment is successful when ALL of these are true:
 ✅ Progress saves and loads  
 ✅ No CORS errors in console  
 ✅ Both services show "Active" in Railway  
-✅ Database shows data in Supabase  
+✅ Database shows data in Supabase
 
 ---
 

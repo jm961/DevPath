@@ -21,10 +21,12 @@ node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
 1. Go to https://supabase.com/dashboard
 2. Create new project (or select existing)
 3. Go to **Project Settings** → **Database**
-4. Copy the **Connection string (URI)** 
+4. Copy the **Connection string (URI)**
 5. It looks like: `postgresql://postgres:[YOUR-PASSWORD]@db.xxx.supabase.co:5432/postgres`
 6. Replace `[YOUR-PASSWORD]` with your actual Supabase database password
 
+
+postgresql://postgres:70852190Jme@db.zylbnzptiktszbutpelm.supabase.co:5432/postgres
 **→ Save this connection string. You'll use it as `DATABASE_URL` in Railway.**
 
 ---
@@ -36,8 +38,8 @@ node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
 ```bash
 NODE_ENV=production
 PORT=4000
-DATABASE_URL=postgresql://postgres:YOUR_PASSWORD@db.xxx.supabase.co:5432/postgres
-JWT_SECRET=YOUR_GENERATED_SECRET_FROM_STEP_1
+DATABASE_URL=postgresql://postgres:70852190Jme@db.zylbnzptiktszbutpelm.supabase.co:5432/postgres
+JWT_SECRET=90eb2870ad21d43d93609f35edf54b03a09f524e6e5c4143dbd0aced8316191c8d310752b47f523adddac3cff2d664a2441378b92640a606c4b731926c6bc5d6
 JWT_EXPIRES_IN=7d
 FRONTEND_URL=https://devpath.up.railway.app,https://*.vercel.app,http://localhost:3000
 PUBLIC_API_URL=https://devpath-api.up.railway.app/api
@@ -46,6 +48,7 @@ RATE_LIMIT_MAX_REQUESTS=100
 ```
 
 **Add these in Railway:**
+
 1. Create new service from GitHub repo
 2. Set **Root Directory** to: `backend`
 3. Set **Service Name** to: `devpath-api`
@@ -63,6 +66,7 @@ npm run init-db
 ```
 
 **Expected output:**
+
 ```
 ✅ Creating users table...
 ✅ Creating progress table...
@@ -81,6 +85,7 @@ curl https://YOUR-BACKEND-DOMAIN.up.railway.app/health
 ```
 
 **Expected response:**
+
 ```json
 {
   "status": "ok",
@@ -107,11 +112,13 @@ PORT=3000
 ```
 
 **Get Supabase keys:**
+
 1. Supabase Dashboard → **Settings** → **API**
 2. Copy **Project URL** → use as `PUBLIC_SUPABASE_URL`
 3. Copy **anon/public key** → use as `PUBLIC_SUPABASE_ANON_KEY`
 
 **Add these in Railway:**
+
 1. Create new service from same GitHub repo
 2. Set **Root Directory** to: `/` (root)
 3. Set **Service Name** to: `devpath-frontend`
@@ -137,6 +144,7 @@ Railway will auto-redeploy the backend.
 ## 8️⃣ Test Everything
 
 ### Test User Registration:
+
 ```bash
 curl -X POST https://YOUR-BACKEND-DOMAIN.up.railway.app/api/v1-signup \
   -H "Content-Type: application/json" \
@@ -148,6 +156,7 @@ curl -X POST https://YOUR-BACKEND-DOMAIN.up.railway.app/api/v1-signup \
 ```
 
 ### Test Frontend:
+
 1. Open `https://YOUR-FRONTEND-DOMAIN.up.railway.app`
 2. Register a new user
 3. Login
@@ -161,11 +170,13 @@ curl -X POST https://YOUR-BACKEND-DOMAIN.up.railway.app/api/v1-signup \
 ### Backend Domain: `api.devpath.sh`
 
 **In Railway:**
+
 1. Go to backend service → **Settings** → **Networking**
 2. Click **"Custom Domain"** → Enter `api.devpath.sh`
 3. Railway shows CNAME record
 
 **In DNS Provider (Cloudflare/GoDaddy/etc):**
+
 ```
 Type: CNAME
 Name: api
@@ -176,10 +187,12 @@ Proxy: OFF (if Cloudflare)
 ### Frontend Domain: `devpath.sh`
 
 **In Railway:**
+
 1. Go to frontend service → **Settings** → **Networking**
 2. Click **"Custom Domain"** → Enter `devpath.sh`
 
 **In DNS Provider:**
+
 ```
 Type: CNAME
 Name: @
@@ -189,12 +202,14 @@ Value: <value-from-railway>
 ### Update Environment Variables (After domains are active):
 
 **Backend:**
+
 ```bash
 PUBLIC_API_URL=https://api.devpath.sh/api
 FRONTEND_URL=https://devpath.sh,https://www.devpath.sh,https://*.vercel.app
 ```
 
 **Frontend:**
+
 ```bash
 PUBLIC_API_URL=https://api.devpath.sh/api
 ```
@@ -226,17 +241,20 @@ railway run npm run init-db
 ## 🐛 Troubleshooting Commands
 
 ### View Railway Logs:
+
 ```bash
 railway logs --service devpath-api
 railway logs --service devpath-frontend
 ```
 
 ### Test Database Connection (Local):
+
 ```bash
 psql "postgresql://postgres:PASSWORD@db.xxx.supabase.co:5432/postgres"
 ```
 
 ### Reset Database (if needed):
+
 ```bash
 # In Railway shell or CLI
 npm run reset-db
@@ -244,6 +262,7 @@ npm run init-db
 ```
 
 ### Check Server Status:
+
 ```bash
 # Health check
 curl https://api.devpath.sh/health
@@ -257,16 +276,19 @@ curl -v https://api.devpath.sh/health
 ## 📊 Monitoring Commands
 
 ### Check Railway Service Status:
+
 ```bash
 railway status
 ```
 
 ### Check Railway Variables:
+
 ```bash
 railway variables
 ```
 
 ### View Recent Deployments:
+
 ```bash
 railway deployments
 ```
@@ -276,17 +298,20 @@ railway deployments
 ## ✅ Success Indicators
 
 **Backend is ready when:**
+
 - ✅ `/health` returns 200 with `"database": "connected"`
 - ✅ No errors in Railway deployment logs
 - ✅ Service shows "Active" in Railway dashboard
 
 **Frontend is ready when:**
+
 - ✅ Homepage loads without errors
 - ✅ Browser console has no CORS errors
 - ✅ Registration/login works
 - ✅ Service shows "Active" in Railway dashboard
 
 **Database is ready when:**
+
 - ✅ Supabase shows tables: `users`, `progress`
 - ✅ Test user exists in `users` table
 - ✅ No connection errors in backend logs

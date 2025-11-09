@@ -45,6 +45,7 @@ DevPath/
 ## 🔧 Configuration Files
 
 ### ✅ `/backend/railway.json`
+
 ```json
 {
   "deploy": {
@@ -56,6 +57,7 @@ DevPath/
 ```
 
 ### ✅ `/backend/railway.toml`
+
 ```toml
 [build]
 builder = "NIXPACKS"
@@ -67,6 +69,7 @@ healthcheckPath = "/health"
 ```
 
 ### ✅ `/railway.json` (Frontend)
+
 ```json
 {
   "deploy": {
@@ -100,6 +103,7 @@ api.devpath.sh → CNAME Record → Railway CDN → Backend (Express)
 ## 🔐 Environment Variables
 
 ### Backend (`devpath-api`)
+
 ```
 NODE_ENV=production
 PORT=4000
@@ -113,6 +117,7 @@ RATE_LIMIT_MAX_REQUESTS=100
 ```
 
 ### Frontend (`devpath-frontend`)
+
 ```
 PUBLIC_API_URL=https://api.devpath.sh/api
 PUBLIC_SUPABASE_URL=https://xxx.supabase.co
@@ -156,9 +161,11 @@ PORT=3000
 ## 📊 Service Health Indicators
 
 ### ✅ Backend Health Check
+
 **Endpoint:** `GET /health`
 
 **Success Response (200):**
+
 ```json
 {
   "status": "ok",
@@ -170,6 +177,7 @@ PORT=3000
 ```
 
 **Failure Response (503):**
+
 ```json
 {
   "status": "error",
@@ -181,6 +189,7 @@ PORT=3000
 ```
 
 ### ✅ Frontend Health Check
+
 **Endpoint:** `GET /`
 
 **Success:** Homepage loads with status 200  
@@ -331,21 +340,22 @@ High Traffic (> 10000 users/day)
 
 ## 📚 Key Files Reference
 
-| File | Purpose | Required Changes |
-|------|---------|------------------|
-| `backend/railway.json` | Backend deployment config | ✅ Added healthcheck |
-| `backend/railway.toml` | Alternative config | ✅ Created |
-| `railway.json` | Frontend deployment config | ✅ Updated start command |
-| `backend/src/server.js` | API server | ✅ Enhanced /health endpoint |
-| `backend/.env.example` | Environment template | ✅ Already complete |
-| `package.json` (root) | Frontend dependencies | ✅ Already correct |
-| `backend/package.json` | Backend dependencies | ✅ Already correct |
+| File                    | Purpose                    | Required Changes             |
+| ----------------------- | -------------------------- | ---------------------------- |
+| `backend/railway.json`  | Backend deployment config  | ✅ Added healthcheck         |
+| `backend/railway.toml`  | Alternative config         | ✅ Created                   |
+| `railway.json`          | Frontend deployment config | ✅ Updated start command     |
+| `backend/src/server.js` | API server                 | ✅ Enhanced /health endpoint |
+| `backend/.env.example`  | Environment template       | ✅ Already complete          |
+| `package.json` (root)   | Frontend dependencies      | ✅ Already correct           |
+| `backend/package.json`  | Backend dependencies       | ✅ Already correct           |
 
 ---
 
 ## ✅ Pre-Flight Checklist
 
 Before deploying, ensure:
+
 - [x] Code committed and pushed to GitHub
 - [x] Railway account created
 - [x] Supabase project created

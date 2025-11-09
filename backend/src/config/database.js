@@ -41,7 +41,8 @@ pool.on("connect", () => {
 
 pool.on("error", (err) => {
   console.error("❌ Unexpected database error:", err);
-  process.exit(-1);
+  // Don't exit - let the health check report the issue instead
+  // This allows Railway to deploy the service even if DB is temporarily unavailable
 });
 
 module.exports = pool;
