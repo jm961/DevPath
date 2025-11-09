@@ -56,11 +56,7 @@ if (process.env.NODE_ENV === "production") {
 // Domain restriction middleware (production only)
 if (process.env.NODE_ENV === "production") {
   app.use((req, res, next) => {
-    // Comma-separated list of allowed hosts for the API (no protocol), e.g. "api.devpath.sh,api-preview.devpath.sh"
-    const allowedHosts = (process.env.ALLOWED_API_HOSTS || "api.devpath.sh")
-      .split(",")
-      .map((h) => h.trim())
-      .filter(Boolean);
+    const allowedHosts = ["api.devpath.sh"];
     const host = req.get("host");
 
     // Allow Railway deployment domains
@@ -136,13 +132,28 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 // Health check
-app.get("/health", (req, res) => {
-  res.json({
-    status: "ok",
-    message: "DevPath API is running",
-    environment: process.env.NODE_ENV,
-    timestamp: new Date().toISOString(),
-  });
+app.get("/health", async (req, res) => {
+  try {
+    // Check database connection
+    const pool = require("./config/database");
+    await pool.query("SELECT 1");
+    
+    res.json({
+      status: "ok",
+      message: "DevPath API is running",
+      environment: process.env.NODE_ENV,
+      database: "connected",
+      timestamp: new Date().toISOString(),
+    });
+  } catch (error) {
+    res.status(503).json({
+      status: "error",
+      message: "Service unavailable",
+      environment: process.env.NODE_ENV,
+      database: "disconnected",
+      timestamp: new Date().toISOString(),
+    });
+  }
 });
 
 // Routes
