@@ -32,17 +32,31 @@ const pool = new Pool(
       }
 );
 
-// Test connection
+// Test connection on startup
 pool.on("connect", () => {
-  if (process.env.NODE_ENV !== "production") {
-    console.log("✅ Database connected");
-  }
+  console.log("✅ Database connected");
 });
 
 pool.on("error", (err) => {
-  console.error("❌ Unexpected database error:", err);
+  console.error("❌ Unexpected database error:", err.message);
+  console.error("Error code:", err.code);
   // Don't exit - let the health check report the issue instead
   // This allows Railway to deploy the service even if DB is temporarily unavailable
 });
+
+// Test connection immediately
+pool
+  .query("SELECT 1")
+  .then(() => {
+    console.log("✅ Database connection test successful");
+  })
+  .catch((err) => {
+    console.error("❌ Database connection test failed:", err.message);
+    console.error("Error details:", {
+      code: err.code,
+      message: err.message,
+      hasDATABASE_URL: !!process.env.DATABASE_URL,
+    });
+  });
 
 module.exports = pool;

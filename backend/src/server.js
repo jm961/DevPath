@@ -81,10 +81,15 @@ const allowedOrigins =
         "http://localhost:4321",
         "http://localhost:5173",
       ]
-    : (process.env.FRONTEND_URL || "https://devpath.sh")
-        .split(",")
-        .map((url) => url.trim())
-        .filter(Boolean);
+    : [
+        "https://devpath.sh",
+        "https://www.devpath.sh",
+        "https://*.vercel.app", // Allow all Vercel preview deployments
+        ...(process.env.FRONTEND_URL || "")
+          .split(",")
+          .map((url) => url.trim())
+          .filter(Boolean),
+      ];
 
 const wildcardOriginPatterns = allowedOrigins
   .filter((origin) => origin.includes("*"))
@@ -148,6 +153,12 @@ app.get("/health", async (req, res) => {
   } catch (error) {
     health.database = "disconnected";
     health.warning = "Database connection failed, but service is running";
+    // Include error details in non-production for debugging
+    if (process.env.NODE_ENV !== "production") {
+      health.database_error = error.message;
+    }
+    // Log the full error for debugging
+    console.error("Database connection error:", error.message);
   }
 
   // Always return 200 OK so Railway considers the service healthy
