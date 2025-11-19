@@ -51,8 +51,8 @@ lerna-debug.log*
 .gitignore
 .gitattributes
 
-# Documentation
-*.md
+# Documentation (root level only)
+/*.md
 !README.md
 LICENSE
 license
