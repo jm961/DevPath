@@ -19,10 +19,10 @@ export async function toggleMarkResourceDoneApi({
   );
 
   if (error) {
-    throw new Error(error.message || "Failed to toggle topic");
+    return { response: undefined, error };
   }
 
-  return { status: "ok" as const };
+  return { response, error: undefined };
 }
 
 export async function getUserResourceProgressApi({

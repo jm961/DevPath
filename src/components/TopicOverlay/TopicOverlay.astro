@@ -36,18 +36,18 @@ const { contentContributionLink } = Astro.props;
           <div data-auth-required>
             <button
               id='mark-topic-done'
-              class='inline-flex hidden items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-success/20 px-3 py-2 text-sm font-medium text-success ring-1 ring-success/30 backdrop-blur-sm transition-all hover:bg-success/30 sm:px-4 flex-shrink-0 min-w-fit'
+              class='inline-flex hidden items-center justify-center gap-2 rounded-lg bg-success/20 px-3 py-2 text-sm font-medium text-success ring-1 ring-success/30 backdrop-blur-sm transition-all hover:bg-success/30 sm:px-4 flex-shrink-0'
             >
-              <Icon icon='check' class='flex-shrink-0' />
-              <span>Mark as Done</span>
+              <Icon icon='check' class='flex-shrink-0 h-4 w-4' />
+              <span class='whitespace-nowrap'>Mark as Done</span>
             </button>
 
             <button
               id='mark-topic-pending'
-              class='inline-flex hidden items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-danger/20 px-3 py-2 text-sm font-medium text-danger ring-1 ring-danger/30 backdrop-blur-sm transition-all hover:bg-danger/30 sm:px-4 flex-shrink-0 min-w-fit'
+              class='inline-flex hidden items-center justify-center gap-2 rounded-lg bg-danger/20 px-3 py-2 text-sm font-medium text-danger ring-1 ring-danger/30 backdrop-blur-sm transition-all hover:bg-danger/30 sm:px-4 flex-shrink-0'
             >
-              <Icon icon='reset' class='flex-shrink-0' />
-              <span>Mark as Pending</span>
+              <Icon icon='reset' class='flex-shrink-0 h-4 w-4' />
+              <span class='whitespace-nowrap'>Mark as Pending</span>
             </button>
           </div>
         </div>
@@ -319,5 +319,30 @@ const { contentContributionLink } = Astro.props;
   /* Emphasis/Italic */
   .topic-overlay-content :global(em) {
     color: rgba(255, 255, 255, 0.9) !important;
+  }
+
+  /* Responsive button styling */
+  @media (max-width: 640px) {
+    #mark-topic-done,
+    #mark-topic-pending {
+      padding: 0.5rem 0.75rem !important;
+      font-size: 0.875rem !important;
+      gap: 0.5rem !important;
+    }
+
+    #mark-topic-done span,
+    #mark-topic-pending span {
+      font-size: 0.875rem !important;
+    }
+
+    #topic-actions {
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    #topic-actions > div {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
   }
 </style>

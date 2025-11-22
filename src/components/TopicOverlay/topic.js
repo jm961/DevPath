@@ -291,8 +291,15 @@ export class Topic {
       item?.classList?.add("done");
     });
 
+    // Update button states in overlay
+    if (this.markTopicDoneEl && this.markTopicPendingEl) {
+      this.markTopicDoneEl.classList.add("hidden");
+      this.markTopicPendingEl.classList.remove("hidden");
+    }
+
     if (response) {
-      this.close();
+      // Don't close immediately - let user see the update
+      // this.close();
     } else {
       console.warn("⚠️ Backend API failed, but UI updated locally:", error);
       // Store locally for guests
@@ -317,8 +324,15 @@ export class Topic {
       item?.classList?.remove("done");
     });
 
+    // Update button states in overlay
+    if (this.markTopicDoneEl && this.markTopicPendingEl) {
+      this.markTopicDoneEl.classList.remove("hidden");
+      this.markTopicPendingEl.classList.add("hidden");
+    }
+
     if (response) {
-      this.close();
+      // Don't close immediately - let user see the update
+      // this.close();
     } else {
       console.warn("⚠️ Backend API failed, but UI updated locally:", error);
       // Remove from local storage for guests
