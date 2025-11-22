@@ -2,6 +2,7 @@ import { useEffect, useState } from "preact/hooks";
 import GoogleIcon from "../../icons/google.svg";
 import SpinnerIcon from "../../icons/spinner.svg";
 import { getSupabase } from "../../lib/supabase";
+import { syncOAuthUserWithBackend } from "../../lib/oauth-sync";
 
 type GoogleButtonProps = {};
 
@@ -28,14 +29,23 @@ export function GoogleButton(props: GoogleButtonProps) {
       setIsLoading(true);
 
       // Supabase automatically sets the session
-      supabase.auth.getSession().then(({ data, error }) => {
+      supabase.auth.getSession().then(async ({ data, error }) => {
         if (error || !data.session) {
           setError("Something went wrong. Please try again later.");
           setIsLoading(false);
           return;
         }
 
-        // Success! Session is set in Supabase
+        // Sync with backend and get JWT token
+        const syncResult = await syncOAuthUserWithBackend("google");
+
+        if (!syncResult.success) {
+          setError(syncResult.error || "Failed to sync with backend");
+          setIsLoading(false);
+          return;
+        }
+
+        // Success! Session is set in Supabase and synced with backend
         let redirectUrl = "/";
         const googleRedirectAt = localStorage.getItem(GOOGLE_REDIRECT_AT);
         const lastPageBeforeGoogle = localStorage.getItem(GOOGLE_LAST_PAGE);
@@ -88,7 +98,7 @@ export function GoogleButton(props: GoogleButtonProps) {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-          redirectTo: `${window.location.origin}/login`,
+          redirectTo: `${window.location.origin}${window.location.pathname}`,
         },
       });
 

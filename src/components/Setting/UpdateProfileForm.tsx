@@ -57,85 +57,94 @@ export function UpdateProfileForm() {
       return;
     }
 
-    const { response, error } = await httpPatch(
-      `${import.meta.env.PUBLIC_API_URL}/v1-update-profile`,
-      {
-        name: `${firstName} ${lastName}`.trim(),
-        github: github || undefined,
-        linkedin: linkedin || undefined,
-        twitter: twitter || undefined,
-        website: website || undefined,
+    try {
+      const { response, error } = await httpPatch(
+        `${import.meta.env.PUBLIC_API_URL}/v1-update-profile`,
+        {
+          name: `${firstName} ${lastName}`.trim(),
+          github: github || undefined,
+          linkedin: linkedin || undefined,
+          twitter: twitter || undefined,
+          website: website || undefined,
+        }
+      );
+
+      if (error || !response) {
+        setIsSaving(false);
+        setError(error?.message || "Something went wrong. Please try again.");
+        return;
       }
-    );
 
-    if (error || !response) {
+      await loadProfile();
+      setSuccess("Profile updated successfully!");
       setIsSaving(false);
-      setError(error?.message || "Something went wrong. Please try again.");
 
-      return;
+      // Clear success message after 3 seconds
+      setTimeout(() => {
+        setSuccess("");
+      }, 3000);
+    } catch (err) {
+      setIsSaving(false);
+      setError("An unexpected error occurred. Please try again.");
     }
-
-    await loadProfile();
-    setSuccess("Profile updated successfully!");
-    setIsSaving(false);
-
-    // Clear success message after 3 seconds
-    setTimeout(() => {
-      setSuccess("");
-    }, 3000);
   };
 
   const loadProfile = async () => {
     setIsLoading(true);
     setError("");
+    setSuccess("");
 
-    console.log(
-      "🔍 Fetching profile from:",
-      `${import.meta.env.PUBLIC_API_URL}/v1-me`
-    );
+    try {
+      const { error, response } = await httpGet(
+        `${import.meta.env.PUBLIC_API_URL}/v1-me`
+      );
 
-    const { error, response } = await httpGet(
-      `${import.meta.env.PUBLIC_API_URL}/v1-me`
-    );
+      if (error) {
+        if (error.status === 401) {
+          Cookies.remove(TOKEN_COOKIE_NAME);
+          window.location.reload();
+          return;
+        }
 
-    console.log("📦 Profile response:", { error, response });
-
-    if (error || !response) {
-      if (error?.status === 401) {
-        Cookies.remove(TOKEN_COOKIE_NAME);
-        window.location.reload();
-
+        setIsLoading(false);
+        // Only show error for actual failures, not network issues that might be temporary
+        if (error.status !== 0) {
+          setError(error.message || "Failed to load profile data");
+        }
         return;
       }
 
+      if (!response) {
+        setIsLoading(false);
+        setError("No profile data received");
+        return;
+      }
+
+      const { name, email, links } = response;
+
+      // Split name into first and last name
+      const nameParts = (name || "").trim().split(" ");
+      const first = nameParts[0] || "";
+      const last = nameParts.slice(1).join(" ") || "";
+
+      setFirstName(first);
+      setLastName(last);
+      setEmail(email || "");
+      setGithub(links?.github || "");
+      setLinkedin(links?.linkedin || "");
+      setTwitter(links?.twitter || "");
+      setWebsite(links?.website || "");
+
+      // Clear any previous errors on successful load
+      setError("");
       setIsLoading(false);
-      setError(error?.message || "Failed to load profile data");
-
-      return;
+    } catch (err) {
+      setIsLoading(false);
+      // Only show error for unexpected exceptions
+      if (err instanceof Error) {
+        setError("An unexpected error occurred. Please try again.");
+      }
     }
-
-    console.log("✅ Setting profile data:", {
-      name: response.name,
-      email: response.email,
-      links: response.links,
-    });
-
-    const { name, email, links } = response;
-
-    // Split name into first and last name
-    const nameParts = (name || "").trim().split(" ");
-    const first = nameParts[0] || "";
-    const last = nameParts.slice(1).join(" ") || "";
-
-    setFirstName(first);
-    setLastName(last);
-    setEmail(email);
-    setGithub(links?.github || "");
-    setLinkedin(links?.linkedin || "");
-    setTwitter(links?.twitter || "");
-    setWebsite(links?.website || "");
-
-    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -348,7 +357,7 @@ export function UpdateProfileForm() {
           )}
         </div>
 
-        {error && (
+        {error && !isLoading && (
           <div className="flex items-center gap-2 rounded-2xl border border-[#ef4444]/30 bg-[#ef4444]/10 px-4 py-3 backdrop-blur-xl">
             <svg
               className="h-5 w-5 shrink-0 text-[#ef4444]"

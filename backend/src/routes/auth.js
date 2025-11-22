@@ -14,7 +14,9 @@ const {
 router.post("/v1-signup", signupValidation, authController.signup);
 router.post("/v1-login", loginValidation, authController.login);
 
-// Google OAuth callback (from Supabase)
+// OAuth callback from Supabase (Google, GitHub, etc.)
+router.post("/v1-oauth-callback", googleAuthController.oauthCallback);
+// Keep backward compatibility
 router.post("/v1-google-callback", googleAuthController.googleCallback);
 
 // Protected routes

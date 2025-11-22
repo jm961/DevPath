@@ -3,16 +3,17 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 /**
- * Handle Google OAuth callback from Supabase
+ * Handle OAuth callback from Supabase (Google, GitHub, etc.)
  * This endpoint receives user data from the frontend after Supabase OAuth
  */
-const googleCallback = async (req, res) => {
+const oauthCallback = async (req, res) => {
   try {
-    const { email, name, googleId } = req.body;
+    const { email, name, provider } = req.body;
 
     if (!email) {
       return res.status(400).json({
-        error: "Email is required",
+        status: 400,
+        message: "Email is required",
       });
     }
 
@@ -58,7 +59,7 @@ const googleCallback = async (req, res) => {
     // Generate JWT token
     const token = jwt.sign(
       {
-        id: user.id,
+        userId: user.id,
         email: user.email,
         name: user.name,
       },
@@ -67,6 +68,7 @@ const googleCallback = async (req, res) => {
     );
 
     res.json({
+      status: "ok",
       token,
       user: {
         id: user.id,
@@ -75,15 +77,19 @@ const googleCallback = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error("Google callback error:", error);
+    console.error("OAuth callback error:", error);
     res.status(500).json({
-      error: "Authentication failed",
-      message:
-        process.env.NODE_ENV === "development" ? error.message : undefined,
+      status: 500,
+      message: "Authentication failed",
+      error: process.env.NODE_ENV === "development" ? error.message : undefined,
     });
   }
 };
 
+// Keep backward compatibility
+const googleCallback = oauthCallback;
+
 module.exports = {
+  oauthCallback,
   googleCallback,
 };

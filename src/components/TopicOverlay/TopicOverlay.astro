@@ -26,9 +26,9 @@ const { contentContributionLink } = Astro.props;
           <div data-guest-required class='hidden'>
             <button
               data-popup='login-popup'
-              class='inline-flex items-center gap-2 rounded-lg bg-success/20 px-4 py-2 text-sm font-medium text-success ring-1 ring-success/30 backdrop-blur-sm transition-all hover:bg-success/30'
+              class='inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-success/20 px-3 py-2 text-sm font-medium text-success ring-1 ring-success/30 backdrop-blur-sm transition-all hover:bg-success/30 sm:px-4 flex-shrink-0 min-w-fit'
             >
-              <Icon icon='check' />
+              <Icon icon='check' class='flex-shrink-0' />
               <span>Mark as Done</span>
             </button>
           </div>
@@ -36,17 +36,17 @@ const { contentContributionLink } = Astro.props;
           <div data-auth-required>
             <button
               id='mark-topic-done'
-              class='inline-flex hidden items-center gap-2 rounded-lg bg-success/20 px-4 py-2 text-sm font-medium text-success ring-1 ring-success/30 backdrop-blur-sm transition-all hover:bg-success/30'
+              class='inline-flex hidden items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-success/20 px-3 py-2 text-sm font-medium text-success ring-1 ring-success/30 backdrop-blur-sm transition-all hover:bg-success/30 sm:px-4 flex-shrink-0 min-w-fit'
             >
-              <Icon icon='check' />
+              <Icon icon='check' class='flex-shrink-0' />
               <span>Mark as Done</span>
             </button>
 
             <button
               id='mark-topic-pending'
-              class='inline-flex hidden items-center gap-2 rounded-lg bg-danger/20 px-4 py-2 text-sm font-medium text-danger ring-1 ring-danger/30 backdrop-blur-sm transition-all hover:bg-danger/30'
+              class='inline-flex hidden items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-danger/20 px-3 py-2 text-sm font-medium text-danger ring-1 ring-danger/30 backdrop-blur-sm transition-all hover:bg-danger/30 sm:px-4 flex-shrink-0 min-w-fit'
             >
-              <Icon icon='reset' />
+              <Icon icon='reset' class='flex-shrink-0' />
               <span>Mark as Pending</span>
             </button>
           </div>
