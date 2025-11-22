@@ -21,9 +21,11 @@ export function GoogleButton(props: GoogleButtonProps) {
       return;
     }
 
-    // Check if we're returning from OAuth callback
+    // Check if we're returning from OAuth callback - check both hash and query params
     const hashParams = new URLSearchParams(window.location.hash.substring(1));
-    const accessToken = hashParams.get("access_token");
+    const queryParams = new URLSearchParams(window.location.search);
+    const accessToken =
+      hashParams.get("access_token") || queryParams.get("access_token");
 
     if (accessToken) {
       setIsLoading(true);
@@ -46,30 +48,13 @@ export function GoogleButton(props: GoogleButtonProps) {
         }
 
         // Success! Session is set in Supabase and synced with backend
-        let redirectUrl = "/";
-        const googleRedirectAt = localStorage.getItem(GOOGLE_REDIRECT_AT);
-        const lastPageBeforeGoogle = localStorage.getItem(GOOGLE_LAST_PAGE);
-
-        if (googleRedirectAt && lastPageBeforeGoogle) {
-          const socialRedirectAtTime = parseInt(googleRedirectAt, 10);
-          const now = Date.now();
-          const timeSinceRedirect = now - socialRedirectAtTime;
-
-          if (timeSinceRedirect < 30 * 1000) {
-            redirectUrl = lastPageBeforeGoogle;
-          }
-        }
-
+        // Clean up localStorage
         localStorage.removeItem(GOOGLE_REDIRECT_AT);
         localStorage.removeItem(GOOGLE_LAST_PAGE);
 
-        // Clean up URL and redirect
-        window.history.replaceState(
-          {},
-          document.title,
-          window.location.pathname
-        );
-        window.location.href = redirectUrl;
+        // Clean up URL and redirect to home
+        window.history.replaceState({}, document.title, "/");
+        window.location.pathname = "/";
       });
     }
   }, []);
@@ -95,10 +80,17 @@ export function GoogleButton(props: GoogleButtonProps) {
         return;
       }
 
+      // Use the current page URL for redirect, but ensure it's the full URL
+      const redirectUrl = `${window.location.origin}${window.location.pathname}`;
+
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-          redirectTo: `${window.location.origin}${window.location.pathname}`,
+          redirectTo: redirectUrl,
+          queryParams: {
+            access_type: "offline",
+            prompt: "consent",
+          },
         },
       });
 
