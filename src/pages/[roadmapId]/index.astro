@@ -6,7 +6,6 @@ import MarkdownFile from '../../components/MarkdownFile.astro';
 import RelatedRoadmaps from '../../components/RelatedRoadmaps.astro';
 import RoadmapHeader from '../../components/RoadmapHeader.astro';
 import RoadmapStartGuide from '../../components/RoadmapStartGuide.astro';
-import ShareIcons from '../../components/ShareIcons/ShareIcons.astro';
 import TopicOverlay from '../../components/TopicOverlay/TopicOverlay.astro';
 import UpcomingForm from '../../components/UpcomingForm.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
@@ -142,10 +141,6 @@ const metadata = roadmapMeta[roadmapId];
           <!-- Hidden breadcrumb for progress tracking -->
           <div class='hidden' data-roadmap-id={roadmapId}></div>
 
-          <ShareIcons
-            description={roadmapData.briefDescription}
-            pageUrl={`https://devpath.app/${roadmapId}`}
-          />
           <TopicOverlay contentContributionLink={contentContributionLink} />
 
           <FrameRenderer
@@ -161,11 +156,6 @@ const metadata = roadmapMeta[roadmapId];
     {
       !roadmapData.isUpcoming && !roadmapData.jsonUrl && (
         <div class='container relative max-w-[1000px]'>
-          <ShareIcons
-            description={roadmapData.briefDescription}
-            pageUrl={`https://devpath.app/${roadmapId}`}
-          />
-          
           <div id='resource-svg-wrap' class='roadmap-container'>
             <MarkdownFile>
               <roadmapFile.Content />
