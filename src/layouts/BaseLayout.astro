@@ -1,5 +1,6 @@
 ---
 import Analytics from '../components/Analytics/Analytics.astro';
+import VercelAnalytics from '@vercel/analytics/astro';
 import Authenticator from '../components/Authenticator/Authenticator.astro';
 import Footer from '../components/Footer.astro';
 import Navigation from '../components/Navigation/Navigation.astro';
@@ -143,6 +144,7 @@ const canonicalUrl = givenCanonical || currentPageAbsoluteUrl;
     </slot>
 
     <Analytics />
+    <VercelAnalytics />
     <Authenticator />
 
     <slot name='after-footer' />

@@ -52,9 +52,14 @@ export function GoogleButton(props: GoogleButtonProps) {
         localStorage.removeItem(GOOGLE_REDIRECT_AT);
         localStorage.removeItem(GOOGLE_LAST_PAGE);
 
-        // Clean up URL and redirect to home
-        window.history.replaceState({}, document.title, "/");
-        window.location.pathname = "/";
+        // Clean up URL and redirect to home (use production domain in production)
+        const isProduction =
+          window.location.hostname !== "localhost" &&
+          !window.location.hostname.includes("127.0.0.1");
+        const homeUrl = isProduction ? "https://devpath.sh/" : "/";
+
+        window.history.replaceState({}, document.title, homeUrl);
+        window.location.href = homeUrl;
       });
     }
   }, []);
@@ -80,8 +85,13 @@ export function GoogleButton(props: GoogleButtonProps) {
         return;
       }
 
-      // Use the current page URL for redirect, but ensure it's the full URL
-      const redirectUrl = `${window.location.origin}${window.location.pathname}`;
+      // Use production domain in production, current origin in development
+      const isProduction =
+        window.location.hostname !== "localhost" &&
+        !window.location.hostname.includes("127.0.0.1");
+      const redirectUrl = isProduction
+        ? `https://devpath.sh${window.location.pathname}`
+        : `${window.location.origin}${window.location.pathname}`;
 
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: "google",
