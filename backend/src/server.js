@@ -76,6 +76,7 @@ if (process.env.NODE_ENV === "production") {
 const allowedOrigins =
   process.env.NODE_ENV === "development"
     ? [
+        "http://localhost:4321",
         "http://localhost:3000",
         "http://localhost:3003",
         "http://localhost:4321",
@@ -207,8 +208,6 @@ app.listen(PORT, () => {
   console.log(`📍 http://localhost:${PORT}`);
   console.log(`🏥 Health check: http://localhost:${PORT}/health`);
   console.log(
-    `🌐 CORS enabled for: ${
-      process.env.FRONTEND_URL || "http://localhost:3000"
-    }\n`
+    `🌐 CORS enabled for: ${process.env.FRONTEND_URL || "https://devpath.sh"}\n`
   );
 });

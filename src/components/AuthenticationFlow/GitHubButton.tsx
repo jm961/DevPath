@@ -52,11 +52,8 @@ export function GitHubButton(props: GitHubButtonProps) {
         localStorage.removeItem(GITHUB_REDIRECT_AT);
         localStorage.removeItem(GITHUB_LAST_PAGE);
 
-        // Clean up URL and redirect to home (use production domain in production)
-        const isProduction =
-          window.location.hostname !== "localhost" &&
-          !window.location.hostname.includes("127.0.0.1");
-        const homeUrl = isProduction ? "https://devpath.sh/" : "/";
+        // Clean up URL and redirect to home (Always force production)
+        const homeUrl = "https://devpath.sh/";
 
         window.history.replaceState({}, document.title, homeUrl);
         window.location.href = homeUrl;
@@ -85,13 +82,17 @@ export function GitHubButton(props: GitHubButtonProps) {
         return;
       }
 
-      // Use production domain in production, current origin in development
-      const isProduction =
-        window.location.hostname !== "localhost" &&
-        !window.location.hostname.includes("127.0.0.1");
-      const redirectUrl = isProduction
-        ? `https://devpath.sh${window.location.pathname}`
-        : `${window.location.origin}${window.location.pathname}`;
+      // STRICT FORCE: Always redirect to production URL
+      // This ensures we never hit localhost:3000 even if running locally
+
+      // Ensure we don't double-slash (devpath.sh/ + /pathname)
+      const pathname = window.location.pathname.startsWith("/")
+        ? window.location.pathname
+        : `/${window.location.pathname}`;
+
+      const redirectUrl = `https://devpath.sh${pathname}`;
+
+      console.log("🔐 Initiating GitHub OAuth to:", redirectUrl);
 
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: "github",
